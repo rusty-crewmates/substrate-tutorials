@@ -1,0 +1,17 @@
+version: "3.2"
+
+services:
+  dev:
+    container_name: rusty-node
+    image: paritytech/ci-linux:974ba3ac-20201006
+    working_dir: /var/www/rusty-node
+    ports:
+      - "9944:9944"
+    environment:
+      - CARGO_HOME=/var/www/rusty-node/.cargo
+    volumes:
+      - .:/var/www/rusty-node
+      - type: bind
+        source: ./.local
+        target: /root/.local
+    command: bash -c "cargo build --release && ./target/release/rusty-node --dev --ws-external"
