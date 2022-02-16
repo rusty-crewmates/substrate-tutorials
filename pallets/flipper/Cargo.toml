@@ -1,13 +1,11 @@
 [package]
-authors     = ["Substrate DevHub <https://github.com/substrate-developer-hub>"]
-description = "FRAME pallet template for defining custom runtime logic."
-edition     = "2021"
-homepage    = "https://substrate.io/"
-license     = "Unlicense"
-name        = "pallet-template"
-publish     = false
-repository  = "https://github.com/substrate-developer-hub/substrate-rusty-node/"
-version     = "4.0.0-dev"
+authors    = ["Simon Galasso"]
+edition    = "2021"
+license    = "Apache-2.0"
+name       = "pallet-flipper"
+publish    = false
+repository = "https://github.com/substrate-developer-hub/substrate-rusty-node/"
+version    = "0.1.0"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
