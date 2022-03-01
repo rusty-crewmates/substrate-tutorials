@@ -1,42 +1,42 @@
 [package]
-name = "pallet-template"
-version = "4.0.0-dev"
+authors     = ["Substrate DevHub <https://github.com/substrate-developer-hub>"]
 description = "FRAME pallet template for defining custom runtime logic."
-authors = ["Substrate DevHub <https://github.com/substrate-developer-hub>"]
-homepage = "https://substrate.io/"
-edition = "2021"
-license = "Unlicense"
-publish = false
-repository = "https://github.com/substrate-developer-hub/substrate-rusty-node/"
+edition     = "2021"
+homepage    = "https://substrate.io/"
+license     = "Unlicense"
+name        = "pallet-template"
+publish     = false
+repository  = "https://github.com/substrate-developer-hub/substrate-rusty-node/"
+version     = "4.0.0-dev"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { package = "parity-scale-codec", version = "2.0.0", default-features = false, features = [
-	"derive",
+  "derive",
 ] }
-scale-info = { version = "1.0", default-features = false, features = [
-	"derive",
-] }
+frame-benchmarking = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest", optional = true }
 frame-support = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
 frame-system = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-frame-benchmarking = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest", optional = true }
+scale-info = { version = "1.0", default-features = false, features = [
+  "derive",
+] }
 
 [dev-dependencies]
-sp-core = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-io = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-core    = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-io      = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
 sp-runtime = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
 
 [features]
 default = ["std"]
 std = [
-	"codec/std",
-	"scale-info/std",
-	"frame-support/std",
-	"frame-system/std",
-	"frame-benchmarking/std",
+  "codec/std",
+  "scale-info/std",
+  "frame-support/std",
+  "frame-system/std",
+  "frame-benchmarking/std",
 ]
 
 runtime-benchmarks = ["frame-benchmarking/runtime-benchmarks"]
-try-runtime = ["frame-support/try-runtime"]
+try-runtime        = ["frame-support/try-runtime"]

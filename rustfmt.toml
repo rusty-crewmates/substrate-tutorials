@@ -18,6 +18,7 @@ comment_width = 100
 wrap_comments = true
 
 # Misc
+chain_width                = 80
 match_arm_blocks           = false
 match_block_trailing_comma = true
 reorder_impl_items         = true

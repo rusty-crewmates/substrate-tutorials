@@ -1,0 +1,8 @@
+# Taplo is a TOML formater
+# https://taplo.tamasfe.dev/
+
+exclude = []
+
+[formatting]
+align_entries = true
+reorder_keys  = true
