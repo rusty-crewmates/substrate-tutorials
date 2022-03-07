@@ -19,44 +19,44 @@ name = "rusty-node"
 [dependencies]
 structopt = "0.3.25"
 
-sc-cli                  = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-client-api           = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-consensus            = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-consensus-aura       = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-executor             = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-finality-grandpa     = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-keystore             = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-service              = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-telemetry            = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-transaction-pool     = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-transaction-pool-api = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-consensus            = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-consensus-aura       = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-core                 = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-finality-grandpa     = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-runtime              = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-timestamp            = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-cli                  = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-client-api           = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-consensus            = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-consensus-aura       = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-executor             = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-finality-grandpa     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-keystore             = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-service              = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-telemetry            = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-transaction-pool     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-transaction-pool-api = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-consensus            = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-consensus-aura       = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-core                 = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-finality-grandpa     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-runtime              = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-timestamp            = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
 
 # These dependencies are used for the node template's RPCs
 jsonrpc-core                   = "18.0.0"
-pallet-transaction-payment-rpc = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-basic-authorship            = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-rpc                         = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-rpc-api                     = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-api                         = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-block-builder               = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-blockchain                  = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-substrate-frame-rpc-system     = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+pallet-transaction-payment-rpc = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-basic-authorship            = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-rpc                         = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-rpc-api                     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-api                         = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-block-builder               = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-blockchain                  = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+substrate-frame-rpc-system     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
 
 # These dependencies are used for runtime benchmarking
-frame-benchmarking     = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-frame-benchmarking-cli = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+frame-benchmarking     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+frame-benchmarking-cli = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
 
 # Local Dependencies
-rusty-node-runtime = { version = "4.0.0-dev", path = "../runtime" }
+rusty-node-runtime = { path = "../runtime" }
 
 [build-dependencies]
-substrate-build-script-utils = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+substrate-build-script-utils = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
 
 [features]
 default            = []
