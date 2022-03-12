@@ -16,17 +16,17 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { package = "parity-scale-codec", version = "2.0.0", default-features = false, features = [
 	"derive",
 ] }
-frame-benchmarking = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest", optional = true }
-frame-support = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-frame-system = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+frame-benchmarking = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12", optional = true }
+frame-support = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+frame-system = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
 scale-info = { version = "1.0", default-features = false, features = [
 	"derive",
 ] }
 
 [dev-dependencies]
-sp-core    = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-io      = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-runtime = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sp-core    = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sp-io      = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sp-runtime = { default-features = false, git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
 
 [features]
 default = ["std"]

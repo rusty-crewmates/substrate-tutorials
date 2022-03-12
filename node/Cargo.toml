@@ -19,44 +19,44 @@ name = "rusty-node"
 [dependencies]
 structopt = "0.3.25"
 
-sc-cli                  = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-client-api           = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-consensus            = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-consensus-aura       = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-executor             = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-finality-grandpa     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-keystore             = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-service              = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-telemetry            = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-transaction-pool     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-transaction-pool-api = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-consensus            = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-consensus-aura       = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-core                 = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-finality-grandpa     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-runtime              = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-timestamp            = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+sc-cli                  = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-client-api           = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-consensus            = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-consensus-aura       = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-executor             = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-finality-grandpa     = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-keystore             = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-service              = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-telemetry            = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-transaction-pool     = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-transaction-pool-api = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sp-consensus            = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sp-consensus-aura       = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sp-core                 = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sp-finality-grandpa     = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sp-runtime              = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sp-timestamp            = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
 
 # These dependencies are used for the node template's RPCs
 jsonrpc-core                   = "18.0.0"
-pallet-transaction-payment-rpc = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-basic-authorship            = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-rpc                         = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sc-rpc-api                     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-api                         = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-block-builder               = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-sp-blockchain                  = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-substrate-frame-rpc-system     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+pallet-transaction-payment-rpc = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-basic-authorship            = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-rpc                         = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sc-rpc-api                     = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sp-api                         = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sp-block-builder               = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+sp-blockchain                  = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+substrate-frame-rpc-system     = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
 
 # These dependencies are used for runtime benchmarking
-frame-benchmarking     = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
-frame-benchmarking-cli = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+frame-benchmarking     = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
+frame-benchmarking-cli = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
 
 # Local Dependencies
 rusty-node-runtime = { path = "../runtime" }
 
 [build-dependencies]
-substrate-build-script-utils = { git = "https://github.com/paritytech/substrate.git", tag = "devhub/latest" }
+substrate-build-script-utils = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
 
 [features]
 default            = []
