@@ -19,7 +19,7 @@ If you are stuck, you can always check the solution. It's not cheating, it's jus
 
 ## Recommended order
 
-- [pallet-testing](https://github.com/rusty-crewmates/substrate-tutorials/tree/ex/nft): get familiar with substrate testing suite
+- [pallet-testing](https://github.com/rusty-crewmates/substrate-tutorials/tree/ex/pallet-testing): get familiar with substrate testing suite
 - [fungible-token](https://github.com/rusty-crewmates/substrate-tutorials/tree/ex/fungible-token): build a basic fungible asset pallet and learn how to write substrate extrinsics and interact with storage
 - [nft](https://github.com/rusty-crewmates/substrate-tutorials/tree/ex/nft): build a basic NFT pallet and write more extrinsics (they are substrate 🍞 and 🧈, so better work them twice)
 - [marketplace](https://github.com/rusty-crewmates/substrate-tutorials/tree/ex/marketplace): build a marketplace for our NFTs and discover how to make pallets interact with each other
