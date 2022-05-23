@@ -53,6 +53,8 @@ hex-literal               = { version = "0.3.4", optional = true }
 
 # Local Dependencies
 pallet-nft = { default-features = false, path = "../pallets/nfts" }
+pallet-assets = { default-features = false, path = "../pallets/assets" }
+pallet-flipper = { default-features = false, path = "../pallets/flipper" }
 
 [build-dependencies]
 substrate-wasm-builder = { git = "https://github.com/paritytech/substrate.git", tag = "monthly-2021-12" }
@@ -67,6 +69,8 @@ runtime-benchmarks = [
 	"hex-literal",
 	"pallet-balances/runtime-benchmarks",
 	"pallet-nft/runtime-benchmarks",
+	"pallet-assets/runtime-benchmarks",
+	"pallet-flipper/runtime-benchmarks",
 	"pallet-timestamp/runtime-benchmarks",
 	"sp-runtime/runtime-benchmarks",
 ]
@@ -83,6 +87,8 @@ std = [
 	"pallet-randomness-collective-flip/std",
 	"pallet-sudo/std",
 	"pallet-nft/std",
+	"pallet-assets/std",
+	"pallet-flipper/std",
 	"pallet-timestamp/std",
 	"pallet-transaction-payment-rpc-runtime-api/std",
 	"pallet-transaction-payment/std",
