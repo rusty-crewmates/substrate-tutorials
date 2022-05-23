@@ -41,6 +41,7 @@ pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
 
 pub use pallet_assets;
+pub use pallet_flipper;
 
 /// An index to a block.
 pub type BlockNumber = u32;
@@ -273,6 +274,10 @@ impl pallet_sudo::Config for Runtime {
 
 /// Configure the pallet-template in pallets/template.
 impl pallet_assets::Config for Runtime {
+  	type Event = Event;
+}
+/// Configure the pallet-flipper in pallets/flipper.
+impl pallet_flipper::Config for Runtime {
 	type Event = Event;
 }
 
@@ -293,6 +298,8 @@ construct_runtime!(
 		Sudo: pallet_sudo,
 
 		Assets: pallet_assets,
+		// Include the custom logic from the pallet-flipper in the runtime.
+		FlipperModule: pallet_flipper,
 	}
 );
 
@@ -472,6 +479,7 @@ impl_runtime_apis! {
 			list_benchmark!(list, extra, pallet_balances, Balances);
 			list_benchmark!(list, extra, pallet_timestamp, Timestamp);
 			list_benchmark!(list, extra, pallet_template, Assets);
+			list_benchmark!(list, extra, pallet_flipper, FlipperModule);
 
 			let storage_info = AllPalletsWithSystem::storage_info();
 
@@ -510,6 +518,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, pallet_balances, Balances);
 			add_benchmark!(params, batches, pallet_timestamp, Timestamp);
 			add_benchmark!(params, batches, pallet_template, Assets);
+			add_benchmark!(params, batches, pallet_flipper, FlipperModule);
 
 			Ok(batches)
 		}
