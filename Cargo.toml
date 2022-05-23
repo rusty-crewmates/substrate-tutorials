@@ -1,4 +1,4 @@
 [workspace]
-members = ['node', 'pallets/*', 'runtime']
+members = ['exercises/*/*']
 [profile.release]
 panic = 'unwind'
