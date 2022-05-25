@@ -1,4 +1,4 @@
-use crate as pallet_flipper;
+use crate as pallet_nft;
 use frame_support::parameter_types;
 use frame_system as system;
 use sp_core::H256;
@@ -18,7 +18,7 @@ frame_support::construct_runtime!(
 		UncheckedExtrinsic = UncheckedExtrinsic,
 	{
 		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
-		FlipperModule: pallet_flipper::{Pallet, Call, Storage, Event<T>},
+		NFTs: pallet_nft::{Pallet, Call, Storage, Event<T>},
 	}
 );
 
@@ -54,11 +54,16 @@ impl system::Config for TestRuntime {
 	type Version = ();
 }
 
-impl pallet_flipper::Config for TestRuntime {
+impl pallet_nft::Config for TestRuntime {
 	type Event = Event;
+	type NFTId = u128;
 }
 
 // Build genesis storage according to the mock runtime.
 pub fn new_test_ext() -> sp_io::TestExternalities {
 	system::GenesisConfig::default().build_storage::<TestRuntime>().unwrap().into()
 }
+
+// Mock users AccountId
+pub const ALICE: u64 = 1;
+pub const BOB: u64 = 2;
