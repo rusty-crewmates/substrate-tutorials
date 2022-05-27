@@ -10,7 +10,6 @@ mod tests;
 pub mod types;
 
 use frame_support::ensure;
-use sp_std::vec::Vec;
 use types::*;
 
 #[frame_support::pallet]
@@ -22,6 +21,9 @@ pub mod pallet {
 	#[pallet::config]
 	pub trait Config: frame_system::Config + scale_info::TypeInfo {
 		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
+
+		#[pallet::constant]
+		type MaxLength: Get<u32>;
 	}
 
 	#[pallet::pallet]
@@ -29,10 +31,9 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::storage]
-	#[pallet::unbounded]
 	#[pallet::getter(fn unique_asset)]
 	pub(super) type UniqueAsset<T: Config> =
-		StorageMap<_, Blake2_128Concat, UniqueAssetId, UniqueAssetDetails<T>>;
+		StorageMap<_, Blake2_128Concat, UniqueAssetId, UniqueAssetDetails<T, T::MaxLength>>;
 
 	#[pallet::storage]
 	#[pallet::getter(fn account)]
@@ -88,7 +89,11 @@ pub mod pallet {
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
 		#[pallet::weight(0)]
-		pub fn mint(origin: OriginFor<T>, metadata: Vec<u8>, supply: u128) -> DispatchResult {
+		pub fn mint(
+			origin: OriginFor<T>,
+			metadata: BoundedVec<u8, T::MaxLength>,
+			supply: u128,
+		) -> DispatchResult {
 			let origin = ensure_signed(origin)?;
 
 			ensure!(supply > 0, Error::<T>::NoSupply);

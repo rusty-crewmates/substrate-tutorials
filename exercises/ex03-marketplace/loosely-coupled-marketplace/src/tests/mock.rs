@@ -74,8 +74,13 @@ impl pallet_balances::Config for TestRuntime {
 	type WeightInfo = ();
 }
 
+parameter_types! {
+	pub const MaxLength: u32 = 20;
+}
+
 impl pallet_marketplace_nfts::Config for TestRuntime {
 	type Event = Event;
+	type MaxLength = MaxLength;
 	type NFTId = u128;
 }
 

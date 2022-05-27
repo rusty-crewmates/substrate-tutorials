@@ -53,7 +53,6 @@ pub mod pallet {
 	}
 
 	#[pallet::storage]
-	#[pallet::unbounded]
 	#[pallet::getter(fn nft_for_sale)]
 	pub type NFTsForSale<T: Config> = StorageDoubleMap<
 		_,

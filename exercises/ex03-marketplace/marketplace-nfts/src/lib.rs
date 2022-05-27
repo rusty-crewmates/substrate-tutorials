@@ -11,13 +11,7 @@ pub mod types;
 
 use frame_support::ensure;
 use sp_runtime::traits::{AtLeast32BitUnsigned, One, Saturating};
-use sp_std::vec::Vec;
 use types::*;
-
-pub trait Sellable<AccountId, RessourceId> {
-	fn amount_owned(id: RessourceId, account: AccountId) -> u128;
-	fn transfer(id: RessourceId, from: AccountId, to: AccountId, amount: u128) -> u128;
-}
 
 #[frame_support::pallet]
 pub mod pallet {
@@ -29,7 +23,10 @@ pub mod pallet {
 	pub trait Config: frame_system::Config + scale_info::TypeInfo {
 		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
 
-		type NFTId: Parameter + AtLeast32BitUnsigned + Default + Copy;
+		type NFTId: Parameter + AtLeast32BitUnsigned + Default + Copy + MaxEncodedLen;
+
+		#[pallet::constant]
+		type MaxLength: Get<u32>;
 	}
 
 	#[pallet::pallet]
@@ -37,13 +34,11 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::storage]
-	#[pallet::unbounded]
 	#[pallet::getter(fn unique_asset)]
 	pub(super) type UniqueAsset<T: Config> =
-		StorageMap<_, Blake2_128Concat, T::NFTId, UniqueAssetDetails<T>>;
+		StorageMap<_, Blake2_128Concat, T::NFTId, UniqueAssetDetails<T, T::MaxLength>>;
 
 	#[pallet::storage]
-	#[pallet::unbounded]
 	#[pallet::getter(fn account)]
 	/// The holdings of a specific account for a specific asset.
 	pub(super) type Account<T: Config> = StorageDoubleMap<
@@ -57,7 +52,6 @@ pub mod pallet {
 	>;
 
 	#[pallet::storage]
-	#[pallet::unbounded]
 	#[pallet::getter(fn nonce)]
 	/// Nonce for id of the next created asset
 	pub(super) type Nonce<T: Config> = StorageValue<_, T::NFTId, ValueQuery>;
@@ -98,7 +92,11 @@ pub mod pallet {
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
 		#[pallet::weight(0)]
-		pub fn mint(origin: OriginFor<T>, metadata: Vec<u8>, supply: u128) -> DispatchResult {
+		pub fn mint(
+			origin: OriginFor<T>,
+			metadata: BoundedVec<u8, T::MaxLength>,
+			supply: u128,
+		) -> DispatchResult {
 			let origin = ensure_signed(origin)?;
 
 			ensure!(supply > 0, Error::<T>::NoSupply);

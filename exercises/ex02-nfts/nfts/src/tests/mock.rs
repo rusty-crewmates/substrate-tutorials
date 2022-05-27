@@ -54,8 +54,13 @@ impl system::Config for TestRuntime {
 	type Version = ();
 }
 
+parameter_types! {
+	pub const MaxLength: u32 = 20;
+}
+
 impl pallet_nft::Config for TestRuntime {
 	type Event = Event;
+	type MaxLength = MaxLength;
 }
 
 // Build genesis storage according to the mock runtime.

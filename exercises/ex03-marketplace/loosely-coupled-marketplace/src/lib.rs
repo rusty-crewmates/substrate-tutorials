@@ -4,7 +4,6 @@ pub use pallet::*;
 
 #[cfg(test)]
 mod tests;
-pub mod traits;
 pub mod types;
 
 use frame_support::{
@@ -15,7 +14,7 @@ use frame_support::{
 // use support::Sellable;
 use types::*;
 
-use pallet_marketplace_nfts::Sellable;
+use pallet_marketplace_nfts::types::Sellable;
 
 pub type BalanceOf<T> =
 	<<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
@@ -30,7 +29,7 @@ pub mod pallet {
 	pub trait Config: frame_system::Config + scale_info::TypeInfo {
 		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
 		type Currency: Currency<Self::AccountId>;
-		type RessourceId: Parameter + Copy;
+		type RessourceId: Parameter + Copy + MaxEncodedLen;
 		type Ressource: Sellable<Self::AccountId, Self::RessourceId>;
 	}
 
@@ -57,7 +56,6 @@ pub mod pallet {
 	}
 
 	#[pallet::storage]
-	#[pallet::unbounded]
 	#[pallet::getter(fn ressource_for_sale)]
 	pub type RessourcesForSale<T: Config> = StorageDoubleMap<
 		_,

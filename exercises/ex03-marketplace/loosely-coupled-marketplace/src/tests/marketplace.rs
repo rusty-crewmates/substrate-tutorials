@@ -2,12 +2,12 @@ use crate::{tests::mock::*, Error};
 use frame_support::{assert_noop, assert_ok, error::BadOrigin};
 
 fn create_nft(amount: u128) {
-	let metadata: Vec<u8> = "Some metadata".into();
+	let metadata = "Some metadata".as_bytes().to_vec().try_into().unwrap();
 	NFTs::mint(Origin::signed(ALICE), metadata, amount).unwrap();
 }
 
 fn amount_owned(ressource_id: u128, address: u64) -> u128 {
-	use pallet_marketplace_nfts::Sellable;
+	use pallet_marketplace_nfts::types::Sellable;
 
 	<TestRuntime as crate::pallet::Config>::Ressource::amount_owned(ressource_id, address)
 }

@@ -3,12 +3,15 @@ use frame_support::{assert_noop, assert_ok, error::BadOrigin};
 
 mod mint {
 	use super::*;
-
 	#[test]
 	fn ok() {
 		new_test_ext().execute_with(|| {
-			let metadata: Vec<u8> = "Some metadata".into();
-			assert_ok!(NFTs::mint(Origin::signed(ALICE), metadata.clone(), 5));
+			let metadata = "Some metadata".as_bytes().to_vec();
+			assert_ok!(NFTs::mint(
+				Origin::signed(ALICE),
+				metadata.clone().try_into().unwrap(),
+				5
+			));
 
 			assert_eq!(NFTs::nonce(), 1);
 
@@ -22,7 +25,14 @@ mod mint {
 	#[test]
 	fn must_be_signed() {
 		new_test_ext().execute_with(|| {
-			assert_noop!(NFTs::mint(Origin::none(), "".into(), 5), BadOrigin);
+			assert_noop!(
+				NFTs::mint(
+					Origin::none(),
+					"".as_bytes().to_vec().try_into().unwrap(),
+					5
+				),
+				BadOrigin
+			);
 		})
 	}
 
@@ -30,7 +40,11 @@ mod mint {
 	fn must_have_positive_supply() {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
-				NFTs::mint(Origin::signed(ALICE), "".into(), 0),
+				NFTs::mint(
+					Origin::signed(ALICE),
+					"".as_bytes().to_vec().try_into().unwrap(),
+					0
+				),
 				Error::<TestRuntime>::NoSupply
 			);
 		})
@@ -47,7 +61,7 @@ mod transfer {
 			let transfered_amount = 2;
 			assert_ok!(NFTs::mint(
 				Origin::signed(ALICE),
-				"Some metadata".into(),
+				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 				minted_amount
 			));
 			assert_ok!(NFTs::transfer(
@@ -69,7 +83,7 @@ mod transfer {
 			let transfered_amount = 10;
 			assert_ok!(NFTs::mint(
 				Origin::signed(ALICE),
-				"Some metadata".into(),
+				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 				minted_amount
 			));
 			assert_ok!(NFTs::transfer(
@@ -87,7 +101,14 @@ mod transfer {
 	#[test]
 	fn must_be_signed() {
 		new_test_ext().execute_with(|| {
-			assert_noop!(NFTs::mint(Origin::none(), "".into(), 5), BadOrigin);
+			assert_noop!(
+				NFTs::mint(
+					Origin::none(),
+					"".as_bytes().to_vec().try_into().unwrap(),
+					5
+				),
+				BadOrigin
+			);
 		})
 	}
 
@@ -104,7 +125,11 @@ mod transfer {
 	#[test]
 	fn must_own_some() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(NFTs::mint(Origin::signed(ALICE), "Some metadata".into(), 5));
+			assert_ok!(NFTs::mint(
+				Origin::signed(ALICE),
+				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
+				5
+			));
 			assert_noop!(
 				NFTs::transfer(Origin::signed(BOB), 0, 2, ALICE),
 				Error::<TestRuntime>::NotOwned
@@ -123,7 +148,7 @@ mod burn {
 			let burned_amount = 2;
 			assert_ok!(NFTs::mint(
 				Origin::signed(ALICE),
-				"Some metadata".into(),
+				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 				minted_amount
 			));
 			assert_ok!(NFTs::burn(Origin::signed(ALICE), 0, burned_amount));
@@ -144,7 +169,7 @@ mod burn {
 			let burned_amount = 10;
 			assert_ok!(NFTs::mint(
 				Origin::signed(ALICE),
-				"Some metadata".into(),
+				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 				minted_amount
 			));
 			assert_ok!(NFTs::transfer(
@@ -166,7 +191,14 @@ mod burn {
 	#[test]
 	fn must_be_signed() {
 		new_test_ext().execute_with(|| {
-			assert_noop!(NFTs::mint(Origin::none(), "".into(), 5), BadOrigin);
+			assert_noop!(
+				NFTs::mint(
+					Origin::none(),
+					"".as_bytes().to_vec().try_into().unwrap(),
+					5
+				),
+				BadOrigin
+			);
 		})
 	}
 
@@ -183,7 +215,11 @@ mod burn {
 	#[test]
 	fn must_own_some() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(NFTs::mint(Origin::signed(ALICE), "Some metadata".into(), 5));
+			assert_ok!(NFTs::mint(
+				Origin::signed(ALICE),
+				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
+				5
+			));
 			assert_noop!(
 				NFTs::burn(Origin::signed(BOB), 0, 2),
 				Error::<TestRuntime>::NotOwned

@@ -4,6 +4,7 @@ use frame_support::RuntimeDebug;
 use scale_info::TypeInfo;
 
 #[derive(Encode, Decode, Eq, PartialEq, RuntimeDebug, TypeInfo, MaxEncodedLen)]
+#[codec(mel_bound())]
 pub struct SaleData<T: Config> {
 	pub price: BalanceOf<T>,
 	pub amount: u128,
