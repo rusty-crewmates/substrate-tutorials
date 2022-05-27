@@ -1,6 +1,5 @@
 use crate::{tests::mock::*, Error};
-use frame_support::BoundedVec;
-use frame_support::{assert_noop, assert_ok, error::BadOrigin};
+use frame_support::{assert_noop, assert_ok, error::BadOrigin, BoundedVec};
 
 mod create {
 	use super::*;

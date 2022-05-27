@@ -1,2 +1,2 @@
+mod flipper;
 pub mod mock;
-mod tests;

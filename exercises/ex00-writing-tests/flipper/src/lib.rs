@@ -49,8 +49,8 @@ pub mod pallet {
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
-		/// This function set a value to the Value storage and emit an event, it should be used once,
-		/// if something is already present in the storage, it return an error.
+		/// This function set a value to the Value storage and emit an event, it should be used
+		/// once, if something is already present in the storage, it return an error.
 		#[pallet::weight(0)]
 		pub fn set_value(origin: OriginFor<T>, value: bool) -> DispatchResult {
 			// Check that the extrinsic was signed and get the signer.
@@ -71,7 +71,7 @@ pub mod pallet {
 
 					// Return a successful DispatchResultWithPostInfo.
 					Ok(())
-				}
+				},
 			}
 		}
 
@@ -95,7 +95,7 @@ pub mod pallet {
 					Self::deposit_event(Event::ValueFlipped(new, who));
 
 					Ok(())
-				}
+				},
 			}
 		}
 	}
