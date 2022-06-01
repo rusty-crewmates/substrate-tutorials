@@ -24,8 +24,7 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config:
-		frame_system::Config + scale_info::TypeInfo + pallet_marketplace_nfts::Config
-	{
+		frame_system::Config + scale_info::TypeInfo + todo!("add a dependecy on pallet_marketplace_nft") {
 		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
 		type Currency: Currency<Self::AccountId>;
 	}
@@ -76,7 +75,7 @@ pub mod pallet {
 			let origin = ensure_signed(origin)?;
 
 			ensure!(amount > 0, Error::<T>::ZeroAmount);
-			let owned = pallet_marketplace_nfts::Pallet::<T>::account(nft_id, origin.clone());
+			let owned = todo!("get the amount owned from the pallet_nft account storage");
 			ensure!(owned >= amount, Error::<T>::NotEnoughOwned);
 
 			NFTsForSale::<T>::insert(nft_id, origin.clone(), SaleData { price, amount });
@@ -96,7 +95,7 @@ pub mod pallet {
 			let buyer = ensure_signed(origin)?;
 
 			let sale_data = NFTsForSale::<T>::get(nft_id, seller.clone());
-			let owned = pallet_marketplace_nfts::Pallet::<T>::account(nft_id, seller.clone());
+			let owned = todo!("get the amount owned from the pallet_nft account storage");
 
 			ensure!(amount <= sale_data.amount, Error::<T>::NotEnoughInSale);
 			ensure!(sale_data.amount <= owned, Error::<T>::NotEnoughOwned);
@@ -108,12 +107,7 @@ pub mod pallet {
 
 			<T as pallet::Config>::Currency::transfer(&buyer, &seller, total_to_pay, KeepAlive)?;
 
-			pallet_marketplace_nfts::Pallet::<T>::unchecked_transfer(
-				nft_id,
-				seller.clone(),
-				buyer.clone(),
-				amount,
-			);
+			todo!("call the pallet_marketplace_nft transfer function");
 
 			if amount == sale_data.amount {
 				NFTsForSale::<T>::remove(nft_id, seller.clone());

@@ -29,6 +29,12 @@ pub mod pallet {
 	pub trait Config: frame_system::Config + scale_info::TypeInfo {
 		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
 		type Currency: Currency<Self::AccountId>;
+		// Here are types that allow for the pallet coupling
+		// Ressource must be a type that implement transeferable (remeber that pallets are types)
+		// RessourceId is used to have a fully generic ressource, can be int, uint, string, hash
+		// or about anything.
+		// It's entierly up to the coupled pallet to chose the type of the ID,
+		// it will still be compatible with this one.
 		type RessourceId: Parameter + Copy + MaxEncodedLen;
 		type Ressource: Sellable<Self::AccountId, Self::RessourceId>;
 	}
@@ -79,7 +85,9 @@ pub mod pallet {
 			let origin = ensure_signed(origin)?;
 
 			ensure!(amount > 0, Error::<T>::ZeroAmount);
-			let owned = T::Ressource::amount_owned(nft_id, origin.clone());
+			let owned = todo!(
+				"get the amount of this specific nft owned by the seller, throug the Ressource type and it's Sellabe trait"
+			);
 			ensure!(owned >= amount, Error::<T>::NotEnoughOwned);
 
 			RessourcesForSale::<T>::insert(nft_id, origin.clone(), SaleData { price, amount });
@@ -99,7 +107,9 @@ pub mod pallet {
 			let buyer = ensure_signed(origin)?;
 
 			let sale_data = RessourcesForSale::<T>::get(nft_id, seller.clone());
-			let owned = T::Ressource::amount_owned(nft_id, seller.clone());
+			let owned = todo!(
+				"get the amount of this specific nft owned by the seller, throug the Ressource type and it's Sellabe trait"
+			);
 
 			ensure!(amount <= sale_data.amount, Error::<T>::NotEnoughInSale);
 			ensure!(sale_data.amount <= owned, Error::<T>::NotEnoughOwned);
@@ -109,7 +119,7 @@ pub mod pallet {
 				.checked_mul(&amount.checked_into().ok_or(Error::<T>::Overflow)?)
 				.ok_or(Error::<T>::Overflow)?;
 
-			T::Currency::transfer(&buyer, &seller, total_to_pay, KeepAlive)?;
+			todo!("transefer amount of nft_id from the sellet to the buyer");
 
 			T::Ressource::transfer(nft_id, seller.clone(), buyer.clone(), amount);
 
