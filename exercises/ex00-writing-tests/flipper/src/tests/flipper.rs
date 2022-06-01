@@ -22,4 +22,5 @@ fn flip_value_ok() {
 		// TODO: ensure the good behaviour of flip_value() function.
 	});
 }
-// TODO: Make another test to check the behaviour in the case where an error occured in the flip_function().
+// TODO: Make another test to check the behaviour in the case where an error occured in the
+// flip_function().

@@ -213,7 +213,8 @@ pub mod pallet {
 
 impl<T: Config> Pallet<T> {
 	// This is not a call, so it cannot be called directly by real world users
-	// Still it have to be generic over the runtime types, that's why we implement it on Pallet rather than just defining a local function
+	// Still it have to be generic over the runtime types, that's why we implement it on Pallet
+	// rather than just defining a local function
 	fn ensure_is_owner(asset_id: AssetId, account: T::AccountId) -> Result<(), Error<T>> {
 		let details = Self::asset(asset_id).ok_or(Error::<T>::Unknown)?;
 		ensure!(details.owner == account, Error::<T>::NoPermission);
