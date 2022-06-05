@@ -19,3 +19,7 @@ We designed the exercises to teach you:
 - some blockchain core principles
 
 If you are stuck, you can always check the solution branch. It's not cheating, it's just learning 🧑‍🎓
+
+## Looking for a job ?
+
+We are in contact with multiple projects in the Substrare echosystem that are looking for developers, either full time or for some periodic missions. If you would like to be contacted with some offers, please fill this form: https://forms.gle/mUoLGsDUSpy4yB3F9
