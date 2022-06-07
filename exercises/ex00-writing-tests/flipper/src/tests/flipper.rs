@@ -17,4 +17,6 @@ fn flip_value_ok() {
 	new_test_ext().execute_with(|| todo!("ensure the good behaviour of flip_value() function."));
 }
 
-todo!("Make another test to check the behaviour in the case where an error occured in the flip_function().");
+todo!(
+	"Make another test to check the behaviour in the case where an error occured in the flip_function()."
+);
