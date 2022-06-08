@@ -7,7 +7,7 @@
 - code until all tests passes
 
 > By default running `cargo test` will run test for every exercises in the workspace. Which is not optimal while working on a specific exercise.  
-> Instead use our `test_in_docker.sh` scipt. It will run the tests for the exercise you pass as argument only.
+> Instead use our `run_one_exercise_tests.sh` scipt. It will run the tests for the exercise you pass as argument only.
 
 If you want to run your pallet in a real runtime, you can easely edit the `substrate-node-template` and add your pallet to it's runtime.
 
