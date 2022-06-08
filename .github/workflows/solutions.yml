@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - solutions
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  format_build_lint_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: add nightly toolchain
+      run: rustup update nightly
+    - name: Format code
+      run: rustup component add rustfmt --toolchain nightly-x86_64-unknown-linux-gnu && cargo +nightly fmt -- --check
+    - name: Build
+      run: cargo build
+    - name: Clippy
+      run: cargo clippy --bins --tests --examples --all -- -D warnings
+    - name: Run tests
+      run: cargo test

@@ -6,13 +6,11 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  rustfmt:
+  format:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
     - uses: webiny/action-conventional-commits@v1.0.3
-    - name: add nightly toolchain
-      run: rustup update nightly
     - name: format code
-      run: rustup component add rustfmt --toolchain nightly-x86_64-unknown-linux-gnu && cargo +nightly fmt -- --check
+      run: cargo test
