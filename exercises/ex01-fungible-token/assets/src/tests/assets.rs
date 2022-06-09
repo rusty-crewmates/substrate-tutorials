@@ -7,19 +7,19 @@ mod create {
 	#[test]
 	fn ok() {
 		new_test_ext().execute_with(|| {
-			// The execution went through without error
+			// The execution went through without error.
 			assert_ok!(Assets::create(Origin::signed(ALICE)));
 
-			// The nonce was increased
+			// The nonce was increased.
 			assert!(Assets::nonce() == 1);
 
 			// The asset id is 0;
 			let details = Assets::asset(0).unwrap();
 
-			// The sender is the owner of the asset
+			// The sender is the owner of the asset.
 			assert!(details.owner == ALICE);
 
-			// The supply is still 0
+			// The supply is still 0.
 			assert!(details.supply == 0);
 		})
 	}
@@ -55,7 +55,7 @@ mod set_metadata {
 
 			let metadata = Assets::metadata(0).unwrap();
 
-			// Metadata have been set
+			// Metadata has been set
 			assert_eq!(metadata.name, name);
 			assert_eq!(metadata.symbol, symbol);
 		})
@@ -117,21 +117,21 @@ mod mint {
 
 			let mut total_supply = Assets::asset(0).unwrap().supply;
 			assert_eq!(total_supply, 0);
-			// Initial owned amount is 0
+			// Initial owned amount is 0.
 			assert_eq!(Assets::account(0, ALICE), 0);
 			assert_eq!(Assets::account(0, BOB), 0);
 
 			let amount = 100;
 
-			// Can mint to itself
+			// Can mint to itself.
 			assert_ok!(Assets::mint(Origin::signed(ALICE), 0, amount, ALICE));
 			total_supply += amount;
-			// Total supply have been increased
+			// Total supply has been increased.
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply);
-			// User account have been credited
+			// User account has been credited.
 			assert_eq!(Assets::account(0, ALICE), amount);
 
-			// Can mint to somebody else
+			// Can mint to somebody else.
 			assert_ok!(Assets::mint(Origin::signed(ALICE), 0, amount, BOB));
 			total_supply += amount;
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply);
@@ -211,7 +211,7 @@ mod burn {
 
 			assert_ok!(Assets::burn(Origin::signed(BOB), 0, burn_amount));
 			total_supply -= burn_amount;
-			// Total supply and account have been reduced by burn_amount
+			// Total supply and account have been reduced by burn_amount.
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply);
 			assert_eq!(Assets::account(0, BOB), mint_amount - burn_amount);
 		})
@@ -230,7 +230,7 @@ mod burn {
 			let total_supply = Assets::asset(0).unwrap().supply;
 
 			assert_ok!(Assets::burn(Origin::signed(BOB), 0, burn_amount));
-			// Total supply and account have been reduced by mint_amount
+			// Total supply and account have been reduced by mint_amount.
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply - mint_amount);
 			assert_eq!(Assets::account(0, BOB), 0);
 		})
@@ -275,11 +275,11 @@ mod transfer {
 				transfer_amount,
 				ALICE
 			));
-			// Total supply is still the same
+			// Total supply is still the same.
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply);
-			// BOB account have been reduced by transfer_amount
+			// BOB's account has been reduced by transfer_amount.
 			assert_eq!(Assets::account(0, BOB), mint_amount - transfer_amount);
-			// Alice account have been increased by transfer_amount
+			// Alice's account has been increased by transfer_amount.
 			assert_eq!(Assets::account(0, ALICE), transfer_amount);
 		})
 	}
@@ -299,7 +299,7 @@ mod transfer {
 				transfer_amount,
 				ALICE
 			));
-			// Account have only beed modified by mint_amount
+			// Account has only been modified by mint_amount.
 			assert_eq!(Assets::account(0, BOB), 0);
 			assert_eq!(Assets::account(0, ALICE), mint_amount);
 		})

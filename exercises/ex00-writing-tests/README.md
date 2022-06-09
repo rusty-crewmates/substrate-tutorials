@@ -1,15 +1,16 @@
 # Writing tests
 
-A Substrate-node logic execution happens in the [runtime](https://docs.substrate.io/v3/concepts/runtime/), this logic is divided by a set of modules called [pallets](https://docs.substrate.io/v3/getting-started/glossary/#pallet). Substrate provide [FRAME](https://docs.substrate.io/v3/runtime/frame/) a framework to help you create new pallets compatible with Substrate. While oversimplifying a pallet can be thought as a [storage](https://docs.substrate.io/v3/runtime/storage/) and some dispatchable functions (or [extrinsics](https://docs.substrate.io/v3/concepts/extrinsics/)) that allow to interact with it.
+A Substrate-node logic execution happens in the [runtime](https://docs.substrate.io/v3/concepts/runtime/). This logic is divided by a set of modules called [pallets](https://docs.substrate.io/v3/getting-started/glossary/#pallet). Substrate provides [FRAME](https://docs.substrate.io/v3/runtime/frame/), a framework to help you create new pallets compatible with Substrate. While oversimplifying a pallet can be thought of as a [storage](https://docs.substrate.io/v3/runtime/storage/) and some dispatchable functions (or [extrinsics](https://docs.substrate.io/v3/concepts/extrinsics/)) that allow interacting with it.
 
-To have a better understanding about the pallets architecture and how to use the dispatchable functions, you will have in this exercise to make some tests to check their behaviours.
+To have a better understanding of a pallet's architecture and how to use its dispatchable functions, you will have in this exercise to complete some tests to check their behaviors.
 
 ## To do
-In ```pallets/flipper/src/``` you will find a .lib that define the pallet configuration, storage and dispatchable functions. The mock file simulate the execution of the runtime, you don't need to update it, neither the benchmark file. All you have to do is to make 4 tests to check the behaviour of the ```set_value()``` and ```flip_value()``` functions.
-1. Fill the ```set_value_ok()``` test to ensure the good behaviour of ```set_value()``` function.
+In ```ex00-writing-tests/flipper/src/``` you will find a ```.lib``` file that defines the pallet configuration, storage, and dispatchable functions. 
+In ```ex00-writing-tests/flipper/src/tests/``` you will find the ```mod.rs``` file which by convention is used as the contents of the ````mod tests;```` module declaration in ```../.lib```, and the ```mock.rs``` file which simulates the execution of the runtime. You don't need to update them. All you have to do is to write the missing code in 4 tests, in the ```flipper.rs``` file. The goal is to check the correct behavior of the ```set_value()``` and ```flip_value()``` functions.
+1. Fill the ```set_value_ok()``` test to ensure the good behaviour of the ```set_value()``` function.
 2. Fill the ```set_value_err_already_set()``` test to verify if the function returns the expected error.
-3. Fill the ```flip_value_ok()``` test to ensure the good behaviour of ```flip_value()``` function.
-4. Make another test to check the behaviour in the case where an error occured in the ```flip_function()```.
+3. Fill the ```flip_value_ok()``` test to ensure the good behaviour of the ```flip_value()``` function.
+4. Make another test to check the behavior in the case where an error occurred in the ```flip_function()```.
 
 > Don't forget to comment your code
 ## Some links
