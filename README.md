@@ -6,10 +6,10 @@
 - clone it on your machine
 - code until all tests passes
 
-> By default running `cargo test` will run test for every exercises in the workspace. Which is not optimal while working on a specific exercise.  
-> Instead use our `run_one_exercise_tests.sh` scipt. It will run the tests for the exercise you pass as argument only.
+> By default running `cargo test` will run tests for every exercises in the workspace. Which is not optimal while working on a specific exercise.  
+> Instead use our `run_one_exercise_tests.sh` script. It will run the tests for the exercise you pass as argument only.
 
-If you want to run your pallet in a real runtime, you can easely edit the `substrate-node-template` and add your pallet to it's runtime.
+If you want to run your pallet in a real runtime, you can easily edit the `substrate-node-template` and add your pallet to it's runtime.
 
 ## What is in those exercises ?
 
@@ -26,7 +26,7 @@ We are in contact with multiple projects in the Substrare echosystem that are lo
 
 ## Looking for developers ?
 
-This reository was frist created by the [Rusty Crewmates](https://rustycrewmates.com/) team to train our own developers. We are a software development and consulting company, focussing on both Rust and blockchain.  
+This repository was first created by the [Rusty Crewmates](https://rustycrewmates.com/) team to train our own developers. We are a software development and consulting company, focussing on both Rust and blockchain.  
 We developed for top project in the Substrate ecosystem such as [Edgeware](https://edgewa.re/), [Kabocha](https://www.kabocha.network/), [Ternoa](https://www.ternoa.com/), [Polkaswap](https://polkaswap.io/) and [SubQuery](https://explorer.subquery.network/), both on a long term and per project basis.
-We propose a large range of services, smart-contract development and audit for Substrate, Near and Solana, but also regular back-end developement for Rust or blockchain oriented projects.  
+We propose a large range of services, smart-contract development and audit for Substrate, Near and Solana, but also regular back-end development for Rust or blockchain oriented projects.  
 If you think we can help you, please reach out at contact@rustycrewmates.com
