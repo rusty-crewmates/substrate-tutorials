@@ -1,5 +1,15 @@
 # Exercises to learn substrate
 
+## What is Substrate ?
+
+Substrate can be described as a blockchain framework — specifically, a framework for building customized blockchains.
+It is built on the Rust programming language, which makes use of novel design patterns to enable development of code that is safe and fast.
+
+
+To give some context, Polkadot is a layer-0 protocol and multichain network laying the foundation for the future of Web3.
+Substrate is the primary blockchain SDK used by developers to create the parachains that make up the Polkadot network.
+
+
 ## How to train ?
 
 - fork this repository
