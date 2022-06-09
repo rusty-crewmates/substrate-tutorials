@@ -32,7 +32,7 @@ If you are stuck, you can always check the solution branch. It's not cheating, i
 
 ## Looking for a job ?
 
-We are in contact with multiple projects in the Substrare echosystem that are looking for developers, either full time or for some periodic missions. If you would like to be contacted with some offers, please fill this form: https://forms.gle/mUoLGsDUSpy4yB3F9
+We are in contact with multiple projects in the Substrate ecosystem that are looking for developers, either full time or for some periodic missions. If you would like to be contacted with some offers, please fill this form: https://forms.gle/mUoLGsDUSpy4yB3F9
 
 ## Looking for developers ?
 
