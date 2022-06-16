@@ -4,17 +4,17 @@ use frame_support::{assert_noop, assert_ok};
 
 #[test]
 fn set_value_ok() {
-	new_test_ext().execute_with(|| todo!("ensure the good behaviour of set_value() function."));
+	new_test_ext().execute_with(|| todo!("Ensure the good behaviour of the set_value() function."));
 }
 
 #[test]
 fn set_value_err_already_set() {
-	new_test_ext().execute_with(|| todo!("verify if the function returns the expected error."));
+	new_test_ext().execute_with(|| todo!("Verify if the function returns the expected error."));
 }
 
 #[test]
 fn flip_value_ok() {
-	new_test_ext().execute_with(|| todo!("ensure the good behaviour of flip_value() function."));
+	new_test_ext().execute_with(|| todo!("Ensure the good behaviour of the flip_value() function."));
 }
 
 todo!(
