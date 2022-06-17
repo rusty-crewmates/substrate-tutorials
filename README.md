@@ -1,10 +1,22 @@
 # Exercises to learn substrate
 
+## Who is this tutorial for?
+
+This tutorial is for developers willing to learn the basics of Substrate development or broaden their skills regarding specific use cases of this framework.
+
+You will need a solid grasp of the Rust programming language before you start to learn Substrate.
+Some common entry points to learning Rust, as referred to [here](https://www.rust-lang.org/learn) are:
+- the [Rust Book](https://doc.rust-lang.org/book/) (aka "The Book"): the official manual, which is very well written and approachable.
+- the [Rustlings git repository](https://github.com/rust-lang/rustlings/): a thorough series of exercises.
+- the [Rust by examples](https://doc.rust-lang.org/stable/rust-by-example/) documentation.
+
+And of course, you should always challenge yourself with a little side project or two.
+
+
 ## What is Substrate?
 
 Substrate can be described as a blockchain framework — specifically, a framework for building customized blockchains.
 It is built on the Rust programming language, which makes use of novel design patterns to enable the development of code that is safe and fast.
-
 
 To give some context, Polkadot is a layer-0 protocol and multichain network laying the foundation for the future of Web3.
 Substrate is the primary blockchain SDK used by developers to create the parachains that make up the Polkadot network.
