@@ -61,7 +61,7 @@ pub mod pallet {
 
 	#[pallet::storage]
 	#[pallet::getter(fn nonce)]
-	/// Nonce for id of the next created asset
+	/// Nonce for id of the next created asset.
 	pub(super) type Nonce<T: Config> = StorageValue<_, AssetId, ValueQuery>;
 
 	// Pallets use events to inform users when important changes are made.
@@ -69,30 +69,30 @@ pub mod pallet {
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		/// New asset created
+		/// New asset created.
 		Created {
 			owner: T::AccountId,
 			asset_id: AssetId,
 		},
-		/// New metadata has been set for an asset
+		/// New metadata has been set for an asset.
 		MetadataSet {
 			asset_id: AssetId,
 			name: BoundedVec<u8, T::MaxLength>,
 			symbol: BoundedVec<u8, T::MaxLength>,
 		},
-		/// Some assets have been minted
+		/// Some assets have been minted.
 		Minted {
 			asset_id: AssetId,
 			owner: T::AccountId,
 			total_supply: u128,
 		},
-		/// Some assets have been burned
+		/// Some assets have been burned.
 		Burned {
 			asset_id: AssetId,
 			owner: T::AccountId,
 			total_supply: u128,
 		},
-		/// Some assets have been transferred
+		/// Some assets have been transferred.
 		Transferred {
 			asset_id: AssetId,
 			from: T::AccountId,
@@ -104,9 +104,9 @@ pub mod pallet {
 	// Errors inform users that something went wrong.
 	#[pallet::error]
 	pub enum Error<T> {
-		/// The asset ID is unknown
+		/// The asset ID is unknown.
 		Unknown,
-		/// The signing account has no permision to do the operation
+		/// The signing account has no permission to do the operation.
 		NoPermission,
 	}
 
@@ -144,9 +144,9 @@ pub mod pallet {
 			Self::ensure_is_owner(asset_id, origin)?;
 
 			// TODO:
-			// - create a new AssetMetadata instance based on the call arguments
-			// - insert this metadata in the Metadata storage, under the asset_id key
-			// - deposit an `Created` event
+			// - Create a new AssetMetadata instance based on the call arguments.
+			// - Insert this metadata in the Metadata storage, under the asset_id key.
+			// - Deposit a `Created` event.
 
 			Ok(())
 		}
@@ -159,8 +159,8 @@ pub mod pallet {
 			to: T::AccountId,
 		) -> DispatchResult {
 			// TODO:
-			// - ensure the extrinsic origin is a signed transaction
-			// - ensure the caller is the asset owner
+			// - Ensure the extrinsic origin is a signed transaction.
+			// - Ensure the caller is the asset owner.
 
 			let mut minted_amount = 0;
 
@@ -178,7 +178,7 @@ pub mod pallet {
 				*balance += minted_amount;
 			});
 
-			// TODO: Deposit a `Minted` event
+			// TODO: Deposit a `Minted` event.
 
 			Ok(())
 		}
@@ -186,10 +186,10 @@ pub mod pallet {
 		#[pallet::weight(0)]
 		pub fn burn(origin: OriginFor<T>, asset_id: AssetId, amount: u128) -> DispatchResult {
 			// TODO:
-			// - ensure the extrinsic origin is a signed transaction
-			// - mutate the total supply
-			// - mutate the account balance
-			// - emit a `Burned` event
+			// - Ensure the extrinsic origin is a signed transaction.
+			// - Mutate the total supply.
+			// - Mutate the account balance.
+			// - Emit a `Burned` event.
 
 			Ok(())
 		}
@@ -202,9 +202,9 @@ pub mod pallet {
 			to: T::AccountId,
 		) -> DispatchResult {
 			// TODO:
-			// - ensure the extrinsic origin is a signed transaction
-			// - mutate both account balance
-			// - emit a `Transfered` event
+			// - Ensure the extrinsic origin is a signed transaction.
+			// - Mutate both account balances.
+			// - Emit a `Transferred` event.
 
 			Ok(())
 		}
@@ -212,9 +212,9 @@ pub mod pallet {
 }
 
 impl<T: Config> Pallet<T> {
-	// This is not a call, so it cannot be called directly by real world users
-	// Still it have to be generic over the runtime types, that's why we implement it on Pallet
-	// rather than just defining a local function
+	// This is not a call, so it cannot be called directly by real-world users.
+	// Still it has to be generic over the runtime types, and that's why we implement it on Pallet
+	// rather than just defining a local function.
 	fn ensure_is_owner(asset_id: AssetId, account: T::AccountId) -> Result<(), Error<T>> {
 		let details = Self::asset(asset_id).ok_or(Error::<T>::Unknown)?;
 		ensure!(details.owner == account, Error::<T>::NoPermission);
