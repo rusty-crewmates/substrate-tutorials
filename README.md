@@ -5,12 +5,17 @@
 This tutorial is for developers willing to learn the basics of Substrate development and broaden their skillsets through real-world use cases.
 
 You will need a solid grasp of the Rust programming language before you start to learn Substrate.
-Some common entry points to learning Rust, as referred to [here](https://www.rust-lang.org/learn) are:
-- the [Rust Book](https://doc.rust-lang.org/book/) (aka "The Book"): the official manual, which is very well written and approachable.
-- the [Rustlings git repository](https://github.com/rust-lang/rustlings/): a thorough series of exercises.
-- the [Rust by examples](https://doc.rust-lang.org/stable/rust-by-example/) documentation.
-
-And of course, you should always challenge yourself with a little side project or two.
+<details>
+  <summary>Some good entry points to learning Rust 📚</summary>
+    
+&nbsp;&nbsp;&nbsp;As officially referred to [here](https://www.rust-lang.org/learn), the best paths to get started with Rust are:
+- The [Rust Book](https://doc.rust-lang.org/book/) (aka "The Book"): the official manual, which is very well written and approachable.
+- The [Rustlings git repository](https://github.com/rust-lang/rustlings/): a thorough series of exercises.
+- The [Rust by examples](https://doc.rust-lang.org/stable/rust-by-example/) documentation.
+    
+&nbsp;&nbsp;&nbsp;And of course, you should always challenge yourself with a side project or two.
+    
+</details>
 
 
 ## What is Substrate?
@@ -40,7 +45,7 @@ We designed the exercises to teach you:
 - some good Substrate practices
 - some blockchain core principles
 
-If you are stuck, you can always check the solution branch. It's not cheating, it's just learning 🧑‍🎓
+If you are stuck, you can always check the solution branch. It's not cheating, just learning 🧑‍🎓
 
 ## Looking for a job?
 
