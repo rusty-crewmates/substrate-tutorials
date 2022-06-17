@@ -2,7 +2,7 @@
 
 ## Who is this tutorial for?
 
-This tutorial is for developers willing to learn the basics of Substrate development or broaden their skills regarding specific use cases of this framework.
+This tutorial is for developers willing to learn the basics of Substrate development and broaden their skillsets through real-world use cases of this framework.
 
 You will need a solid grasp of the Rust programming language before you start to learn Substrate.
 Some common entry points to learning Rust, as referred to [here](https://www.rust-lang.org/learn) are:
