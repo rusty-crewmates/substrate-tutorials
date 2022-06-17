@@ -49,49 +49,49 @@ pub mod pallet {
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
-		/// This function set a value to the Value storage and emit an event, it should be used
-		/// once, if something is already present in the storage, it return an error.
+		/// This function sets a value to the Value storage and emits an event, it should be used
+		/// once, if something is already present in the storage, it returns an error.
 		#[pallet::weight(0)]
 		pub fn set_value(origin: OriginFor<T>, value: bool) -> DispatchResult {
-			// Check that the extrinsic was signed and get the signer.
-			// This function will return an error if the extrinsic is not signed.
+			// Checks that the extrinsic is signed and gets the signer.
+			// This function will return an error if the extrinsic isn't signed.
 			// https://docs.substrate.io/v3/runtime/origins
 			let who = ensure_signed(origin)?;
 
-			// Check that there is nothing in the storage.
+			// Checks that there is nothing in the storage.
 			match <Value<T>>::get() {
-				// Return an error if the value has already been set.
+				// Returns an error if the value has already been set.
 				Some(_) => Err(Error::<T>::AlreadySet)?,
 				None => {
-					// Update storage.
+					// Updates the storage.
 					<Value<T>>::put(value);
 
-					// Emit an event.
+					// Emits an event.
 					Self::deposit_event(Event::ValueStored(value, who));
 
-					// Return a successful DispatchResultWithPostInfo.
+					// Returns a successful DispatchResultWithPostInfo.
 					Ok(())
 				},
 			}
 		}
 
-		/// This function flip the value and emit an event, if there is no value in the storage then
-		/// it return an error.
+		/// This function flips the value and emits an event, if there is no value in the storage then
+		/// it returns an error.
 		#[pallet::weight(0)]
 		pub fn flip_value(origin: OriginFor<T>) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 
-			// Check that there is something stored.
+			// Checks that there is something stored.
 			match <Value<T>>::get() {
-				// Return an error if the value has not been set.
+				// Returns an error if the value has not been set.
 				None => Err(Error::<T>::NoneValue)?,
 				Some(old) => {
-					// Flip the value.
+					// Flips the value.
 					let new = !old;
-					// Set the value in the storage.
+					// Sets the value in the storage.
 					<Value<T>>::put(new);
 
-					// Emit an event.
+					// Emits an event.
 					Self::deposit_event(Event::ValueFlipped(new, who));
 
 					Ok(())
