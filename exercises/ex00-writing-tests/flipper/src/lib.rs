@@ -75,8 +75,8 @@ pub mod pallet {
 			}
 		}
 
-		/// This function flips the value and emits an event, if there is no value in the storage then
-		/// it returns an error.
+		/// This function flips the value and emits an event, if there is no value in the storage
+		/// then it returns an error.
 		#[pallet::weight(0)]
 		pub fn flip_value(origin: OriginFor<T>) -> DispatchResult {
 			let who = ensure_signed(origin)?;

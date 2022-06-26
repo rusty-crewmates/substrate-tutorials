@@ -18,7 +18,7 @@ frame_support::construct_runtime!(
 		UncheckedExtrinsic = UncheckedExtrinsic,
 	{
 		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
-		FlipperModule: pallet_flipper::{Pallet, Call, Storage, Event<T>},
+		Flipper: pallet_flipper::{Pallet, Call, Storage, Event<T>},
 	}
 );
 
@@ -62,3 +62,5 @@ impl pallet_flipper::Config for TestRuntime {
 pub fn new_test_ext() -> sp_io::TestExternalities {
 	system::GenesisConfig::default().build_storage::<TestRuntime>().unwrap().into()
 }
+
+pub const ALICE: u64 = 0;

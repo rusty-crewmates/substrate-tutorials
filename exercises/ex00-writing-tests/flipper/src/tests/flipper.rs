@@ -1,10 +1,13 @@
 use super::mock::*;
-use crate::Error;
+use crate::{pallet, Error};
 use frame_support::{assert_noop, assert_ok};
 
 #[test]
 fn set_value_ok() {
-	new_test_ext().execute_with(|| todo!("Ensure the good behaviour of the set_value() function."));
+	new_test_ext().execute_with(|| {
+		assert_ok!(Flipper::set_value(Origin::signed(ALICE), false));
+		assert_eq!(Flipper::value(), Some(false));
+	});
 }
 
 #[test]
@@ -14,9 +17,11 @@ fn set_value_err_already_set() {
 
 #[test]
 fn flip_value_ok() {
-	new_test_ext().execute_with(|| todo!("Ensure the good behaviour of the flip_value() function."));
+	new_test_ext()
+		.execute_with(|| todo!("Ensure the good behaviour of the flip_value() function."));
 }
 
-todo!(
-	"Make another test to check the behaviour in the case where an error occured in the flip_function()."
-);
+#[test]
+fn flip_value_ko() {
+	new_test_ext().execute_with(|| todo!("write a scenario that trigger an error in flip_value()"));
+}
