@@ -4,7 +4,7 @@ if ([ -z "$1" ] || [ ! -d "$1" ]); then echo "Please provide the path to a valid
 
 EXERCISE=$1
 
-echo "FROM ghcr.io/rusty-crewmates/substrate-tutorials:latest
+echo "FROM tdelabro/rusty-crewmates-substrate-tutorials:latest
 
 ADD $EXERCISE  /home/substrate-tutorials/$EXERCISE
 
