@@ -12,5 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: webiny/action-conventional-commits@v1.0.3
+    - name: add nightly toolchain
+      run: rustup update nightly
     - name: format code
-      run: cargo test
+      run: rustup component add rustfmt --toolchain nightly-x86_64-unknown-linux-gnu && cargo +nightly fmt -- --check
