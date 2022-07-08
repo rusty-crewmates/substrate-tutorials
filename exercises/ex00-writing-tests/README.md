@@ -18,11 +18,11 @@ In ```ex00-writing-tests/flipper/src/tests/``` you will find the ```mock.rs``` f
 
 ## Some links
 * Awesome Rusty : https://github.com/rusty-crewmates/awesome-rusty
-* Pallet skeleton : https://docs.substrate.io/v3/runtime/frame/#skeleton-of-a-pallet
-* Informations about the tests with Substrate : https://docs.substrate.io/v3/runtime/testing/
+* Pallet skeleton : https://docs.substrate.io/tutorials/work-with-pallets/custom-pallet/
+* Informations about the tests with Substrate : https://docs.substrate.io/main-docs/test/
 * Some macros you could need : https://docs.rs/frame-support/2.0.0-rc4/frame_support/#macros
-* About Substrate's Origin : https://docs.substrate.io/v3/runtime/origins/
-* Events and Errors : https://docs.substrate.io/v3/runtime/events-and-errors/
+* About Substrate's Origin : https://docs.substrate.io/main-docs/build/origins/
+* Events and Errors : https://docs.substrate.io/main-docs/build/events-errors/
 
 ## Ensure everything is ok
 `cargo check`  
