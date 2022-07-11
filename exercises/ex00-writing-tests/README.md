@@ -1,6 +1,6 @@
 # Writing tests
 
-A Substrate-node logic execution happens in the [runtime](https://docs.substrate.io/v3/concepts/runtime/). This logic is divided by a set of modules called [pallets](https://docs.substrate.io/v3/getting-started/glossary/#pallet). Substrate provides [FRAME](https://docs.substrate.io/v3/runtime/frame/), a framework to help you create new pallets compatible with Substrate. While oversimplifying a pallet can be thought of as a [storage](https://docs.substrate.io/v3/runtime/storage/) and some dispatchable functions (or [extrinsics](https://docs.substrate.io/v3/concepts/extrinsics/)) that allow interacting with it.
+A Substrate-node logic execution happens in the [runtime](https://docs.substrate.io/main-docs/fundamentals/runtime-intro/). This logic is divided by a set of modules called [pallets](https://docs.substrate.io/main-docs/fundamentals/runtime-intro/#composing-a-runtime-with-pallets). Substrate provides [FRAME](https://docs.substrate.io/main-docs/fundamentals/runtime-intro/#frame), a framework to help you create new pallets compatible with Substrate. While oversimplifying a pallet can be thought of as a [storage](https://docs.substrate.io/main-docs/fundamentals/state-transitions-and-storage/) and some dispatchable functions (or [extrinsics](https://docs.substrate.io/main-docs/fundamentals/transaction-types/)) that allow interacting with it.
 
 In future exercises, you will be writing pallets yourself, but in this one, the pallet is already coded, and all you have to do is test it by writing tests. It will be an excellent first contact with Substrate syntax and familiarize you with its testing suite.
 
@@ -20,7 +20,7 @@ In ```ex00-writing-tests/flipper/src/tests/``` you will find the ```mock.rs``` f
 * Awesome Rusty : https://github.com/rusty-crewmates/awesome-rusty
 * Pallet skeleton : https://docs.substrate.io/tutorials/work-with-pallets/custom-pallet/
 * Informations about the tests with Substrate : https://docs.substrate.io/main-docs/test/
-* Some macros you could need : https://docs.rs/frame-support/2.0.0-rc4/frame_support/#macros
+* Some macros you could need : https://docs.rs/frame-support/latest/frame_support/index.html#macros
 * About Substrate's Origin : https://docs.substrate.io/main-docs/build/origins/
 * Events and Errors : https://docs.substrate.io/main-docs/build/events-errors/
 
