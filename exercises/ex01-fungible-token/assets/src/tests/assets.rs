@@ -1,6 +1,13 @@
 use crate::{tests::mock::*, Error};
 use frame_support::{assert_noop, assert_ok, error::BadOrigin, BoundedVec};
 
+pub fn last_event() -> Event {
+	frame_system::Pallet::<TestRuntime>::events()
+		.pop()
+		.expect("Event expected")
+		.event
+}
+
 mod create {
 	use super::*;
 
@@ -21,6 +28,15 @@ mod create {
 
 			// The supply is still 0.
 			assert!(details.supply == 0);
+
+			// The event was deposited
+			assert_eq!(
+				last_event(),
+				Event::Assets(crate::Event::Created {
+					owner: ALICE,
+					asset_id: 0
+				})
+			)
 		})
 	}
 
@@ -58,6 +74,16 @@ mod set_metadata {
 			// Metadata has been set
 			assert_eq!(metadata.name, name);
 			assert_eq!(metadata.symbol, symbol);
+
+			// The event was deposited
+			assert_eq!(
+				last_event(),
+				Event::Assets(crate::Event::MetadataSet {
+					asset_id: 0,
+					name,
+                    symbol
+				})
+			)
 		})
 	}
 
@@ -85,7 +111,7 @@ mod set_metadata {
 				BoundedVec::try_from("TASS".as_bytes().to_vec()).unwrap();
 			assert_noop!(
 				Assets::set_metadata(Origin::signed(ALICE), 0, name, symbol,),
-				Error::<TestRuntime>::Unknown
+				Error::<TestRuntime>::UnknownAssetId
 			);
 		})
 	}
@@ -130,12 +156,31 @@ mod mint {
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply);
 			// User account has been credited.
 			assert_eq!(Assets::account(0, ALICE), amount);
+			// The event was deposited
+			assert_eq!(
+				last_event(),
+				Event::Assets(crate::Event::Minted {
+					asset_id: 0,
+					owner: ALICE ,
+                    total_supply
+				})
+			);
 
 			// Can mint to somebody else.
 			assert_ok!(Assets::mint(Origin::signed(ALICE), 0, amount, BOB));
 			total_supply += amount;
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply);
 			assert_eq!(Assets::account(0, BOB), amount);
+
+			// The event was deposited
+			assert_eq!(
+				last_event(),
+				Event::Assets(crate::Event::Minted {
+					asset_id: 0,
+					owner: BOB ,
+                    total_supply
+				})
+			);
 		})
 	}
 
@@ -177,7 +222,7 @@ mod mint {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
 				Assets::mint(Origin::signed(ALICE), 0, 100, BOB),
-				Error::<TestRuntime>::Unknown
+				Error::<TestRuntime>::UnknownAssetId
 			);
 		})
 	}
@@ -214,6 +259,16 @@ mod burn {
 			// Total supply and account have been reduced by burn_amount.
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply);
 			assert_eq!(Assets::account(0, BOB), mint_amount - burn_amount);
+
+			// The event was deposited
+			assert_eq!(
+				last_event(),
+				Event::Assets(crate::Event::Burned {
+					asset_id: 0,
+					owner: BOB ,
+                    total_supply
+				})
+			);
 		})
 	}
 
@@ -233,6 +288,16 @@ mod burn {
 			// Total supply and account have been reduced by mint_amount.
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply - mint_amount);
 			assert_eq!(Assets::account(0, BOB), 0);
+
+			// The event was deposited
+			assert_eq!(
+				last_event(),
+				Event::Assets(crate::Event::Burned {
+					asset_id: 0,
+					owner: BOB ,
+                    total_supply
+				})
+			);
 		})
 	}
 
@@ -249,7 +314,7 @@ mod burn {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
 				Assets::burn(Origin::signed(ALICE), 0, 100),
-				Error::<TestRuntime>::Unknown
+				Error::<TestRuntime>::UnknownAssetId
 			);
 		})
 	}
@@ -281,6 +346,17 @@ mod transfer {
 			assert_eq!(Assets::account(0, BOB), mint_amount - transfer_amount);
 			// Alice's account has been increased by transfer_amount.
 			assert_eq!(Assets::account(0, ALICE), transfer_amount);
+
+			// The event was deposited
+			assert_eq!(
+				last_event(),
+				Event::Assets(crate::Event::Transferred {
+					asset_id: 0,
+                    from: BOB,
+					to: ALICE,
+                    amount: transfer_amount
+				})
+			);
 		})
 	}
 
@@ -318,7 +394,7 @@ mod transfer {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
 				Assets::transfer(Origin::signed(ALICE), 0, 100, BOB),
-				Error::<TestRuntime>::Unknown
+				Error::<TestRuntime>::UnknownAssetId
 			);
 		})
 	}
