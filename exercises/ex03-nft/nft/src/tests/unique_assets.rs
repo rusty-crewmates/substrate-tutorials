@@ -17,6 +17,7 @@ mod mint {
 			assert_eq!(details.creator(), ALICE);
 			assert_eq!(details.metadata(), metadata);
 			assert_eq!(details.supply, 5);
+			assert_eq!(NFTs::account(0, ALICE), 5)
 		})
 	}
 
