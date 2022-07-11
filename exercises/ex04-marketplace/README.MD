@@ -69,10 +69,7 @@ The first is more flexible, allow reusability and limit the access to the pallet
 The second give full access and make the second pallet unusable without the first one.
 As a rule of thumb try to only tightly couple your pallets to Substrate core pallets, and only when the other solution doesn't really make sense. Try to prefer as much as possible loosely coupled pallets.
 
-More on the subject:
-- https://docs.substrate.io/v3/runtime/pallet-coupling/
-- https://docs.substrate.io/how-to-guides/v3/pallet-design/loose-coupling/
-- https://docs.substrate.io/how-to-guides/v3/pallet-design/tight-coupling/
+More on the subject: https://docs.substrate.io/main-docs/build/pallet-coupling/
 
 # What to do ?
 
