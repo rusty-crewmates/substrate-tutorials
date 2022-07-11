@@ -105,7 +105,7 @@ pub mod pallet {
 	#[pallet::error]
 	pub enum Error<T> {
 		/// The asset ID is unknown.
-		Unknown,
+		UnknownAssetId,
 		/// The signing account has no permission to do the operation.
 		NoPermission,
 	}
@@ -146,7 +146,7 @@ pub mod pallet {
 			// TODO:
 			// - Create a new AssetMetadata instance based on the call arguments.
 			// - Insert this metadata in the Metadata storage, under the asset_id key.
-			// - Deposit a `Created` event.
+			// - Deposit a `MetadataSet` event.
 
 			Ok(())
 		}
@@ -165,7 +165,7 @@ pub mod pallet {
 			let mut minted_amount = 0;
 
 			Asset::<T>::try_mutate(asset_id, |maybe_details| -> DispatchResult {
-				let details = maybe_details.as_mut().ok_or(Error::<T>::Unknown)?;
+				let details = maybe_details.as_mut().ok_or(Error::<T>::UnknownAssetId)?;
 
 				let old_supply = details.supply;
 				details.supply = details.supply.saturating_add(amount);
@@ -216,7 +216,7 @@ impl<T: Config> Pallet<T> {
 	// Still it has to be generic over the runtime types, and that's why we implement it on Pallet
 	// rather than just defining a local function.
 	fn ensure_is_owner(asset_id: AssetId, account: T::AccountId) -> Result<(), Error<T>> {
-		let details = Self::asset(asset_id).ok_or(Error::<T>::Unknown)?;
+		let details = Self::asset(asset_id).ok_or(Error::<T>::UnknownAssetId)?;
 		ensure!(details.owner == account, Error::<T>::NoPermission);
 
 		Ok(())
