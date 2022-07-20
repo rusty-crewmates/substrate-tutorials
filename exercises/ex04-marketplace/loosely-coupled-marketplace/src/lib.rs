@@ -30,13 +30,13 @@ pub mod pallet {
 		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
 		type Currency: Currency<Self::AccountId>;
 		// Here are types that allow for the pallet coupling
-		// Ressource must be a type that implement transeferable (remeber that pallets are types)
-		// RessourceId is used to have a fully generic ressource, can be int, uint, string, hash
+		// Resource must be a type that implement transeferable (remeber that pallets are types)
+		// ResourceId is used to have a fully generic ressource, can be int, uint, string, hash
 		// or about anything.
 		// It's entierly up to the coupled pallet to chose the type of the ID,
 		// it will still be compatible with this one.
-		type RessourceId: Parameter + Copy + MaxEncodedLen;
-		type Ressource: Sellable<Self::AccountId, Self::RessourceId>;
+		type ResourceId: Parameter + Copy + MaxEncodedLen;
+		type Resource: Sellable<Self::AccountId, Self::ResourceId>;
 	}
 
 	#[pallet::pallet]
@@ -46,10 +46,10 @@ pub mod pallet {
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		/// Ressource has been listed for sale (ressource_id, seller, price, amount)
-		ListedForSale(T::RessourceId, T::AccountId, BalanceOf<T>, u128),
-		// Ressource has been sold (ressource_id, seller, buyer, amount)
-		Sold(T::RessourceId, T::AccountId, T::AccountId, u128),
+		/// Resource has been listed for sale (ressource_id, seller, price, amount)
+		ListedForSale(T::ResourceId, T::AccountId, BalanceOf<T>, u128),
+		// Resource has been sold (ressource_id, seller, buyer, amount)
+		Sold(T::ResourceId, T::AccountId, T::AccountId, u128),
 	}
 
 	#[pallet::error]
@@ -63,10 +63,10 @@ pub mod pallet {
 
 	#[pallet::storage]
 	#[pallet::getter(fn ressource_for_sale)]
-	pub type RessourcesForSale<T: Config> = StorageDoubleMap<
+	pub type ResourcesForSale<T: Config> = StorageDoubleMap<
 		_,
 		Blake2_128Concat,
-		T::RessourceId,
+		T::ResourceId,
 		Blake2_128Concat,
 		T::AccountId,
 		SaleData<T>,
@@ -78,19 +78,19 @@ pub mod pallet {
 		#[pallet::weight(0)]
 		pub fn set_sale(
 			origin: OriginFor<T>,
-			nft_id: T::RessourceId,
+			nft_id: T::ResourceId,
 			price: BalanceOf<T>,
 			amount: u128,
 		) -> DispatchResult {
 			let origin = ensure_signed(origin)?;
 
 			ensure!(amount > 0, Error::<T>::ZeroAmount);
-			let owned = todo!(
-				"get the amount of this specific nft owned by the seller, throug the Ressource type and it's Sellabe trait"
+			let owned: u128 = todo!(
+				"get the amount of this specific nft owned by the seller, throug the Resource type and it's Sellabe trait"
 			);
 			ensure!(owned >= amount, Error::<T>::NotEnoughOwned);
 
-			RessourcesForSale::<T>::insert(nft_id, origin.clone(), SaleData { price, amount });
+			ResourcesForSale::<T>::insert(nft_id, origin.clone(), SaleData { price, amount });
 
 			Self::deposit_event(Event::<T>::ListedForSale(nft_id, origin, price, amount));
 
@@ -100,15 +100,15 @@ pub mod pallet {
 		#[pallet::weight(0)]
 		pub fn buy(
 			origin: OriginFor<T>,
-			nft_id: T::RessourceId,
+			nft_id: T::ResourceId,
 			seller: T::AccountId,
 			amount: u128,
 		) -> DispatchResult {
 			let buyer = ensure_signed(origin)?;
 
-			let sale_data = RessourcesForSale::<T>::get(nft_id, seller.clone());
+			let sale_data = ResourcesForSale::<T>::get(nft_id, seller.clone());
 			let owned = todo!(
-				"get the amount of this specific nft owned by the seller, throug the Ressource type and it's Sellabe trait"
+				"get the amount of this specific nft owned by the seller, throug the Resource type and it's Sellabe trait"
 			);
 
 			ensure!(amount <= sale_data.amount, Error::<T>::NotEnoughInSale);
@@ -119,14 +119,16 @@ pub mod pallet {
 				.checked_mul(&amount.checked_into().ok_or(Error::<T>::Overflow)?)
 				.ok_or(Error::<T>::Overflow)?;
 
-			todo!("transefer amount of nft_id from the sellet to the buyer");
+			todo!("transefer amount of nft_id from the seller to the buyer");
 
-			T::Ressource::transfer(nft_id, seller.clone(), buyer.clone(), amount);
+			todo!("transfer the amount of currency owed from the buyer to the seller");
+
+			T::Resource::transfer(nft_id, seller.clone(), buyer.clone(), amount);
 
 			if amount == sale_data.amount {
-				RessourcesForSale::<T>::remove(nft_id, seller.clone());
+				ResourcesForSale::<T>::remove(nft_id, seller.clone());
 			} else {
-				RessourcesForSale::<T>::mutate(nft_id, seller.clone(), |data| {
+				ResourcesForSale::<T>::mutate(nft_id, seller.clone(), |data| {
 					data.amount -= amount
 				});
 			}

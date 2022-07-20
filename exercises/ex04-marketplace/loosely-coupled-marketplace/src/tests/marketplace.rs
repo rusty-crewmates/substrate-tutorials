@@ -9,7 +9,7 @@ fn create_nft(amount: u128) {
 fn amount_owned(ressource_id: u128, address: u64) -> u128 {
 	use pallet_marketplace_nfts::types::Sellable;
 
-	<TestRuntime as crate::pallet::Config>::Ressource::amount_owned(ressource_id, address)
+	<TestRuntime as crate::pallet::Config>::Resource::amount_owned(ressource_id, address)
 }
 
 mod set_sale {
