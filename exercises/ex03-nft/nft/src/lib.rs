@@ -79,7 +79,7 @@ pub mod pallet {
 	#[pallet::error]
 	pub enum Error<T> {
 		/// The asset ID is unknown
-		Unknown,
+		UnknownAssetId,
 		/// The signing account does not own any amount of this asset
 		NotOwned,
 		/// Supply must be positive
