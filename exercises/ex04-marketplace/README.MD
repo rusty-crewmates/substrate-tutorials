@@ -7,7 +7,7 @@ And to do so we are going to build a marketplace pallet, that will allow users t
 
 As you maybe already understood, pallets are generic over a certain runtime. They are supposed to be generic enough to be used by other blockchains, with entierly different runtimes. It's only during the compilation that the runtime will inject it's specific types into the pallets to make them work all together.
 
-It happen in `runtime/src/lib.rs`. Here is an example:
+It happen in `runtime/src/lib.rs` (in the substrate-node-template submodule, at the root of this repository). Here is an example:
 
 ```rust
 parameter_types! {
@@ -74,8 +74,8 @@ More on the subject: https://docs.substrate.io/main-docs/build/pallet-coupling/
 # What to do ?
 
 We implemented the same functionality, a marketplace for our nfts, the two ways:
-- `pallet_loose_marketplace` must use the trait `Sellable` defined in `support/src/lib.rs` to interact with the `pallet_nft`
-- `pallet_tight_marketplace` should add `pallet_nft` to it config to directly make calls to it's storage
+- `pallet_loose_marketplace` must use the trait `Sellable` defined in `marketplace-nfts/src/types.rs` to interact with the `pallet_markeplace_nft`
+- `pallet_tight_marketplace` should add `pallet_marketplace_nft` to it config to directly make calls to it's storage
 
-You have to do this, and write the calls to the `pallet_nft` for each marketplace.
+You have to do this, and write the calls to the `pallet_marketplace_nft` for each marketplace.
 There is a few todo!() in the code preventing compilation. Start there and make the tests pass.

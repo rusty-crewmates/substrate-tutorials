@@ -87,8 +87,8 @@ impl pallet_marketplace_nfts::Config for TestRuntime {
 impl pallet_marketplace::Config for TestRuntime {
 	type Currency = Balances;
 	type Event = Event;
-	type Ressource = NFTs;
-	type RessourceId = u128;
+	type Resource = NFTs;
+	type ResourceId = u128;
 }
 
 // Mock users AccountId

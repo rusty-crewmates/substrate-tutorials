@@ -7,9 +7,11 @@ use frame_support::{
 };
 use scale_info::TypeInfo;
 
-pub trait Sellable<AccountId, RessourceId> {
-	fn amount_owned(id: RessourceId, account: AccountId) -> u128;
-	fn transfer(id: RessourceId, from: AccountId, to: AccountId, amount: u128) -> u128;
+pub trait Sellable<AccountId, ResourceId> {
+	/// return the amount of `id` possessed by `account`
+	fn amount_owned(id: ResourceId, account: AccountId) -> u128;
+	/// transfer `amount` of the `id` ressource, from `from` to `to`, and return the amount created
+	fn transfer(id: ResourceId, from: AccountId, to: AccountId, amount: u128) -> u128;
 }
 
 pub type UniqueAssetId = u128;
