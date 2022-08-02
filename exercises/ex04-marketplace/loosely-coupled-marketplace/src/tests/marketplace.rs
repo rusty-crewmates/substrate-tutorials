@@ -6,10 +6,10 @@ fn create_nft(amount: u128) {
 	NFTs::mint(Origin::signed(ALICE), metadata, amount).unwrap();
 }
 
-fn amount_owned(ressource_id: u128, address: u64) -> u128 {
+fn amount_owned(resource_id: u128, address: u64) -> u128 {
 	use pallet_marketplace_nfts::types::Sellable;
 
-	<TestRuntime as crate::pallet::Config>::Resource::amount_owned(ressource_id, address)
+	<TestRuntime as crate::pallet::Config>::Resource::amount_owned(resource_id, address)
 }
 
 mod set_sale {
@@ -29,7 +29,7 @@ mod set_sale {
 				amount
 			));
 
-			let sale = Marketplace::ressource_for_sale(0, ALICE);
+			let sale = Marketplace::resource_for_sale(0, ALICE);
 			assert_eq!(sale.price, price);
 			assert_eq!(sale.amount, amount);
 		})

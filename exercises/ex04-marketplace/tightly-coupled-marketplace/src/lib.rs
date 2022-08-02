@@ -24,7 +24,7 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config: frame_system::Config + scale_info::TypeInfo {
-		todo!("add a dependecy on pallet_marketplace_nft on the previous line");
+		todo!("add a dependency on pallet_marketplace_nft on the previous line");
 		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
 		type Currency: Currency<Self::AccountId>;
 	}

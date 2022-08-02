@@ -1,6 +1,6 @@
-# Non fungible tokens
+# Non-fungible tokens
 
-In this tutorial, you will build simple NFT pallet.
+In this tutorial, you will build a simple NFT pallet.
 
 ## What to do?
 

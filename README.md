@@ -54,7 +54,7 @@ We are in contact with multiple projects in the Substrate ecosystem that are loo
 ## Looking for developers?
 
 This repository was first created by the [Rusty Crewmates](https://rustycrewmates.com/) team to train our developers. We are a software development and consulting company, focussing on both Rust and blockchain.  
-We developed for top projects in the Substrate ecosystem such as [Edgeware](https://edgewa.re/), [Kabocha](https://www.kabocha.network/), [Ternoa](https://www.ternoa.com/), [Polkaswap](https://polkaswap.io/) and [SubQuery](https://explorer.subquery.network/), both on a long term and per project basis.
-We propose a large range of services, smart-contract development and audit for Substrate, Near and Solana, but also regular back-end development for Rust or blockchain oriented projects.
+We developed for top projects in the Substrate ecosystem such as [Edgeware](https://edgewa.re/), [Kabocha](https://www.kabocha.network/), [Ternoa](https://www.ternoa.com/), [Polkaswap](https://polkaswap.io/), and [SubQuery](https://explorer.subquery.network/), both on a long-term and per project basis.
+We propose a large range of services, smart-contract development and audit for Substrate, Near, and Solana, but also regular back-end development for Rust or blockchain-oriented projects.
 
 If you think we can help you, please reach out at contact@rustycrewmates.com

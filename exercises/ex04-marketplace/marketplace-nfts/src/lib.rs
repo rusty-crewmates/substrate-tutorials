@@ -177,7 +177,7 @@ impl<T: Config> Pallet<T> {
 		Ok(())
 	}
 
-	// Note that it must be public in order to be callable from pallet_tight_marketplace
+	// Note that it must be public to be callable from pallet_tight_marketplace
 	pub fn unchecked_transfer(
 		nft_id: T::NFTId,
 		from: T::AccountId,
@@ -208,7 +208,7 @@ impl<T: Config> Pallet<T> {
 
 impl<T: Config> Sellable<T::AccountId, T::NFTId> for Pallet<T> {
 	fn amount_owned(nft_id: T::NFTId, account: T::AccountId) -> u128 {
-		todo!("retur the amount of nft_id owned by account")
+		todo!("return the amount of nft_id owned by account")
 	}
 
 	fn transfer(nft_id: T::NFTId, from: T::AccountId, to: T::AccountId, amount: u128) -> u128 {

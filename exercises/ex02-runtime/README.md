@@ -24,7 +24,7 @@ Your terminal should fill with logs looking like this:
 ```
 It means that the chain is running and producing new blocks. Good.
 
-Now open the `Polkadot.js` app, either in your [web navigator](https://polkadot.js.org/apps/#/explorer) or on [desktop](https://github.com/polkadot-js/apps/releases).
+Now open the `Polkadot.js` app, either in your [web navigator](https://polkadot.js.org/apps/#/explorer) or on your [desktop](https://github.com/polkadot-js/apps/releases).
 Connect to your local development chain (top left icon, `DEVELOPMENT` section, `Local Node`, hit the top `Switch` button with two arrows forming a circle), by default at `127.0.0.1:9944`.
 Bravo! You can now interact with the chain that is running on your local machine.
 Take some time to explore the UI, you can go to the Developer/Extrinsic section and do some calls, even transfer some funds using the pallet Balances.
@@ -35,7 +35,7 @@ Great. Now go back to your terminal and hit `Ctrl + c` to kill the chain. We are
 
 To be able to use our code in this project, we have to add it to the manifest.  
 Open `substrate-node-template/runtime/Cargo.toml`.
-And add `pallet_assets` as a dependecy:
+And add `pallet_assets` as a dependency:
 ```toml
 [dependencies]
 ...

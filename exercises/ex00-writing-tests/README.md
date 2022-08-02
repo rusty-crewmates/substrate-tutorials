@@ -17,12 +17,12 @@ In ```ex00-writing-tests/flipper/src/tests/``` you will find the ```mock.rs``` f
 4. Read ```flip_function()``` code and imagine a scenario that will lead to an error when calling it
 
 ## Some links
-* Awesome Rusty : https://github.com/rusty-crewmates/awesome-rusty
-* Pallet skeleton : https://docs.substrate.io/tutorials/work-with-pallets/custom-pallet/
-* Informations about the tests with Substrate : https://docs.substrate.io/main-docs/test/
-* Some macros you could need : https://docs.rs/frame-support/latest/frame_support/index.html#macros
-* About Substrate's Origin : https://docs.substrate.io/main-docs/build/origins/
-* Events and Errors : https://docs.substrate.io/main-docs/build/events-errors/
+* Awesome Rusty: https://github.com/rusty-crewmates/awesome-rusty
+* Pallet skeleton: https://docs.substrate.io/tutorials/work-with-pallets/custom-pallet/
+* Information about the tests with Substrate: https://docs.substrate.io/main-docs/test/
+* Some macros you could need: https://docs.rs/frame-support/latest/frame_support/index.html#macros
+* About Substrate's Origin: https://docs.substrate.io/main-docs/build/origins/
+* Events and Errors: https://docs.substrate.io/main-docs/build/events-errors/
 
 ## Ensure everything is ok
 `cargo check`  

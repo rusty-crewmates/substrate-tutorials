@@ -6,8 +6,8 @@ fn create_nft(amount: u128) {
 	NFTs::mint(Origin::signed(ALICE), metadata, amount).unwrap();
 }
 
-fn amount_owned(ressource_id: u128, address: u64) -> u128 {
-	NFTs::account(ressource_id, address)
+fn amount_owned(resource_id: u128, address: u64) -> u128 {
+	NFTs::account(resource_id, address)
 }
 
 mod set_sale {

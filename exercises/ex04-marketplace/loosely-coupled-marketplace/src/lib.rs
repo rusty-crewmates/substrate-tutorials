@@ -29,11 +29,11 @@ pub mod pallet {
 	pub trait Config: frame_system::Config + scale_info::TypeInfo {
 		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
 		type Currency: Currency<Self::AccountId>;
-		// Here are types that allow for the pallet coupling
-		// Resource must be a type that implement transeferable (remeber that pallets are types)
-		// ResourceId is used to have a fully generic ressource, can be int, uint, string, hash
+		// Here are types that allow for the pallet coupling.
+		// Resource must be a type that implements transferable (remember that pallets are types).
+		// ResourceId is used to have a fully generic resource, can be int, uint, string, hash
 		// or about anything.
-		// It's entierly up to the coupled pallet to chose the type of the ID,
+		// It's entirely up to the coupled pallet to choose the type of the ID,
 		// it will still be compatible with this one.
 		type ResourceId: Parameter + Copy + MaxEncodedLen;
 		type Resource: Sellable<Self::AccountId, Self::ResourceId>;
@@ -46,9 +46,9 @@ pub mod pallet {
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		/// Resource has been listed for sale (ressource_id, seller, price, amount)
+		/// Resource has been listed for sale (resource_id, seller, price, amount)
 		ListedForSale(T::ResourceId, T::AccountId, BalanceOf<T>, u128),
-		// Resource has been sold (ressource_id, seller, buyer, amount)
+		// Resource has been sold (resource_id, seller, buyer, amount)
 		Sold(T::ResourceId, T::AccountId, T::AccountId, u128),
 	}
 
@@ -62,7 +62,7 @@ pub mod pallet {
 	}
 
 	#[pallet::storage]
-	#[pallet::getter(fn ressource_for_sale)]
+	#[pallet::getter(fn resource_for_sale)]
 	pub type ResourcesForSale<T: Config> = StorageDoubleMap<
 		_,
 		Blake2_128Concat,
@@ -86,7 +86,7 @@ pub mod pallet {
 
 			ensure!(amount > 0, Error::<T>::ZeroAmount);
 			let owned: u128 = todo!(
-				"get the amount of this specific nft owned by the seller, throug the Resource type and it's Sellabe trait"
+				"get the amount of this specific NFT owned by the seller, through the Resource type and its Sellable trait"
 			);
 			ensure!(owned >= amount, Error::<T>::NotEnoughOwned);
 
@@ -108,7 +108,7 @@ pub mod pallet {
 
 			let sale_data = ResourcesForSale::<T>::get(nft_id, seller.clone());
 			let owned = todo!(
-				"get the amount of this specific nft owned by the seller, throug the Resource type and it's Sellabe trait"
+				"get the amount of this specific NFT owned by the seller, through the Resource type and its Sellable trait"
 			);
 
 			ensure!(amount <= sale_data.amount, Error::<T>::NotEnoughInSale);
@@ -119,7 +119,7 @@ pub mod pallet {
 				.checked_mul(&amount.checked_into().ok_or(Error::<T>::Overflow)?)
 				.ok_or(Error::<T>::Overflow)?;
 
-			todo!("transefer amount of nft_id from the seller to the buyer");
+			todo!("transfer amount of nft_id from the seller to the buyer");
 
 			todo!("transfer the amount of currency owed from the buyer to the seller");
 

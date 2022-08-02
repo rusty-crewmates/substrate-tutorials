@@ -23,5 +23,5 @@ fn flip_value_ok() {
 
 #[test]
 fn flip_value_ko() {
-	new_test_ext().execute_with(|| todo!("write a scenario that trigger an error in flip_value()"));
+	new_test_ext().execute_with(|| todo!("write a scenario that triggers an error in flip_value()"));
 }
