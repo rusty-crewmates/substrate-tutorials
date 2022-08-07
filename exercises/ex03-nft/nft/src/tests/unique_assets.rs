@@ -1,6 +1,13 @@
 use crate::{tests::mock::*, Error};
 use frame_support::{assert_noop, assert_ok, error::BadOrigin, BoundedVec};
 
+fn last_event() -> Event {
+	frame_system::Pallet::<TestRuntime>::events()
+		.pop()
+		.expect("Event expected")
+		.event
+}
+
 mod mint {
 	use super::*;
 
@@ -17,7 +24,14 @@ mod mint {
 			assert_eq!(details.creator(), ALICE);
 			assert_eq!(details.metadata(), metadata);
 			assert_eq!(details.supply, 5);
-			assert_eq!(NFTs::account(0, ALICE), 5)
+			assert_eq!(NFTs::account(0, ALICE), 5);
+			assert_eq!(
+				last_event(),
+				Event::NFTs(crate::Event::Created {
+					creator: ALICE,
+					asset_id: 0
+				})
+			)
 		})
 	}
 
@@ -72,6 +86,16 @@ mod transfer {
 
 			assert_eq!(NFTs::account(0, ALICE), minted_amount - transfered_amount);
 			assert_eq!(NFTs::account(0, BOB), transfered_amount);
+
+			assert_eq!(
+				last_event(),
+				Event::NFTs(crate::Event::Transferred {
+					asset_id: 0,
+					from: ALICE,
+					to: BOB,
+					amount: transfered_amount
+				})
+			)
 		})
 	}
 
@@ -94,6 +118,16 @@ mod transfer {
 
 			assert_eq!(NFTs::account(0, ALICE), 0);
 			assert_eq!(NFTs::account(0, BOB), minted_amount);
+
+			assert_eq!(
+				last_event(),
+				Event::NFTs(crate::Event::Transferred {
+					asset_id: 0,
+					from: ALICE,
+					to: BOB,
+					amount: minted_amount
+				})
+			)
 		})
 	}
 
@@ -157,6 +191,15 @@ mod burn {
 				minted_amount - burned_amount
 			);
 			assert_eq!(NFTs::account(0, ALICE), minted_amount - burned_amount);
+
+			assert_eq!(
+				last_event(),
+				Event::NFTs(crate::Event::Burned {
+					asset_id: 0,
+					owner: ALICE,
+					total_supply: minted_amount - burned_amount
+				})
+			)
 		})
 	}
 
@@ -178,6 +221,15 @@ mod burn {
 				0
 			);
 			assert_eq!(NFTs::account(0, ALICE), 0);
+
+			assert_eq!(
+				last_event(),
+				Event::NFTs(crate::Event::Burned {
+					asset_id: 0,
+					owner: ALICE,
+					total_supply: 0
+				})
+			)
 		})
 	}
 
