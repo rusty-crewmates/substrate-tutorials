@@ -119,11 +119,9 @@ pub mod pallet {
 				.checked_mul(&amount.checked_into().ok_or(Error::<T>::Overflow)?)
 				.ok_or(Error::<T>::Overflow)?;
 
-			todo!("transfer amount of nft_id from the seller to the buyer");
-
 			todo!("transfer the amount of currency owed from the buyer to the seller");
 
-			T::Resource::transfer(nft_id, seller.clone(), buyer.clone(), amount);
+			todo!("transfer amount of nft_id from the seller to the buyer");
 
 			if amount == sale_data.amount {
 				ResourcesForSale::<T>::remove(nft_id, seller.clone());
