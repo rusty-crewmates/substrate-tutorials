@@ -128,9 +128,7 @@ pub mod pallet {
 			if amount == sale_data.amount {
 				ResourcesForSale::<T>::remove(nft_id, seller.clone());
 			} else {
-				ResourcesForSale::<T>::mutate(nft_id, seller.clone(), |data| {
-					data.amount -= amount
-				});
+				ResourcesForSale::<T>::mutate(nft_id, seller.clone(), |data| data.amount -= amount);
 			}
 
 			Self::deposit_event(Event::<T>::Sold(nft_id, seller, buyer, amount));

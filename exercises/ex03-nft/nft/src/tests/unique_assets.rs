@@ -173,10 +173,7 @@ mod burn {
 
 			assert_ok!(NFTs::burn(Origin::signed(ALICE), 0, burned_amount));
 
-			assert_eq!(
-				NFTs::unique_asset(0).unwrap().supply,
-				0
-			);
+			assert_eq!(NFTs::unique_asset(0).unwrap().supply, 0);
 			assert_eq!(NFTs::account(0, ALICE), 0);
 		})
 	}
@@ -184,14 +181,7 @@ mod burn {
 	#[test]
 	fn must_be_signed() {
 		new_test_ext().execute_with(|| {
-			assert_noop!(
-				NFTs::burn(
-					Origin::none(),
-					0,
-					5
-				),
-				BadOrigin
-			);
+			assert_noop!(NFTs::burn(Origin::none(), 0, 5), BadOrigin);
 		})
 	}
 

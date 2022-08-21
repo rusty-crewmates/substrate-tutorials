@@ -65,7 +65,11 @@ impl pallet_assets::Config for TestRuntime {
 
 // Build genesis storage according to the mock runtime.
 pub fn new_test_ext() -> sp_io::TestExternalities {
-	system::GenesisConfig::default().build_storage::<TestRuntime>().unwrap().into()
+	let t = frame_system::GenesisConfig::default().build_storage::<TestRuntime>().unwrap();
+	let mut ext = sp_io::TestExternalities::new(t);
+	// In order to emit events the block number must be more than 0
+	ext.execute_with(|| System::set_block_number(1));
+	ext
 }
 
 // Mock users AccountId

@@ -81,7 +81,7 @@ mod set_metadata {
 				Event::Assets(crate::Event::MetadataSet {
 					asset_id: 0,
 					name,
-                    symbol
+					symbol
 				})
 			)
 		})
@@ -161,8 +161,8 @@ mod mint {
 				last_event(),
 				Event::Assets(crate::Event::Minted {
 					asset_id: 0,
-					owner: ALICE ,
-                    total_supply
+					owner: ALICE,
+					total_supply
 				})
 			);
 
@@ -177,8 +177,8 @@ mod mint {
 				last_event(),
 				Event::Assets(crate::Event::Minted {
 					asset_id: 0,
-					owner: BOB ,
-                    total_supply
+					owner: BOB,
+					total_supply
 				})
 			);
 		})
@@ -265,8 +265,8 @@ mod burn {
 				last_event(),
 				Event::Assets(crate::Event::Burned {
 					asset_id: 0,
-					owner: BOB ,
-                    total_supply
+					owner: BOB,
+					total_supply
 				})
 			);
 		})
@@ -294,8 +294,8 @@ mod burn {
 				last_event(),
 				Event::Assets(crate::Event::Burned {
 					asset_id: 0,
-					owner: BOB ,
-                    total_supply
+					owner: BOB,
+					total_supply
 				})
 			);
 		})
@@ -352,9 +352,9 @@ mod transfer {
 				last_event(),
 				Event::Assets(crate::Event::Transferred {
 					asset_id: 0,
-                    from: BOB,
+					from: BOB,
 					to: ALICE,
-                    amount: transfer_amount
+					amount: transfer_amount
 				})
 			);
 		})
