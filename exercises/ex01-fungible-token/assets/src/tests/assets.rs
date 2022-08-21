@@ -295,7 +295,7 @@ mod burn {
 				Event::Assets(crate::Event::Burned {
 					asset_id: 0,
 					owner: BOB,
-					total_supply
+					total_supply: total_supply - mint_amount,
 				})
 			);
 		})
