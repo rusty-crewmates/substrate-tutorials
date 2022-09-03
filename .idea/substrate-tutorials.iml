@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/exercises/ex00-writing-tests/flipper/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/exercises/ex01-fungible-token/assets/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/exercises/ex03-nft/nft/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/exercises/ex04-marketplace/loosely-coupled-marketplace/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/exercises/ex04-marketplace/marketplace-nfts/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/exercises/ex04-marketplace/tightly-coupled-marketplace/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
