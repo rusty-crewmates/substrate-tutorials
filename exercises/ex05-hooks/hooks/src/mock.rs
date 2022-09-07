@@ -1,9 +1,9 @@
 use crate as pallet_hooks;
-use frame_system as system;
 use frame_support::{
 	parameter_types,
 	traits::{ConstU16, ConstU64},
 };
+use frame_system as system;
 use sp_core::H256;
 use sp_runtime::{
 	testing::Header,
@@ -88,10 +88,7 @@ pub struct ExtBuilder {
 impl Default for ExtBuilder {
 	fn default() -> Self {
 		ExtBuilder {
-			caps_endowed_accounts: vec![
-				(ALICE, 1_000_000),
-				(BOB, 100_000),
-			],
+			caps_endowed_accounts: vec![(ALICE, 1_000_000), (BOB, 100_000)],
 		}
 	}
 }

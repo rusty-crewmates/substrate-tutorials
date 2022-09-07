@@ -7,10 +7,7 @@ use frame_support::traits::{OnFinalize, OnInitialize};
 fn authorized() {
 	ExtBuilder::default().balances(vec![]).build().execute_with(|| {
 		<Hooks as OnInitialize<u64>>::on_initialize(0);
-		assert_ok!(
-			Hooks::transfer_funds(Origin::signed(ALICE), BOB, 100_000)
-		);
-
+		assert_ok!(Hooks::transfer_funds(Origin::signed(ALICE), BOB, 100_000));
 	})
 }
 
