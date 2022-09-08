@@ -2,7 +2,7 @@
 authors    = ["Nathan Gardet-Derc"]
 edition    = "2021"
 license    = "Apache-2.0"
-name       = "pallet-hooks"
+name       = "pallet-reminder"
 publish    = false
 repository = "https://github.com/substrate-developer-hub/substrate-rusty-node/"
 version    = "0.1.0"
@@ -24,7 +24,6 @@ frame-system       = { version = "4.0.0-dev", default-features = false, git = "h
 syn                = { version = "=1.0.96" }
 
 [dev-dependencies]
-pallet-balances = { default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.22" }
 sp-core         = { version = "6.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
 sp-io           = { version = "6.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
 sp-runtime      = { version = "6.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
@@ -37,7 +36,6 @@ std = [
 	"frame-support/std",
 	"frame-system/std",
 	"frame-benchmarking/std",
-	"pallet-balances/std",
 ]
 
 runtime-benchmarks = ["frame-benchmarking/runtime-benchmarks"]

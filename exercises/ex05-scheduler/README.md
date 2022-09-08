@@ -4,10 +4,11 @@ Substrate offers a way to automatically execute code on some events (when a bloc
 
 ## What to do?
 
-The aim of this exercice is to allow a certain transaction to happen only on specifics blocks.
-For this, you will have a storage that contains a bool, and a extrinsic that can only work if the bool is true.
+The aim of this exercice is to schedule an event to be sent at a specific blocknumber, and notify (by another event) how many scheduled events have been processed every blocks.
+For this, you will have a storage map that contains a list of event as value, and a blocknumber as a key.
+You will also have a storage that count how many event have been processed, and an extrinsic to schedule events.
 
-You will have to make sure that the bool is only true if the block number is a a multiple of 2, and set to false at the end of each blocks, to ensure it will be false for the next block.
+the aim is to use the `on_initialize` hook to execute events, and increase the counter, the `on_idle` hook to emit the counting event, and the `on_finalize` hook to reset the counter.
 
 We placed some helpful comments in the code 😉.
 
@@ -23,6 +24,5 @@ $ cargo test
 * Transaction lifecycle: https://docs.substrate.io/fundamentals/transaction-lifecycle/
 
 ## What to focus on
-
 
 Storage and extrinsics are already completed, you only need to focus on the hooks logic.
