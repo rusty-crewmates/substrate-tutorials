@@ -1,5 +1,5 @@
-use crate::{mock::*, Error};
-use frame_support::{assert_noop, assert_ok};
+use crate::mock::*;
+use frame_support::assert_ok;
 
 use frame_support::traits::{OnFinalize, OnIdle, OnInitialize};
 
@@ -61,7 +61,7 @@ mod mint {
 			<Reminder as OnInitialize<u64>>::on_initialize(2);
 			assert_eq!(Reminder::event_counter(), 2);
 			<Reminder as OnIdle<u64>>::on_idle(2, 10000);
-			System::assert_last_event(Event::Reminder(crate::Event::RemindersExecuteds(2)).into());
+			System::assert_last_event(Event::Reminder(crate::Event::RemindersExecuteds(2)));
 		})
 	}
 

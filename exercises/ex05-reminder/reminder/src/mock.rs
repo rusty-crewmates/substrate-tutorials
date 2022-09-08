@@ -1,6 +1,5 @@
 use crate as pallet_reminder;
 use frame_support::{
-	parameter_types,
 	traits::{ConstU16, ConstU64},
 };
 use frame_system as system;
@@ -65,4 +64,3 @@ pub fn new_test_ext() -> sp_io::TestExternalities {
 
 // Mock users AccountId
 pub const ALICE: u64 = 1;
-pub const BOB: u64 = 2;

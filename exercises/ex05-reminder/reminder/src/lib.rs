@@ -51,7 +51,7 @@ pub mod pallet {
 			let reminders = Self::reminders(n);
 			for reminder in reminders {
 				Self::deposit_event(Event::Reminder(reminder.clone()));
-				<EventCounter<T>>::mutate(|value| *value = *value + 1);
+				<EventCounter<T>>::mutate(|value| *value += 1);
 			}
 			<Reminders<T>>::remove(n);
 			0
