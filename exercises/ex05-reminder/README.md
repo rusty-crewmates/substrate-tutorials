@@ -8,7 +8,11 @@ The aim of this exercice is to schedule an event to be sent at a specific blockn
 For this, you will have a storage map that contains a list of event as value, and a blocknumber as a key.
 You will also have a storage that count how many event have been processed, and an extrinsic to schedule events.
 
-the aim is to use the `on_initialize` hook to execute events, and increase the counter, the `on_idle` hook to emit the counting event, and the `on_finalize` hook to reset the counter.
+the aim is to use the `on_initialize` hook to first reset the counter, execute events, and increase the new counter,
+and the `on_finalize` hook emit the events
+
+on_initialize also return the weight used in the hook. We placed a first occurence so let you see how it works.
+(tip: on_initialize can be done in one read and two writes !)
 
 We placed some helpful comments in the code 😉.
 
@@ -22,6 +26,7 @@ $ cargo test
 ## some links
 
 * Transaction lifecycle: https://docs.substrate.io/fundamentals/transaction-lifecycle/
+* Hooks technical documentation: https://paritytech.github.io/substrate/master/frame_support/traits/trait.Hooks.html#method.on_idle
 
 ## What to focus on
 

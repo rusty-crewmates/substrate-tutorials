@@ -42,32 +42,31 @@ pub mod pallet {
 	}
 
 	#[pallet::error]
-	pub enum Error<T> {
-	}
+	pub enum Error<T> {}
 
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		fn on_initialize(n: T::BlockNumber) -> Weight {
+			let mut used_weight = 0;
 			let reminders = Self::reminders(n);
+			used_weight += T::DbWeight::get().reads(1);
+			let mut event_counter = 0;
+
 			for reminder in reminders {
 				Self::deposit_event(Event::Reminder(reminder.clone()));
-				<EventCounter<T>>::mutate(|value| *value += 1);
+				event_counter += 1;
 			}
+			<EventCounter<T>>::mutate(|value| *value = event_counter);
+			used_weight += T::DbWeight::get().writes(1);
 			<Reminders<T>>::remove(n);
-			0
-		}
-
-		fn on_idle(_: T::BlockNumber, _: Weight) -> Weight {
-			let count = Self::event_counter();
-			if count > 0 {
-				Self::deposit_event(Event::RemindersExecuteds(count));
-			}
-			0
+			used_weight += T::DbWeight::get().writes(1);
+			used_weight
 		}
 
 		fn on_finalize(_: T::BlockNumber) {
-			if Self::event_counter() > 0 {
-				<EventCounter<T>>::put(0);
+			let count = Self::event_counter();
+			if count > 0 {
+				Self::deposit_event(Event::RemindersExecuteds(count));
 			}
 		}
 	}

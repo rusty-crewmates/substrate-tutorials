@@ -1,7 +1,10 @@
 use crate::mock::*;
 use frame_support::assert_ok;
 
-use frame_support::traits::{OnFinalize, OnIdle, OnInitialize};
+use frame_support::{
+	traits::{Get, OnFinalize, OnInitialize},
+	weights::RuntimeDbWeight,
+};
 
 mod mint {
 	use super::*;
@@ -60,7 +63,7 @@ mod mint {
 			));
 			<Reminder as OnInitialize<u64>>::on_initialize(2);
 			assert_eq!(Reminder::event_counter(), 2);
-			<Reminder as OnIdle<u64>>::on_idle(2, 10000);
+			<Reminder as OnFinalize<u64>>::on_finalize(2);
 			System::assert_last_event(Event::Reminder(crate::Event::RemindersExecuteds(2)));
 		})
 	}
@@ -79,10 +82,29 @@ mod mint {
 				"test2".as_bytes().to_vec(),
 			));
 			<Reminder as OnInitialize<u64>>::on_initialize(2);
-			<Reminder as OnIdle<u64>>::on_idle(2, 10000);
-			assert_eq!(Reminder::event_counter(), 2);
 			<Reminder as OnFinalize<u64>>::on_finalize(2);
+			assert_eq!(Reminder::event_counter(), 2);
+			<Reminder as OnInitialize<u64>>::on_initialize(3);
 			assert_eq!(Reminder::event_counter(), 0);
+		})
+	}
+
+	#[test]
+	fn valid_weights() {
+		new_test_ext().execute_with(|| {
+			let db_weights: RuntimeDbWeight =
+				<TestRuntime as frame_system::Config>::DbWeight::get();
+
+			assert_ok!(Reminder::schedule_reminder(
+				Origin::signed(ALICE),
+				2,
+				"test".as_bytes().to_vec(),
+			));
+			assert_eq!(
+				<Reminder as OnInitialize<u64>>::on_initialize(2),
+				db_weights.reads_writes(2, 1)
+			);
+			<Reminder as OnFinalize<u64>>::on_finalize(2);
 		})
 	}
 }
