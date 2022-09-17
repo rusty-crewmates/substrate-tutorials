@@ -2,7 +2,7 @@ use crate::mock::*;
 use frame_support::assert_ok;
 
 use frame_support::{
-	traits::{Get, OnFinalize, OnInitialize},
+	traits::{OnFinalize, OnInitialize},
 	weights::RuntimeDbWeight,
 };
 
