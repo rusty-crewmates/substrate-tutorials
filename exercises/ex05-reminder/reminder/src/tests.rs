@@ -69,7 +69,7 @@ mod mint {
 	}
 
 	#[test]
-	fn reset_timer() {
+	fn reset_counter() {
 		new_test_ext().execute_with(|| {
 			assert_ok!(Reminder::schedule_reminder(
 				Origin::signed(ALICE),
@@ -100,9 +100,14 @@ mod mint {
 				2,
 				"test".as_bytes().to_vec(),
 			));
+			assert_ok!(Reminder::schedule_reminder(
+				Origin::signed(ALICE),
+				2,
+				"test2".as_bytes().to_vec(),
+			));
 			assert_eq!(
 				<Reminder as OnInitialize<u64>>::on_initialize(2),
-				db_weights.reads_writes(2, 1)
+				db_weights.reads_writes(4, 1)
 			);
 			<Reminder as OnFinalize<u64>>::on_finalize(2);
 		})

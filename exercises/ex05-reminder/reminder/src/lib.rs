@@ -65,9 +65,7 @@ pub mod pallet {
 
 		fn on_finalize(_: T::BlockNumber) {
 			let count = Self::event_counter();
-			if count > 0 {
-				Self::deposit_event(Event::RemindersExecuteds(count));
-			}
+			Self::deposit_event(Event::RemindersExecuteds(count));
 		}
 	}
 
