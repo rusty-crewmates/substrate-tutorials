@@ -46,26 +46,30 @@ pub mod pallet {
 
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
+		// on_initialize() will be called at the beginning of each new block, before anything
 		fn on_initialize(n: T::BlockNumber) -> Weight {
 			let mut used_weight = 0;
-			let reminders = Self::reminders(n);
+			let reminders = todo!("get the reminders for the block `n`");
+			// this is an example of how do we get system weights for read and writes.
+			// you only have to mesure read and writes for this exercice !
+			//
+			// try to do this hook in one read and two writes !
 			used_weight += T::DbWeight::get().reads(1);
-			let mut event_counter = 0;
+
+			todo!(
+				"find a way to count events for this block, and put the total in the corresponding storage"
+			);
 
 			for reminder in reminders {
-				Self::deposit_event(Event::Reminder(reminder.clone()));
-				event_counter += 1;
+				todo!("now, emit a `Reminder` event for each events");
 			}
-			<EventCounter<T>>::mutate(|value| *value = event_counter);
-			used_weight += T::DbWeight::get().writes(1);
-			<Reminders<T>>::remove(n);
-			used_weight += T::DbWeight::get().writes(1);
+
+			todo!("clean the storage, a.k remove the events, after emitting them");
 			used_weight
 		}
 
 		fn on_finalize(_: T::BlockNumber) {
-			let count = Self::event_counter();
-			Self::deposit_event(Event::RemindersExecuteds(count));
+			todo!("emit a `RemindersExecutes` event, with the right value");
 		}
 	}
 
