@@ -71,4 +71,4 @@ $ cargo test
 
 * Benchmarks: https://docs.substrate.io/test/benchmark/
 * An exemple of a benchmark file (supersig): https://github.com/kabocha-network/pallet_supersig/blob/master/src/benchmarking.rs
-* Node template with supersig pallet: 
+* Node template with supersig pallet: https://github.com/decentration/substrate-supersig-template
