@@ -93,4 +93,4 @@ We'll do the weights for the last two function, in two different way, so you'll 
 * Transactions, weight and fees: https://docs.substrate.io/build/tx-weights-fees/
 * Benchmarks: https://docs.substrate.io/test/benchmark/
 * An exemple of a benchmark file (supersig): https://github.com/kabocha-network/pallet_supersig/blob/master/src/benchmarking.rs
-* Node template with supersig pallet: 
+* Node template with supersig pallet: https://github.com/decentration/substrate-supersig-template
