@@ -1,6 +1,7 @@
 # Weights
 
-In Substrate, each transaction have a cost, depending on the ressources used by an extrinsic (the duration of execution, the number of storage access, the amount of data processed...). This price usually correspond to what is called the *weight of the extrinsic*. This is paid *before* the transaction, meaning we need a way to evaluate the weight of the extrinsic before the execution.
+With substraten, like with ethereum you have to pay to execute code. But unlike ethereum, the cost of a call is not directly linked to the amount of instruction executed. In Substrate it is up to the developer to fix the weight for each extrinsic. It can be an arbitrary value (like 0 or 42000000), it can also depend on the size of the extrinsic payload, or on the value of some variable passed to the extrinsic. The cost of the call is called the *weight* of the call.
+This price is paid *before* the transaction, meaning we need a way to evaluate the weight of the extrinsic before the execution.
 
 There is multiple ways to do that, we'll cover them all in this tutorial.
 
@@ -8,7 +9,7 @@ There is multiple ways to do that, we'll cover them all in this tutorial.
 
 This is by far, the simplest way to give a weight to an extrinsic. The developper arbitrary give a weight to an extrinsic.
 
-So simply do it ! You can give any value, depending of what you want the weight of this extrinsic to be, as the developper, but for this time, try to give the extrinsic `extrinsic1()` a weight of 10000 + 1 read.
+So simply do it ! You can give any value, depending of what you want the weight of this extrinsic to be, as the developper, but for this time, try to give the extrinsic `verify_address()` a weight of 10000 + 1 read.
 
 You can find how to do this by reading [this documentation](https://docs.substrate.io/build/tx-weights-fees/) (look into the *Default weight annotations* chapter)
 
@@ -20,16 +21,21 @@ Benchmarks gives us a way to simulate the execution of an extrinsic, and output 
 In this part, we will learn how to make benchmarks, execute them, and link them to an extrinsic.
 We already wrote benchmarks for `extrinsic2()`, so your job will be to write them for `extrinsic3()` and `extrinsic4()` (this one have a dynamic weight, that depends of the length of the vector) :)
 
-To simulate the execution, Substrate need a node. So, a mockup runtime will be provided, with the pallet already integrated.
+To simulate the execution, Substrate need a node.
+
+So, the first step will be to integrate your pallet with the substrate-node-template, at the root of the repository.
 
 ### 1 - Writing benchmarks 
 
-The first part, is, obviously, to write benchmarks. For this, edit the `ex06-benchmarks/src/pallets/funglible_token/src/benchmarking.rs` file. Take example on the first benchmark function we did for you :)
+The first part, is, obviously, to write benchmarks. For this, edit the `ex06-weights/src/pallets/funglible_token/src/benchmarking.rs` file. Take example on the first benchmark function we did for you :)
 
 ### 2 - executing the benchmarks
 
-The first step of executing our benchmark is to move into the runtime folder `ex06-benchmarks/src`
-Then, run this command:
+The first step of executing our benchmark is to move the pallet into the node-template, and *integrate the pallet to the runtime*.
+
+hint: to fill the `WeightInfo` parameter, look how they did for the pallet_balance :)
+
+Then, once the integration is done, run this command to compile the runtime in benchmark mode:
 
 ```sh
 cargo build --release --features runtime-benchmarks
@@ -43,16 +49,16 @@ Then, we can start the actual benchmarks
     --chain dev \
     --execution=wasm \
     --wasm-execution=compiled \
-    --pallet "fungible-token" \
+    --pallet "weights" \
     --extrinsic "*" \
     --steps 50 \
     --repeat 20 \
-    --output pallets/fungible-token/src/weights.rs
+    --output pallets/weights/src/weights.rs
 ```
 
-And you're all done :) You're newly generated weights are in the `pallets/fungible-token/src/weights.rs` file.
+And you're all done :) You're newly generated weights are in the `pallets/weights/src/weights.rs` file. Move it into the exercice !
 
-/!\ Your weight should match those in the `pallets/fungible-token/src/solution_weights.rs` file. Benchmark depends on the machine running them, so plain values will be different, but the *structure* of the weight should correspond (the number of reads, writes, the variables...).
+/!\ Your weight should match those in the `ex06-weights/src/solution_weights.rs` file. Benchmark depends on the machine running them, so plain values will be different, but the *structure* of the weight should correspond (the number of reads, writes, the variables...).
 
 ### 3 - Integrating the new weights to the benchmark
 
@@ -79,8 +85,8 @@ $ cargo test
 
 ## Conditional weights
 
-Remember how you can simply give a value in the parenthesis of the weight of an extrinsic ? These parenthesis are not for parameters, but actual scope.
-Meaning, you can put a condition instead, using the parameters of the extrinsics, making it possible to arbitrary decide if you want to use a weight or another, depending on your parameters.
+Instead of a unique value, you can pass some code into the weight macro. In this code, you have access to the variables of the extrinsic related to this weight.
+Meaning, you can put a condition instead of a value, making it possible to arbitrary decide if you want to use a weight or another, depending on your parameters.
 
 We'll do the weights for the last two function, in two different way, so you'll see how far we can go:
 
