@@ -1,5 +1,9 @@
 use crate as pallet_reminder;
-use frame_support::traits::{ConstU16, ConstU64};
+use frame_support::{
+	parameter_types,
+	traits::{ConstU16, ConstU64},
+	weights::RuntimeDbWeight,
+};
 use frame_system as system;
 use sp_core::H256;
 use sp_runtime::{
@@ -22,6 +26,10 @@ frame_support::construct_runtime!(
 	}
 );
 
+parameter_types! {
+	pub const DbWeight: RuntimeDbWeight = RuntimeDbWeight {read: 1, write: 10000};
+}
+
 impl system::Config for TestRuntime {
 	type AccountData = ();
 	type AccountId = u64;
@@ -31,7 +39,7 @@ impl system::Config for TestRuntime {
 	type BlockNumber = u64;
 	type BlockWeights = ();
 	type Call = Call;
-	type DbWeight = ();
+	type DbWeight = DbWeight;
 	type Event = Event;
 	type Hash = H256;
 	type Hashing = BlakeTwo256;
