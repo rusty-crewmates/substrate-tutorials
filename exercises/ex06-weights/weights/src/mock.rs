@@ -1,5 +1,9 @@
 use crate as pallet_weights;
-use frame_support::traits::{ConstU16, ConstU64};
+use frame_support::{
+	traits::{ConstU16, ConstU64},
+	parameter_types,
+	weights::RuntimeDbWeight
+};
 use frame_system as system;
 use sp_core::H256;
 use sp_runtime::{
@@ -22,11 +26,15 @@ frame_support::construct_runtime!(
 	}
 );
 
+parameter_types! {
+	pub const DbWeight: RuntimeDbWeight = RuntimeDbWeight {read: 1, write: 100};
+}
+
 impl system::Config for Test {
 	type BaseCallFilter = frame_support::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
-	type DbWeight = ();
+	type DbWeight = DbWeight;
 	type Origin = Origin;
 	type Call = Call;
 	type Index = u64;
