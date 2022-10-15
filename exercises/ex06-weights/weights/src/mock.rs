@@ -1,8 +1,8 @@
 use crate as pallet_weights;
 use frame_support::{
-	traits::{ConstU16, ConstU64},
 	parameter_types,
-	weights::RuntimeDbWeight
+	traits::{ConstU16, ConstU64},
+	weights::RuntimeDbWeight,
 };
 use frame_system as system;
 use sp_core::H256;
@@ -23,6 +23,8 @@ frame_support::construct_runtime!(
 	{
 		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
 		Weight: pallet_weights::{Pallet, Call, Storage, Event<T>},
+
+		Balances: pallet_balances,
 	}
 );
 
@@ -31,31 +33,50 @@ parameter_types! {
 }
 
 impl system::Config for Test {
+	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountId = u64;
 	type BaseCallFilter = frame_support::traits::Everything;
-	type BlockWeights = ();
+	type BlockHashCount = ConstU64<250>;
 	type BlockLength = ();
-	type DbWeight = DbWeight;
-	type Origin = Origin;
-	type Call = Call;
-	type Index = u64;
 	type BlockNumber = u64;
+	type BlockWeights = ();
+	type Call = Call;
+	type DbWeight = DbWeight;
+	type Event = Event;
 	type Hash = H256;
 	type Hashing = BlakeTwo256;
-	type AccountId = u64;
-	type Lookup = IdentityLookup<Self::AccountId>;
 	type Header = Header;
-	type Event = Event;
-	type BlockHashCount = ConstU64<250>;
-	type Version = ();
-	type PalletInfo = PalletInfo;
-	type AccountData = ();
-	type OnNewAccount = ();
-	type OnKilledAccount = ();
-	type SystemWeightInfo = ();
-	type SS58Prefix = ConstU16<42>;
-	type OnSetCode = ();
+	type Index = u64;
+	type Lookup = IdentityLookup<Self::AccountId>;
 	type MaxConsumers = frame_support::traits::ConstU32<16>;
+	type OnKilledAccount = ();
+	type OnNewAccount = ();
+	type OnSetCode = ();
+	type Origin = Origin;
+	type PalletInfo = PalletInfo;
+	type SS58Prefix = ConstU16<42>;
+	type SystemWeightInfo = ();
+	type Version = ();
 }
+
+parameter_types! {
+	pub const ExistentialDeposit: Balance = 1_000;
+	pub const MaxLocks: u32 = 50;
+	pub const MaxReserves: u32 = 50;
+}
+
+impl pallet_balances::Config for Test {
+	type AccountStore = System;
+	type Balance = Balance;
+	type DustRemoval = ();
+	type Event = Event;
+	type ExistentialDeposit = ExistentialDeposit;
+	type MaxLocks = MaxLocks;
+	type MaxReserves = MaxReserves;
+	type ReserveIdentifier = [u8; 8];
+	type WeightInfo = ();
+}
+
 
 impl pallet_weights::Config for Test {
 	type Event = Event;

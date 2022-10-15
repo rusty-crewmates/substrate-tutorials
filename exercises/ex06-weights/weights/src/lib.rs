@@ -2,6 +2,8 @@
 
 pub use pallet::*;
 
+pub use sp_core::hashing::blake2_256;
+
 #[cfg(test)]
 mod mock;
 
@@ -16,6 +18,7 @@ mod tests;
 
 #[frame_support::pallet]
 pub mod pallet {
+	use super::*;
 	use frame_support::pallet_prelude::*;
 	use frame_system::pallet_prelude::*;
 
@@ -36,6 +39,10 @@ pub mod pallet {
 	#[pallet::unbounded]
 	pub type VecDup<T: Config> = StorageValue<_, Vec<u32>>;
 
+	#[pallet::storage]
+	#[pallet::unbounded]
+	pub type Data<T: Config> = StorageValue<_, Vec<u8>>;
+
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
@@ -51,6 +58,7 @@ pub mod pallet {
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
+		/////////////////////// Part 1 - arbitrary weights ///////////////////////
 		//TODO give this exctrinsic an arbitrary weight !
 		#[pallet::weight(0)]
 		pub fn verify_address(origin: OriginFor<T>) -> DispatchResult {
@@ -69,6 +77,7 @@ pub mod pallet {
 			Ok(())
 		}
 
+		/////////////////////// Part 2 - benchmarks ///////////////////////
 		//TODO write a benchmark for this extrinsic in benchmarking.rs
 		#[pallet::weight(0)]
 		pub fn duplicate_and_store(origin: OriginFor<T>, elem: u32, count: u32) -> DispatchResult {
@@ -80,6 +89,48 @@ pub mod pallet {
 			}
 
 			VecDup::<T>::put(vec);
+			Ok(())
+		}
+
+		/////////////////////// Part 3.A - conditional arbitrary weight ///////////////////////
+		//TODO give this extrinsic a weight of 100_000 if `hash` is true, or 10_000 otherwise
+		#[pallet::weight(0)]
+		pub fn store_maybe_hashed(
+			origin: OriginFor<T>,
+			data: Vec<u8>,
+			hash: bool,
+		) -> DispatchResult {
+			ensure_signed(origin)?;
+
+			if hash {
+				// let hash = T::Hashing::hash(&data);
+				let hash = blake2_256(&data);
+				Data::<T>::put(hash.as_ref().to_vec());
+			} else {
+				Data::<T>::put(data);
+			}
+
+			Ok(())
+		}
+
+		/////////////////////// Part 3.B - conditional benchmark ///////////////////////
+		//TODO write two benchmarks for this extrinsic in benchmarking.rs, and then choose the
+		//corresponding one depending on the value of `hash`
+		#[pallet::weight(0)]
+		pub fn benchmarked_store_maybe_hashed(
+			origin: OriginFor<T>,
+			data: Vec<u8>,
+			hash: bool,
+		) -> DispatchResult {
+			ensure_signed(origin)?;
+
+			if hash {
+				let hash = blake2_256(&data);
+				Data::<T>::put(hash.as_ref().to_vec());
+			} else {
+				Data::<T>::put(data);
+			}
+
 			Ok(())
 		}
 	}

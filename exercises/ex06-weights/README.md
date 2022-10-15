@@ -5,7 +5,7 @@ This price is paid *before* the transaction, meaning we need a way to evaluate t
 
 There is multiple ways to do that, we'll cover them all in this tutorial.
 
-## Arbitrary weights
+## Part 1 - Arbitrary weights
 
 This is by far, the simplest way to give a weight to an extrinsic. The developper arbitrary give a weight to an extrinsic.
 
@@ -13,13 +13,14 @@ So simply do it ! You can give any value, depending of what you want the weight 
 
 You can find how to do this by reading [this documentation](https://docs.substrate.io/build/tx-weights-fees/) (look into the *Default weight annotations* chapter)
 
-## Benchmarks
+## Part 2 - Benchmarks
 
 Benchmarks become usefull when you want your extrinsics' weight to depends on the duration of execution, the number of storage access, the amount of data processed...
 Benchmarks gives us a way to simulate the execution of an extrinsic, and output precise weights for them, based on computational ressources.
 
 In this part, we will learn how to make benchmarks, execute them, and link them to an extrinsic.
-We already wrote benchmarks for `extrinsic2()`, so your job will be to write them for `extrinsic3()` and `extrinsic4()` (this one have a dynamic weight, that depends of the length of the vector) :)
+Your job will be to write them for `duplicate_and_store()`. We placed some good tips in the code.
+
 
 To simulate the execution, Substrate need a node.
 
@@ -83,16 +84,16 @@ Launch the tests by running:
 $ cargo test
 ```
 
-## Conditional weights
+## Part 3 - Conditional weights
 
 Instead of a unique value, you can pass some code into the weight macro. In this code, you have access to the variables of the extrinsic related to this weight.
 Meaning, you can put a condition instead of a value, making it possible to arbitrary decide if you want to use a weight or another, depending on your parameters.
 
 We'll do the weights for the last two function, in two different way, so you'll see how far we can go:
 
-* for ``extrinsic5``, put a weight of 100 000 if the ``hash`` parameter is true, and 10 000 if it is false.
+* A - for ``extrinsic5``, put a weight of 100 000 if the ``hash`` parameter is true, and 10 000 if it is false.
 
-* for ``extrinsic6``, we'll do things a little more complicated. Write *two* benchmark function for this extrinsic, one making the benchmark with the ``hash`` parameter true, and the other with false. This will generate two weights for your function. Then, in your extrinsic's weight, put a condition, choosing the corresponding benchmark with the corresponding value of ``hash``
+* B - for ``extrinsic6``, we'll do things a little more complicated. Write *two* benchmark function for this extrinsic, one making the benchmark with the ``hash`` parameter true, and the other with false. This will generate two weights for your function. Then, in your extrinsic's weight, put a condition, choosing the corresponding benchmark with the corresponding value of ``hash``
 
 # some links
 
