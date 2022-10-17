@@ -88,12 +88,13 @@ $ cargo test
 
 Instead of a unique value, you can pass some code into the weight macro. In this code, you have access to the variables of the extrinsic related to this weight.
 Meaning, you can put a condition instead of a value, making it possible to arbitrary decide if you want to use a weight or another, depending on your parameters.
+frame_support define the weight macro as: `#[pallet::weight($ExpressionResultingInWeight)]`
 
 We'll do the weights for the last two function, in two different way, so you'll see how far we can go:
 
-* A - for ``extrinsic5``, put a weight of 100 000 if the ``hash`` parameter is true, and 10 000 if it is false.
+* A - for ``store_maybe_hashed``, put a weight of 100 000 if the ``hash`` parameter is true, and 10 000 if it is false.
 
-* B - for ``extrinsic6``, we'll do things a little more complicated. Write *two* benchmark function for this extrinsic, one making the benchmark with the ``hash`` parameter true, and the other with false. This will generate two weights for your function. Then, in your extrinsic's weight, put a condition, choosing the corresponding benchmark with the corresponding value of ``hash``
+* B - for ``benchmarked_store_maybe_hashed``, we'll do things a little more complicated. Write *two* benchmark function for this extrinsic, one making the benchmark with the ``hash`` parameter true, and the other with false. This will generate two weights for your function. Then, in your extrinsic's weight, put a condition, choosing the corresponding benchmark with the corresponding value of ``hash``
 
 # some links
 

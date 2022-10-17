@@ -103,7 +103,6 @@ pub mod pallet {
 			ensure_signed(origin)?;
 
 			if hash {
-				// let hash = T::Hashing::hash(&data);
 				let hash = blake2_256(&data);
 				Data::<T>::put(hash.as_ref().to_vec());
 			} else {
@@ -116,6 +115,7 @@ pub mod pallet {
 		/////////////////////// Part 3.B - conditional benchmark ///////////////////////
 		//TODO write two benchmarks for this extrinsic in benchmarking.rs, and then choose the
 		//corresponding one depending on the value of `hash`
+		//hint: look at this pallet's weights macros: https://github.com/paritytech/substrate/blob/master/frame/utility/src/lib.rs
 		#[pallet::weight(0)]
 		pub fn benchmarked_store_maybe_hashed(
 			origin: OriginFor<T>,

@@ -77,7 +77,6 @@ impl pallet_balances::Config for Test {
 	type WeightInfo = ();
 }
 
-
 impl pallet_weights::Config for Test {
 	type Event = Event;
 }
