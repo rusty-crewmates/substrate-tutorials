@@ -2,7 +2,7 @@ use crate::mock::*;
 use frame_support::assert_ok;
 
 use frame_support::{
-	traits::{Get, OnFinalize, OnInitialize},
+	traits::{OnFinalize, OnInitialize},
 	weights::RuntimeDbWeight,
 };
 
@@ -107,7 +107,7 @@ mod mint {
 			));
 			assert_eq!(
 				<Reminder as OnInitialize<u64>>::on_initialize(2),
-				db_weights.reads_writes(4, 1)
+				db_weights.reads_writes(1, 2)
 			);
 			<Reminder as OnFinalize<u64>>::on_finalize(2);
 		})

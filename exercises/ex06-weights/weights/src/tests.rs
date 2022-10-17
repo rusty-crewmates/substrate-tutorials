@@ -56,13 +56,13 @@ fn store_maybe_hashed_test() {
 fn benchmarked_store_maybe_hashed_test() {
 	new_test_ext().execute_with(|| {
 		let long_vec = vec![1; 100000];
-		let weight1 = pallet_weights::Call::<Test>::store_maybe_hashed {
+		let weight1 = pallet_weights::Call::<Test>::benchmarked_store_maybe_hashed {
 			data: long_vec.clone(),
 			hash: true,
 		}
 		.get_dispatch_info()
 		.weight;
-		let weight2 = pallet_weights::Call::<Test>::store_maybe_hashed {
+		let weight2 = pallet_weights::Call::<Test>::benchmarked_store_maybe_hashed {
 			data: long_vec,
 			hash: false,
 		}

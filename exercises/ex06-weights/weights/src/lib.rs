@@ -2,7 +2,11 @@
 
 pub use pallet::*;
 
-pub use sp_core::hashing::blake2_256;
+pub mod weights;
+pub use weights::WeightInfo;
+
+pub use sp_core::Hasher;
+pub use sp_std::vec::Vec;
 
 #[cfg(test)]
 mod mock;
@@ -13,8 +17,8 @@ mod tests;
 // uncomment the following lines to include the benchmarking.rs file in the module tree, if the
 // runtime-benchmarks feature is activated
 //
-// #[cfg(feature = "runtime-benchmarks")]
-// mod benchmarking;
+#[cfg(feature = "runtime-benchmarks")]
+mod benchmarking;
 
 #[frame_support::pallet]
 pub mod pallet {
@@ -25,6 +29,7 @@ pub mod pallet {
 	#[pallet::config]
 	pub trait Config: frame_system::Config {
 		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
+		type WeightInfo: WeightInfo;
 	}
 
 	#[pallet::pallet]
@@ -59,8 +64,7 @@ pub mod pallet {
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
 		/////////////////////// Part 1 - arbitrary weights ///////////////////////
-		//TODO give this exctrinsic an arbitrary weight !
-		#[pallet::weight(0)]
+		#[pallet::weight(10_000 + T::DbWeight::get().reads(1))]
 		pub fn verify_address(origin: OriginFor<T>) -> DispatchResult {
 			let who = ensure_signed(origin.clone())?;
 			ensure_root(origin)?;
@@ -79,7 +83,7 @@ pub mod pallet {
 
 		/////////////////////// Part 2 - benchmarks ///////////////////////
 		//TODO write a benchmark for this extrinsic in benchmarking.rs
-		#[pallet::weight(0)]
+		#[pallet::weight(T::WeightInfo::duplicate_and_store_benchmark(*count))]
 		pub fn duplicate_and_store(origin: OriginFor<T>, elem: u32, count: u32) -> DispatchResult {
 			ensure_signed(origin)?;
 
@@ -94,7 +98,11 @@ pub mod pallet {
 
 		/////////////////////// Part 3.A - conditional arbitrary weight ///////////////////////
 		//TODO give this extrinsic a weight of 100_000 if `hash` is true, or 10_000 otherwise
-		#[pallet::weight(0)]
+		#[pallet::weight(if *hash {
+			100_000
+		} else {
+			10_000
+		})]
 		pub fn store_maybe_hashed(
 			origin: OriginFor<T>,
 			data: Vec<u8>,
@@ -103,7 +111,7 @@ pub mod pallet {
 			ensure_signed(origin)?;
 
 			if hash {
-				let hash = blake2_256(&data);
+				let hash = T::Hashing::hash(&data);
 				Data::<T>::put(hash.as_ref().to_vec());
 			} else {
 				Data::<T>::put(data);
@@ -116,7 +124,11 @@ pub mod pallet {
 		//TODO write two benchmarks for this extrinsic in benchmarking.rs, and then choose the
 		//corresponding one depending on the value of `hash`
 		//hint: look at this pallet's weights macros: https://github.com/paritytech/substrate/blob/master/frame/utility/src/lib.rs
-		#[pallet::weight(0)]
+		#[pallet::weight(if *hash {
+			T::WeightInfo::store_maybe_hashed_true()
+		} else {
+			T::WeightInfo::store_maybe_hashed_false()
+		})]
 		pub fn benchmarked_store_maybe_hashed(
 			origin: OriginFor<T>,
 			data: Vec<u8>,
@@ -125,7 +137,7 @@ pub mod pallet {
 			ensure_signed(origin)?;
 
 			if hash {
-				let hash = blake2_256(&data);
+				let hash = T::Hashing::hash(&data);
 				Data::<T>::put(hash.as_ref().to_vec());
 			} else {
 				Data::<T>::put(data);

@@ -1,8 +1,8 @@
 use crate as pallet_reminder;
 use frame_support::{
-	traits::{ConstU16, ConstU64},
 	parameter_types,
-	weights::RuntimeDbWeight
+	traits::{ConstU16, ConstU64},
+	weights::RuntimeDbWeight,
 };
 use frame_system as system;
 use sp_core::H256;

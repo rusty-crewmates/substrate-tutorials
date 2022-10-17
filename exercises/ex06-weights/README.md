@@ -36,6 +36,10 @@ The first step of executing our benchmark is to move the pallet into the node-te
 
 hint: to fill the `WeightInfo` parameter, look how they did for the pallet_balance :)
 
+Then add what's needed to make the runtime understand that your pallet possess benchmarks:
+
+- add the "list_benchmark!(list, extra, pallet_weights, WeightsModule);"
+
 Then, once the integration is done, run this command to compile the runtime in benchmark mode:
 
 ```sh
@@ -43,17 +47,24 @@ cargo build --release --features runtime-benchmarks
 ```
 
 This will compile our runtime, in release form (we want our benchmark to be as close as production as possible)
-Then, we can start the actual benchmarks
+Then, we can start the actual benchmarks.
+The problem of this, is that the generated `weights.rs` doesn't have the correct format, so we have to manually modify it to make it usable in our pallet.
+But, there is a workaround that exist. Look at this file !
+-> https://github.com/paritytech/substrate/blob/50176e1b57bdf6168d9bf3764d1cce9ed8bcf611/.maintain/frame-weight-template.hbs
+This is a template for our weights.rs. Let's copy it and place it in our `substrate-node-template`, in a `.maintain/` directory.
+
+Then, using the template, we can use this command:
 
 ```sh
 ./target/release/node-template benchmark pallet \
     --chain dev \
     --execution=wasm \
     --wasm-execution=compiled \
-    --pallet "weights" \
+    --pallet "pallet_weights" \
     --extrinsic "*" \
     --steps 50 \
     --repeat 20 \
+    --template=./.maintain/frame-weight-template.hbs \
     --output pallets/weights/src/weights.rs
 ```
 
@@ -65,9 +76,11 @@ And you're all done :) You're newly generated weights are in the `pallets/weight
 
 Now that you have your `weight.rs` file, you can now integrate weights to your pallet.
 
-This is done in 2 steps:
+This is done in multiple steps:
 
-* Add a Weight parameter to config. You need to add the parameter type (usually `WeightInfo`) to your pallet's config, and add the parameter value to the runtime. If you need help, take a look at how it's done with the *supersig* pallet (links below)
+* Import your new WeightInfo struct into your `lib.rs`.
+
+* Add a WeightInfo parameter to config. You need to add the parameter type to your pallet's config, and add the parameter value to the runtime. If you need help, take a look at how it's done with the *supersig* pallet (links below)
 
 * Once it's done, you can now add weights to your extrinsics. To do this, you have to put this on top of each of your extrinsics:
 
@@ -102,3 +115,11 @@ We'll do the weights for the last two function, in two different way, so you'll 
 * Benchmarks: https://docs.substrate.io/test/benchmark/
 * An exemple of a benchmark file (supersig): https://github.com/kabocha-network/pallet_supersig/blob/master/src/benchmarking.rs
 * Node template with supersig pallet: https://github.com/decentration/substrate-supersig-template
+
+
+
+
+
+
+to add: 
+

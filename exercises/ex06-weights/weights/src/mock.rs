@@ -24,7 +24,7 @@ frame_support::construct_runtime!(
 		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
 		Weight: pallet_weights::{Pallet, Call, Storage, Event<T>},
 
-		Balances: pallet_balances,
+		// Balances: pallet_balances,
 	}
 );
 
@@ -59,26 +59,27 @@ impl system::Config for Test {
 	type Version = ();
 }
 
-parameter_types! {
-	pub const ExistentialDeposit: Balance = 1_000;
-	pub const MaxLocks: u32 = 50;
-	pub const MaxReserves: u32 = 50;
-}
+// parameter_types! {
+// 	pub const ExistentialDeposit: u32 = 1_000;
+// 	pub const MaxLocks: u32 = 50;
+// 	pub const MaxReserves: u32 = 50;
+// }
 
-impl pallet_balances::Config for Test {
-	type AccountStore = System;
-	type Balance = Balance;
-	type DustRemoval = ();
-	type Event = Event;
-	type ExistentialDeposit = ExistentialDeposit;
-	type MaxLocks = MaxLocks;
-	type MaxReserves = MaxReserves;
-	type ReserveIdentifier = [u8; 8];
-	type WeightInfo = ();
-}
+// impl pallet_balances::Config for Test {
+// 	type AccountStore = System;
+// 	type Balance = Self::Balance;
+// 	type DustRemoval = ();
+// 	type Event = Event;
+// 	type ExistentialDeposit = ExistentialDeposit;
+// 	type MaxLocks = MaxLocks;
+// 	type MaxReserves = MaxReserves;
+// 	type ReserveIdentifier = [u8; 8];
+// 	type WeightInfo = ();
+// }
 
 impl pallet_weights::Config for Test {
 	type Event = Event;
+	type WeightInfo = ();
 }
 
 // Build genesis storage according to the mock runtime.
@@ -86,4 +87,3 @@ pub fn new_test_ext() -> sp_io::TestExternalities {
 	system::GenesisConfig::default().build_storage::<Test>().unwrap().into()
 }
 
-pub const ALICE: u64 = 1;
