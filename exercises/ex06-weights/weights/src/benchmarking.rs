@@ -2,9 +2,9 @@ use super::*;
 // got the "file not included in module tree" warning ?
 // look at the comment in Cargo.toml (in the feature section), and the one at the top of the lib.rs
 // file
-
+//
+use frame_benchmarking::{account as benchmark_account, benchmarks};
 use crate::Pallet as Weights;
-use frame_benchmarking::benchmarks;
 use frame_system::RawOrigin;
 
 benchmarks! {
@@ -26,7 +26,7 @@ benchmarks! {
 		//hint: https://paritytech.github.io/substrate/master/frame_support/traits/tokens/currency/trait.Currency.html
 
 
-	}: extrinsic_name(RawOrigin::Signed(alice), s)
+	}: extrinsic_name(RawOrigin::Signed(alice), 0, s)
 	verify {
 		// Run some verifications here.
 		// If something isn't right, the benchmark will throw an error
