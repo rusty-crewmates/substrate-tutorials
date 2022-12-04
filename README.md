@@ -33,9 +33,6 @@ Substrate is the primary blockchain SDK used by developers to create the paracha
 - clone it on your machine
 - code until all tests pass
 
-> By default running `cargo test` will run tests for every exercise in the workspace. Which is not optimal while working on a specific exercise.  
-> Instead use our `run_one_exercise_tests.sh` script. It will run the tests for the exercise you pass as an argument only.
-
 If you want to run your pallet in a real runtime, you can easily edit the `substrate-node-template` and add your pallet to its runtime.
 
 ## What's in those exercises?
