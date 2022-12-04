@@ -1,4 +1,4 @@
-# Non-fungible tokens
+# Intermediate pallet: Non-fungible tokens
 
 In this tutorial, you will build a simple NFT pallet.
 

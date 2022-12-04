@@ -1,4 +1,4 @@
-# Writing tests
+# Testing
 
 A Substrate-node logic execution happens in the [runtime](https://docs.substrate.io/main-docs/fundamentals/runtime-intro/). This logic is divided by a set of modules called [pallets](https://docs.substrate.io/main-docs/fundamentals/runtime-intro/#composing-a-runtime-with-pallets). Substrate provides [FRAME](https://docs.substrate.io/main-docs/fundamentals/runtime-intro/#frame), a framework to help you create new pallets compatible with Substrate. While oversimplifying a pallet can be thought of as a [storage](https://docs.substrate.io/main-docs/fundamentals/state-transitions-and-storage/) and some dispatchable functions (or [extrinsics](https://docs.substrate.io/main-docs/fundamentals/transaction-types/)) that allow interacting with it.
 

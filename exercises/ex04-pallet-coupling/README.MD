@@ -1,4 +1,4 @@
-# Marketplace
+# Pallet coupling
 
 In this exercise, you are going to learn how to call functions between pallets. And to do so we are going to build a marketplace pallet, that will allow users to buy and sell NFTs.
 

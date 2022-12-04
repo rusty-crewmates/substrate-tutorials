@@ -1,4 +1,4 @@
-# Fungible Token
+# Easy pallet: Fungible Token
 
 In this exercise, you will build a simple fungible asset pallet.
 
