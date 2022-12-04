@@ -1,31 +1,28 @@
 [package]
-authors  = ["Nathan Gardet-Derc"]
-edition  = "2021"
-homepage = "https://substrate.io/"
-license  = "Unlicense"
-name     = "pallet-weight"
-publish  = false
-version  = "4.0.0-dev"
-
-[package.metadata.docs.rs]
-targets = ["x86_64-unknown-linux-gnu"]
+authors = ["Nathan Gardet-Derc"]
+edition = "2021"
+license = "Apache-2.0"
+name    = "pallet-weight"
+version = "0.1.0"
 
 [dependencies]
 codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false, features = [
 	"derive",
 ] }
-frame-benchmarking = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22", optional = true }
-frame-support = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
-frame-system = { default-features = false, version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
 scale-info = { version = "2.0.1", default-features = false, features = [
 	"derive",
 ] }
-sp-core = { default-features = false, version = "6.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
+
+frame-benchmarking = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22", optional = true }
+
+frame-support = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
+frame-system  = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
+sp-core       = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
 
 [dev-dependencies]
 pallet-balances = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
-sp-io           = { default-features = false, version = "6.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
-sp-runtime      = { default-features = false, version = "6.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
+sp-io           = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
+sp-runtime      = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.22" }
 
 [features]
 # TODO: replace ["std"] with ["std", "runtime-benchmarks"] to activate the benchmark feature
