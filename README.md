@@ -44,6 +44,12 @@ We designed the exercises to teach you:
 
 If you are stuck, you can always check the solution branch. It's not cheating, just learning 🧑‍🎓
 
+## Thanks to our sponsors
+
+<img src="https://user-images.githubusercontent.com/34384633/211193223-4d81e04d-6970-409f-a5b5-f484ae98b9d0.png" width="200">
+
+This tutorial is made possible thanks to a [grant](https://github.com/w3f/Grants-Program/blob/master/applications/substrate-tutorials.md) from the Web3 Foundation. Thanks a lot to them!
+
 ## Looking for a job?
 
 We are in contact with multiple projects in the Substrate ecosystem that are looking for developers, either full-time or for some periodic missions. If you would like to be contacted with some offers, please fill this form: https://forms.gle/mUoLGsDUSpy4yB3F9
