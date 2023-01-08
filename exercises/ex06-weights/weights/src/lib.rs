@@ -2,7 +2,7 @@
 
 pub use pallet::*;
 
-pub use sp_core::hashing::blake2_256;
+use sp_io::hashing::blake2_256;
 
 #[cfg(test)]
 mod mock;
@@ -15,6 +15,8 @@ mod tests;
 //
 // #[cfg(feature = "runtime-benchmarks")]
 // mod benchmarking;
+
+use sp_std::vec::Vec;
 
 #[frame_support::pallet]
 pub mod pallet {

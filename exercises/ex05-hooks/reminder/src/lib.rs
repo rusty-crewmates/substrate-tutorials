@@ -8,6 +8,8 @@ mod mock;
 #[cfg(test)]
 mod tests;
 
+use sp_std::vec::Vec;
+
 #[frame_support::pallet]
 pub mod pallet {
 	use super::*;
@@ -50,7 +52,7 @@ pub mod pallet {
 		fn on_initialize(n: T::BlockNumber) -> Weight {
 			let mut used_weight = 0;
 			// TODO: get the reminders for the block `n`
-			let reminders: Vec<Vec<u8>> = vec![];
+			let reminders: Vec<Vec<u8>> = Vec::new();
 			// this is an example of how do we get system weights for read and writes.
 			// you only have to mesure read and writes for this exercice !
 			//

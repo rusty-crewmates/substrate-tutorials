@@ -41,7 +41,7 @@ And add `pallet_assets` as a dependency:
 ...
 # Local Dependencies
 pallet-template = { version = "4.0.0-dev", default-features = false, path = "../pallets/template" }
-pallet-assets   = { path = "../../exercises/ex01-fungible-token/assets", default-features = false }
+pallet-assets   = { path = "../../exercises/ex01-pallet-easy/assets", default-features = false }
 ```
 
 Compile again to make sure the crate is well added to the project.
@@ -67,7 +67,7 @@ construct_runtime!(
 ```
 
 Now try a `cargo build`... it fails miserably. Why? Because we declared our intention to use the pallet `assets` in the runtime but we did not give it any configuration. What does it mean?  
-Remember this part of `exercises/ex01-fungible-token/assets/src/lib.rs`?
+Remember this part of `exercises/ex01-pallet-easy/assets/src/lib.rs`?
 
 ```rust
 	#[pallet::config]

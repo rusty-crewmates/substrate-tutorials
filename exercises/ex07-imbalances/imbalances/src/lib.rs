@@ -5,6 +5,8 @@ mod tests;
 
 pub use pallet::*;
 
+use sp_std::vec::Vec;
+
 use frame_support::{
 	sp_runtime::traits::{CheckedConversion, CheckedMul},
 	traits::{Currency, Imbalance, TryDrop},
