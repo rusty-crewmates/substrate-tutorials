@@ -74,7 +74,7 @@ pub mod pallet {
 			if address == Some(who.clone()) {
 				Self::deposit_event(Event::IsRoot(who));
 			} else {
-				return Err(Error::<T>::Invalid.into())
+				return Err(Error::<T>::Invalid.into());
 			}
 
 			Ok(())
