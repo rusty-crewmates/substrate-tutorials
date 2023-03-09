@@ -17,15 +17,14 @@ frame-support = { git = "https://github.com/paritytech/substrate.git", branch = 
 frame-system  = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.28", default-features = false }
 sp-std        = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.28", default-features = false }
 
+# Local dependecies
+pallet-marketplace-nfts = { path = "../marketplace-nfts", default-features = false }
 
 [dev-dependencies]
 pallet-balances = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.28" }
 sp-core         = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.28" }
 sp-io           = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.28" }
 sp-runtime      = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.28" }
-
-# Local dependecies
-pallet-marketplace-nfts = { path = "../marketplace-nfts" }
 
 [features]
 default = ["std"]
@@ -35,4 +34,5 @@ std = [
 	"frame-support/std",
 	"frame-system/std",
 	"sp-std/std",
+	"pallet-marketplace-nfts/std",
 ]
