@@ -1,6 +1,5 @@
 use crate as pallet_nft;
 use frame_support::{parameter_types, traits::GenesisBuild};
-use frame_system as system;
 use sp_core::H256;
 use sp_runtime::{
 	testing::Header,
@@ -27,7 +26,7 @@ parameter_types! {
 	pub const SS58Prefix: u8 = 42;
 }
 
-impl system::Config for TestRuntime {
+impl frame_system::Config for TestRuntime {
 	type AccountData = ();
 	type AccountId = u64;
 	type BaseCallFilter = frame_support::traits::Everything;
