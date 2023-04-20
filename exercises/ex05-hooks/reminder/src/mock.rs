@@ -4,7 +4,6 @@ use frame_support::{
 	traits::{ConstU16, ConstU64},
 	weights::RuntimeDbWeight,
 };
-use frame_system as system;
 use sp_core::H256;
 use sp_runtime::{
 	testing::Header,
@@ -30,7 +29,7 @@ parameter_types! {
 	pub const DbWeight: RuntimeDbWeight = RuntimeDbWeight {read: 1, write: 10000};
 }
 
-impl system::Config for TestRuntime {
+impl frame_system::Config for TestRuntime {
 	type AccountData = ();
 	type AccountId = u64;
 	type BaseCallFilter = frame_support::traits::Everything;

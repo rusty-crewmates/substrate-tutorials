@@ -1,6 +1,5 @@
 use crate as pallet_flipper;
 use frame_support::parameter_types;
-use frame_system as system;
 use sp_core::H256;
 use sp_runtime::{
 	testing::Header,
@@ -27,7 +26,7 @@ parameter_types! {
 	pub const SS58Prefix: u8 = 42;
 }
 
-impl system::Config for TestRuntime {
+impl frame_system::Config for TestRuntime {
 	type AccountData = ();
 	type AccountId = u64;
 	type BaseCallFilter = frame_support::traits::Everything;
@@ -60,7 +59,10 @@ impl pallet_flipper::Config for TestRuntime {
 
 // Build genesis storage according to the mock runtime.
 pub fn new_test_ext() -> sp_io::TestExternalities {
-	system::GenesisConfig::default().build_storage::<TestRuntime>().unwrap().into()
+	frame_system::GenesisConfig::default()
+		.build_storage::<TestRuntime>()
+		.unwrap()
+		.into()
 }
 
 pub const ALICE: u64 = 0;
