@@ -7,10 +7,8 @@ use frame_support::{
 	traits::Currency,
 };
 
-// TODO: Uncomment the following lines and fill the tests/mock.rs file
-// in order for the tests to compile and run successfully
-// #[cfg(test)]
-// mod tests;
+#[cfg(test)]
+mod tests;
 
 pub type BalanceOf<T> =
 	<<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
