@@ -22,20 +22,30 @@ struct CoinbaseResponseBody {
 }
 
 pub(crate) fn fetch_btc_price() -> Result<FixedI64, OffchainWorkerError> {
-	// TODO:
-	// - do an http get request to `"https://api.coinbase.com/v2/prices/BTC-USD/buy`
-	// - extract the price form the response body
-	// - convert it to `FixedI64` before returning it
+	let res = http::Request::get(&"https://api.coinbase.com/v2/prices/BTC-USD/buy")
+		.send()?
+		.wait()?;
+	let body_bytes = res.body().collect::<Vec<u8>>();
+	let body: CoinbaseResponseBody = serde_json::from_slice(&body_bytes)?;
 
-	Ok(Default::default())
+	if &body.data.base != "BTC" || &body.data.currency != "USD" {
+		return Err(OffchainWorkerError::WrongPair)
+	}
+
+	let price: f64 = body.data.amount.parse().map_err(|e| OffchainWorkerError::ParsePrice(e))?;
+
+	Ok(f64_to_fixed_i64(price))
 }
 
 impl<T: Config> Pallet<T> {
 	pub(crate) fn fetch_btc_price_and_send_unsigned_transaction() -> Result<(), String> {
-		// Todo: call `fetch_btc_price` and use the return to submit an unsigned transaction
-		// containing a call to `set_btc_price`
+		let btc_price = fetch_btc_price().map_err(|e| e.to_string())?;
 
-		Ok(())
+		let call = Call::set_btc_price { btc_price };
+		frame_system::offchain::SubmitTransaction::<T, Call<T>>::submit_unsigned_transaction(
+			call.into(),
+		)
+		.map_err(|_| String::from("Failed to submit unsigned `set_btc_price` call"))
 	}
 }
 
