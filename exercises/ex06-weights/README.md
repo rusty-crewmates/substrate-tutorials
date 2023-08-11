@@ -80,7 +80,7 @@ You will succeed once every test passes :).
 Launch the tests by running:
 
 ```sh
-$ cargo test
+$ cargo test --package pallet-weight
 ```
 
 ## Part 3 - Conditional weights
