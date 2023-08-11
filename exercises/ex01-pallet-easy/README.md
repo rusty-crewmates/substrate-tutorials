@@ -10,7 +10,7 @@ We placed some helpful comments in the code 😉.
 Launch the tests by running:
 
 ```sh
-$ cargo test
+$ cargo test --package pallet-assets
 ```
 
 ## What to focus on?

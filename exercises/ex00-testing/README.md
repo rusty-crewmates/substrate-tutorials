@@ -25,5 +25,5 @@ In ```ex00-writing-tests/flipper/src/tests/``` you will find the ```mock.rs``` f
 * Events and Errors: https://docs.substrate.io/main-docs/build/events-errors/
 
 ## Ensure everything is ok
-`cargo check`  
-`cargo test`
+`cargo check --package pallet-flipper`  
+`cargo test --package pallet-flipper`

@@ -20,7 +20,7 @@ You will succeed once every tests passes :).
 Launch the tests by running:
 
 ```sh
-$ cargo test
+$ cargo test --package pallet-reminder
 ```
 
 ## some links
