@@ -1,7 +1,7 @@
 use crate::{tests::mock::*, Error};
 use frame_support::{assert_noop, assert_ok, error::BadOrigin, BoundedVec};
 
-pub fn last_event() -> Event {
+pub fn last_event() -> RuntimeEvent {
 	frame_system::Pallet::<TestRuntime>::events()
 		.pop()
 		.expect("Event expected")
@@ -15,7 +15,7 @@ mod create {
 	fn ok() {
 		new_test_ext().execute_with(|| {
 			// The execution went through without error.
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
 
 			// The nonce was increased.
 			assert!(Assets::nonce() == 1);
@@ -32,7 +32,7 @@ mod create {
 			// The event was deposited
 			assert_eq!(
 				last_event(),
-				Event::Assets(crate::Event::Created {
+				RuntimeEvent::Assets(crate::Event::Created {
 					owner: ALICE,
 					asset_id: 0
 				})
@@ -43,7 +43,7 @@ mod create {
 	#[test]
 	fn must_be_signed() {
 		new_test_ext().execute_with(|| {
-			assert_noop!(Assets::create(Origin::none()), BadOrigin);
+			assert_noop!(Assets::create(RuntimeOrigin::none()), BadOrigin);
 		})
 	}
 }
@@ -55,7 +55,7 @@ mod set_metadata {
 	#[test]
 	fn ok() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
 
 			let name: BoundedVec<u8, <TestRuntime as crate::pallet::Config>::MaxLength> =
 				BoundedVec::try_from("TestAsset".as_bytes().to_vec()).unwrap();
@@ -63,7 +63,7 @@ mod set_metadata {
 				BoundedVec::try_from("TASS".as_bytes().to_vec()).unwrap();
 
 			assert_ok!(Assets::set_metadata(
-				Origin::signed(ALICE),
+				RuntimeOrigin::signed(ALICE),
 				0,
 				name.clone(),
 				symbol.clone()
@@ -78,7 +78,7 @@ mod set_metadata {
 			// The event was deposited
 			assert_eq!(
 				last_event(),
-				Event::Assets(crate::Event::MetadataSet {
+				RuntimeEvent::Assets(crate::Event::MetadataSet {
 					asset_id: 0,
 					name,
 					symbol
@@ -94,9 +94,9 @@ mod set_metadata {
 				BoundedVec::try_from("TestAsset".as_bytes().to_vec()).unwrap();
 			let symbol: BoundedVec<u8, <TestRuntime as crate::pallet::Config>::MaxLength> =
 				BoundedVec::try_from("TASS".as_bytes().to_vec()).unwrap();
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
 			assert_noop!(
-				Assets::set_metadata(Origin::none(), 0, name, symbol),
+				Assets::set_metadata(RuntimeOrigin::none(), 0, name, symbol),
 				BadOrigin
 			);
 		})
@@ -110,7 +110,7 @@ mod set_metadata {
 			let symbol: BoundedVec<u8, <TestRuntime as crate::pallet::Config>::MaxLength> =
 				BoundedVec::try_from("TASS".as_bytes().to_vec()).unwrap();
 			assert_noop!(
-				Assets::set_metadata(Origin::signed(ALICE), 0, name, symbol,),
+				Assets::set_metadata(RuntimeOrigin::signed(ALICE), 0, name, symbol,),
 				Error::<TestRuntime>::UnknownAssetId
 			);
 		})
@@ -119,14 +119,14 @@ mod set_metadata {
 	#[test]
 	fn must_be_owner() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
 
 			let name: BoundedVec<u8, <TestRuntime as crate::pallet::Config>::MaxLength> =
 				BoundedVec::try_from("TestAsset".as_bytes().to_vec()).unwrap();
 			let symbol: BoundedVec<u8, <TestRuntime as crate::pallet::Config>::MaxLength> =
 				BoundedVec::try_from("TASS".as_bytes().to_vec()).unwrap();
 			assert_noop!(
-				Assets::set_metadata(Origin::signed(BOB), 0, name, symbol,),
+				Assets::set_metadata(RuntimeOrigin::signed(BOB), 0, name, symbol,),
 				Error::<TestRuntime>::NoPermission
 			);
 		})
@@ -139,7 +139,7 @@ mod mint {
 	#[test]
 	fn ok() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
 
 			let mut total_supply = Assets::asset(0).unwrap().supply;
 			assert_eq!(total_supply, 0);
@@ -150,7 +150,7 @@ mod mint {
 			let amount = 100;
 
 			// Can mint to itself.
-			assert_ok!(Assets::mint(Origin::signed(ALICE), 0, amount, ALICE));
+			assert_ok!(Assets::mint(RuntimeOrigin::signed(ALICE), 0, amount, ALICE));
 			total_supply += amount;
 			// Total supply has been increased.
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply);
@@ -159,7 +159,7 @@ mod mint {
 			// The event was deposited
 			assert_eq!(
 				last_event(),
-				Event::Assets(crate::Event::Minted {
+				RuntimeEvent::Assets(crate::Event::Minted {
 					asset_id: 0,
 					owner: ALICE,
 					total_supply
@@ -167,7 +167,7 @@ mod mint {
 			);
 
 			// Can mint to somebody else.
-			assert_ok!(Assets::mint(Origin::signed(ALICE), 0, amount, BOB));
+			assert_ok!(Assets::mint(RuntimeOrigin::signed(ALICE), 0, amount, BOB));
 			total_supply += amount;
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply);
 			assert_eq!(Assets::account(0, BOB), amount);
@@ -175,7 +175,7 @@ mod mint {
 			// The event was deposited
 			assert_eq!(
 				last_event(),
-				Event::Assets(crate::Event::Minted {
+				RuntimeEvent::Assets(crate::Event::Minted {
 					asset_id: 0,
 					owner: BOB,
 					total_supply
@@ -187,18 +187,18 @@ mod mint {
 	#[test]
 	fn ok_saturating() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
 
 			let first_mint_amount = std::u128::MAX - 50;
 			let second_mint_amount = 100;
 			assert_ok!(Assets::mint(
-				Origin::signed(ALICE),
+				RuntimeOrigin::signed(ALICE),
 				0,
 				first_mint_amount,
 				ALICE
 			));
 			assert_ok!(Assets::mint(
-				Origin::signed(ALICE),
+				RuntimeOrigin::signed(ALICE),
 				0,
 				second_mint_amount,
 				BOB
@@ -212,8 +212,8 @@ mod mint {
 	#[test]
 	fn must_be_signed() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
-			assert_noop!(Assets::mint(Origin::none(), 0, 100, BOB), BadOrigin);
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
+			assert_noop!(Assets::mint(RuntimeOrigin::none(), 0, 100, BOB), BadOrigin);
 		})
 	}
 
@@ -221,7 +221,7 @@ mod mint {
 	fn must_exist() {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
-				Assets::mint(Origin::signed(ALICE), 0, 100, BOB),
+				Assets::mint(RuntimeOrigin::signed(ALICE), 0, 100, BOB),
 				Error::<TestRuntime>::UnknownAssetId
 			);
 		})
@@ -230,10 +230,10 @@ mod mint {
 	#[test]
 	fn must_be_owner() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
 
 			assert_noop!(
-				Assets::mint(Origin::signed(BOB), 0, 100, BOB),
+				Assets::mint(RuntimeOrigin::signed(BOB), 0, 100, BOB),
 				Error::<TestRuntime>::NoPermission
 			);
 		})
@@ -246,15 +246,15 @@ mod burn {
 	#[test]
 	fn ok() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
 
 			let mint_amount = 100;
 			let burn_amount = 50;
-			assert_ok!(Assets::mint(Origin::signed(ALICE), 0, mint_amount, BOB));
+			assert_ok!(Assets::mint(RuntimeOrigin::signed(ALICE), 0, mint_amount, BOB));
 
 			let mut total_supply = Assets::asset(0).unwrap().supply;
 
-			assert_ok!(Assets::burn(Origin::signed(BOB), 0, burn_amount));
+			assert_ok!(Assets::burn(RuntimeOrigin::signed(BOB), 0, burn_amount));
 			total_supply -= burn_amount;
 			// Total supply and account have been reduced by burn_amount.
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply);
@@ -263,7 +263,7 @@ mod burn {
 			// The event was deposited
 			assert_eq!(
 				last_event(),
-				Event::Assets(crate::Event::Burned {
+				RuntimeEvent::Assets(crate::Event::Burned {
 					asset_id: 0,
 					owner: BOB,
 					total_supply
@@ -275,16 +275,16 @@ mod burn {
 	#[test]
 	fn ok_saturating() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
 
 			let mint_amount = 100;
 			let burn_amount = mint_amount + 1;
-			assert_ok!(Assets::mint(Origin::signed(ALICE), 0, mint_amount, ALICE));
-			assert_ok!(Assets::mint(Origin::signed(ALICE), 0, mint_amount, BOB));
+			assert_ok!(Assets::mint(RuntimeOrigin::signed(ALICE), 0, mint_amount, ALICE));
+			assert_ok!(Assets::mint(RuntimeOrigin::signed(ALICE), 0, mint_amount, BOB));
 
 			let total_supply = Assets::asset(0).unwrap().supply;
 
-			assert_ok!(Assets::burn(Origin::signed(BOB), 0, burn_amount));
+			assert_ok!(Assets::burn(RuntimeOrigin::signed(BOB), 0, burn_amount));
 			// Total supply and account have been reduced by mint_amount.
 			assert_eq!(Assets::asset(0).unwrap().supply, total_supply - mint_amount);
 			assert_eq!(Assets::account(0, BOB), 0);
@@ -292,7 +292,7 @@ mod burn {
 			// The event was deposited
 			assert_eq!(
 				last_event(),
-				Event::Assets(crate::Event::Burned {
+				RuntimeEvent::Assets(crate::Event::Burned {
 					asset_id: 0,
 					owner: BOB,
 					total_supply: total_supply - mint_amount,
@@ -304,8 +304,8 @@ mod burn {
 	#[test]
 	fn must_be_signed() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
-			assert_noop!(Assets::burn(Origin::none(), 0, 100), BadOrigin);
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
+			assert_noop!(Assets::burn(RuntimeOrigin::none(), 0, 100), BadOrigin);
 		})
 	}
 
@@ -313,7 +313,7 @@ mod burn {
 	fn must_exist() {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
-				Assets::burn(Origin::signed(ALICE), 0, 100),
+				Assets::burn(RuntimeOrigin::signed(ALICE), 0, 100),
 				Error::<TestRuntime>::UnknownAssetId
 			);
 		})
@@ -326,16 +326,16 @@ mod transfer {
 	#[test]
 	fn ok() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
 
 			let mint_amount = 100;
 			let transfer_amount = 50;
-			assert_ok!(Assets::mint(Origin::signed(ALICE), 0, mint_amount, BOB));
+			assert_ok!(Assets::mint(RuntimeOrigin::signed(ALICE), 0, mint_amount, BOB));
 
 			let total_supply = Assets::asset(0).unwrap().supply;
 
 			assert_ok!(Assets::transfer(
-				Origin::signed(BOB),
+				RuntimeOrigin::signed(BOB),
 				0,
 				transfer_amount,
 				ALICE
@@ -350,7 +350,7 @@ mod transfer {
 			// The event was deposited
 			assert_eq!(
 				last_event(),
-				Event::Assets(crate::Event::Transferred {
+				RuntimeEvent::Assets(crate::Event::Transferred {
 					asset_id: 0,
 					from: BOB,
 					to: ALICE,
@@ -363,14 +363,14 @@ mod transfer {
 	#[test]
 	fn ok_saturating() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
 
 			let mint_amount = 100;
 			let transfer_amount = mint_amount + 1;
-			assert_ok!(Assets::mint(Origin::signed(ALICE), 0, mint_amount, BOB));
+			assert_ok!(Assets::mint(RuntimeOrigin::signed(ALICE), 0, mint_amount, BOB));
 
 			assert_ok!(Assets::transfer(
-				Origin::signed(BOB),
+				RuntimeOrigin::signed(BOB),
 				0,
 				transfer_amount,
 				ALICE
@@ -384,8 +384,8 @@ mod transfer {
 	#[test]
 	fn must_be_signed() {
 		new_test_ext().execute_with(|| {
-			assert_ok!(Assets::create(Origin::signed(ALICE)));
-			assert_noop!(Assets::transfer(Origin::none(), 0, 100, BOB), BadOrigin);
+			assert_ok!(Assets::create(RuntimeOrigin::signed(ALICE)));
+			assert_noop!(Assets::transfer(RuntimeOrigin::none(), 0, 100, BOB), BadOrigin);
 		})
 	}
 
@@ -393,7 +393,7 @@ mod transfer {
 	fn must_exist() {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
-				Assets::transfer(Origin::signed(ALICE), 0, 100, BOB),
+				Assets::transfer(RuntimeOrigin::signed(ALICE), 0, 100, BOB),
 				Error::<TestRuntime>::UnknownAssetId
 			);
 		})

@@ -2,9 +2,9 @@ use codec::{Decode, Encode};
 use frame_support::{
 	pallet_prelude::{BoundedVec, MaxEncodedLen},
 	traits::Get,
-	RuntimeDebug,
 };
 use scale_info::TypeInfo;
+use sp_core::RuntimeDebug;
 
 pub type AssetId = u128;
 

@@ -1,7 +1,7 @@
 use crate::{BalanceOf, Config};
 use codec::{Decode, Encode, MaxEncodedLen};
-use frame_support::RuntimeDebug;
 use scale_info::TypeInfo;
+use sp_core::RuntimeDebug;
 
 #[derive(Encode, Decode, Eq, PartialEq, RuntimeDebug, TypeInfo, MaxEncodedLen)]
 #[codec(mel_bound())]

@@ -9,7 +9,7 @@ fn ok() {
 
 		let amount_to_mint = 500;
 
-		Imbalances::mint_to(Origin::root(), amount_to_mint, ALICE).unwrap();
+		Imbalances::mint_to(RuntimeOrigin::root(), amount_to_mint, ALICE).unwrap();
 
 		assert_eq!(Balances::total_issuance(), total_issuance + amount_to_mint);
 		assert_eq!(
@@ -22,7 +22,7 @@ fn ok() {
 #[test]
 fn must_be_signed() {
 	ExtBuilder::default().balances(vec![(ALICE, 100)]).build().execute_with(|| {
-		assert_noop!(Imbalances::mint_to(Origin::none(), 500, ALICE), BadOrigin);
+		assert_noop!(Imbalances::mint_to(RuntimeOrigin::none(), 500, ALICE), BadOrigin);
 	})
 }
 
@@ -30,7 +30,7 @@ fn must_be_signed() {
 fn must_be_root() {
 	ExtBuilder::default().balances(vec![(ALICE, 100)]).build().execute_with(|| {
 		assert_noop!(
-			Imbalances::mint_to(Origin::signed(ALICE), 500, ALICE),
+			Imbalances::mint_to(RuntimeOrigin::signed(ALICE), 500, ALICE),
 			BadOrigin
 		);
 	})
@@ -40,7 +40,7 @@ fn must_be_root() {
 fn recipent_must_exist() {
 	ExtBuilder::default().build().execute_with(|| {
 		assert_noop!(
-			Imbalances::mint_to(Origin::root(), 500, ALICE),
+			Imbalances::mint_to(RuntimeOrigin::root(), 500, ALICE),
 			Error::<TestRuntime>::AccountDoesNotExist
 		);
 	})

@@ -10,19 +10,22 @@ mod tests;
 
 use sp_std::vec::Vec;
 
+#[allow(unexpected_cfgs)]
 #[frame_support::pallet]
 pub mod pallet {
 	use super::*;
 	use frame_support::pallet_prelude::*;
 	use frame_system::pallet_prelude::*;
 
+	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
+
 	#[pallet::pallet]
-	#[pallet::generate_store(pub(super) trait Store)]
+	#[pallet::storage_version(STORAGE_VERSION)]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
 	pub trait Config: frame_system::Config {
-		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::storage]
@@ -33,12 +36,12 @@ pub mod pallet {
 	#[pallet::unbounded]
 	#[pallet::getter(fn reminders)]
 	pub type Reminders<T: Config> =
-		StorageMap<_, Blake2_256, T::BlockNumber, Vec<Vec<u8>>, ValueQuery>;
+		StorageMap<_, Blake2_256, BlockNumberFor<T>, Vec<Vec<u8>>, ValueQuery>;
 
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		ReminderSet(T::BlockNumber, Vec<u8>),
+		ReminderSet(BlockNumberFor<T>, Vec<u8>),
 		Reminder(Vec<u8>),
 		RemindersExecuteds(u32),
 	}
@@ -49,8 +52,8 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		// on_initialize() will be called at the beginning of each new block, before anything
-		fn on_initialize(n: T::BlockNumber) -> Weight {
-			let mut used_weight = 0;
+		fn on_initialize(n: BlockNumberFor<T>) -> Weight {
+			let mut used_weight = Weight::zero();
 			// TODO: get the reminders for the block `n`
 			let reminders: Vec<Vec<u8>> = Vec::new();
 			// this is an example of how do we get system weights for read and writes.
@@ -68,20 +71,20 @@ pub mod pallet {
 			}
 
 			// TODO: clean the storage, a.k remove the events, after emitting them
-			used_weight
+			used_weight.into()
 		}
 
-		fn on_finalize(_: T::BlockNumber) {
+		fn on_finalize(_: BlockNumberFor<T>) {
 			// TODO: emit a `RemindersExecutes` event, with the right value
 		}
 	}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
-		#[pallet::weight(10_000 + T::DbWeight::get().reads(1))]
+		#[pallet::weight(T::DbWeight::get().reads(1) + 10_000.into())]
 		pub fn schedule_reminder(
 			origin: OriginFor<T>,
-			at: T::BlockNumber,
+			at: BlockNumberFor<T>,
 			message: Vec<u8>,
 		) -> DispatchResult {
 			let _ = ensure_signed(origin)?;

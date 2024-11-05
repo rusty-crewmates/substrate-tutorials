@@ -3,9 +3,9 @@ use codec::{Decode, Encode};
 use frame_support::{
 	pallet_prelude::{BoundedVec, MaxEncodedLen},
 	traits::Get,
-	RuntimeDebug,
 };
 use scale_info::TypeInfo;
+use sp_core::RuntimeDebug;
 
 pub trait Sellable<AccountId, ResourceId> {
 	/// return the amount of `id` possessed by `account`
