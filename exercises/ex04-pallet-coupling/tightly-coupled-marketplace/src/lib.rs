@@ -25,15 +25,16 @@ pub mod pallet {
 	use frame_support::pallet_prelude::*;
 	use frame_system::{ensure_signed, pallet_prelude::*};
 
+	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
 	#[pallet::config]
 	// TODO: add a dependency on pallet_marketplace_nft on the previous line
 	pub trait Config: frame_system::Config + scale_info::TypeInfo {
-		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 		type Currency: Currency<Self::AccountId>;
 	}
 
 	#[pallet::pallet]
-	#[pallet::generate_store(pub(super) trait Store)]
+	#[pallet::storage_version(STORAGE_VERSION)]
 	pub struct Pallet<T>(_);
 
 	#[pallet::event]
@@ -68,7 +69,8 @@ pub mod pallet {
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
-		#[pallet::weight(0)]
+		#[pallet::call_index(0)]
+		#[pallet::weight({0})]
 		pub fn set_sale(
 			origin: OriginFor<T>,
 			nft_id: NFTId,
@@ -89,7 +91,8 @@ pub mod pallet {
 			Ok(())
 		}
 
-		#[pallet::weight(0)]
+		#[pallet::call_index(1)]
+		#[pallet::weight({0})]
 		pub fn buy(
 			origin: OriginFor<T>,
 			nft_id: NFTId,

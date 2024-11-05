@@ -28,9 +28,11 @@ pub mod pallet {
 	};
 	use frame_system::pallet_prelude::*;
 
+	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
+
 	#[pallet::config]
 	pub trait Config: frame_system::Config + scale_info::TypeInfo {
-		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 		type Currency: Currency<Self::AccountId>;
 
 		#[pallet::constant]
@@ -40,7 +42,7 @@ pub mod pallet {
 	}
 
 	#[pallet::pallet]
-	#[pallet::generate_store(pub(super) trait Store)]
+	#[pallet::storage_version(STORAGE_VERSION)]
 	pub struct Pallet<T>(_);
 
 	#[pallet::event]

@@ -13,15 +13,18 @@ use frame_support::ensure;
 use sp_runtime::traits::{AtLeast32BitUnsigned, One, Saturating};
 use types::*;
 
+#[allow(unexpected_cfgs)] // skip warning "unexpected `cfg` condition value: `try-runtime`"
 #[frame_support::pallet]
 pub mod pallet {
 	use super::*;
 	use frame_support::pallet_prelude::*;
 	use frame_system::pallet_prelude::*;
 
+	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
+
 	#[pallet::config]
 	pub trait Config: frame_system::Config + scale_info::TypeInfo {
-		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 
 		type NFTId: Parameter + AtLeast32BitUnsigned + Default + Copy + MaxEncodedLen;
 
@@ -30,7 +33,7 @@ pub mod pallet {
 	}
 
 	#[pallet::pallet]
-	#[pallet::generate_store(pub(super) trait Store)]
+	#[pallet::storage_version(STORAGE_VERSION)]
 	pub struct Pallet<T>(_);
 
 	#[pallet::storage]
@@ -91,7 +94,8 @@ pub mod pallet {
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
-		#[pallet::weight(0)]
+		#[pallet::call_index(0)]
+		#[pallet::weight({0})]
 		pub fn mint(
 			origin: OriginFor<T>,
 			metadata: BoundedVec<u8, T::MaxLength>,
@@ -115,7 +119,8 @@ pub mod pallet {
 			Ok(())
 		}
 
-		#[pallet::weight(0)]
+		#[pallet::call_index(1)]
+		#[pallet::weight({0})]
 		pub fn burn(origin: OriginFor<T>, asset_id: T::NFTId, amount: u128) -> DispatchResult {
 			let origin = ensure_signed(origin)?;
 
@@ -149,7 +154,8 @@ pub mod pallet {
 			Ok(())
 		}
 
-		#[pallet::weight(0)]
+		#[pallet::call_index(2)]
+		#[pallet::weight({0})]
 		pub fn transfer(
 			origin: OriginFor<T>,
 			asset_id: T::NFTId,
