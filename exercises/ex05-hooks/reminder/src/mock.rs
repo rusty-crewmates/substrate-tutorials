@@ -4,15 +4,22 @@ use frame_support::{
 	traits::{ConstU16, ConstU64},
 	weights::RuntimeDbWeight,
 };
-use frame_system::GenesisConfig;
 use sp_core::H256;
-use sp_runtime::{traits::{BlakeTwo256, IdentityLookup}, BuildStorage};
+use sp_runtime::{
+	testing::Header,
+	traits::{BlakeTwo256, IdentityLookup},
+};
 
+type UncheckedExtrinsic = frame_system::mocking::MockUncheckedExtrinsic<TestRuntime>;
 type Block = frame_system::mocking::MockBlock<TestRuntime>;
 
 // Configure a mock runtime to test the pallet.
 frame_support::construct_runtime!(
-	pub enum TestRuntime {
+	pub enum TestRuntime where
+		Block = Block,
+		NodeBlock = Block,
+		UncheckedExtrinsic = UncheckedExtrinsic,
+	{
 		System: frame_system,
 		Reminder: pallet_reminder,
 	}
@@ -28,40 +35,34 @@ impl frame_system::Config for TestRuntime {
 	type BaseCallFilter = frame_support::traits::Everything;
 	type BlockHashCount = ConstU64<250>;
 	type BlockLength = ();
+	type BlockNumber = u64;
 	type BlockWeights = ();
+	type Call = Call;
 	type DbWeight = DbWeight;
+	type Event = Event;
 	type Hash = H256;
 	type Hashing = BlakeTwo256;
+	type Header = Header;
+	type Index = u64;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type MaxConsumers = frame_support::traits::ConstU32<16>;
 	type OnKilledAccount = ();
 	type OnNewAccount = ();
 	type OnSetCode = ();
+	type Origin = Origin;
 	type PalletInfo = PalletInfo;
 	type SS58Prefix = ConstU16<42>;
 	type SystemWeightInfo = ();
 	type Version = ();
-
-	type RuntimeEvent = RuntimeEvent;
-	type RuntimeOrigin = RuntimeOrigin;
-	type RuntimeCall = RuntimeCall;
-	type RuntimeTask = ();
-	type Nonce = u64;
-	type Block = Block;
-	type SingleBlockMigrations = ();
-	type MultiBlockMigrator = ();
-	type PreInherents = ();
-	type PostInherents = ();
-	type PostTransactions = ();
 }
 
 impl pallet_reminder::Config for TestRuntime {
-	type RuntimeEvent = RuntimeEvent;
+	type Event = Event;
 }
 
 pub fn new_test_ext() -> sp_io::TestExternalities {
-	let storage = <GenesisConfig<TestRuntime> as BuildStorage>::build_storage(&GenesisConfig::default()).unwrap();
-	let mut ext = sp_io::TestExternalities::new(storage);
+	let t = frame_system::GenesisConfig::default().build_storage::<TestRuntime>().unwrap();
+	let mut ext = sp_io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }

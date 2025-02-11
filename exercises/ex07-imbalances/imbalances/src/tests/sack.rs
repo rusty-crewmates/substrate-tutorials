@@ -12,7 +12,7 @@ fn ok() {
 			let bob_balance = Balances::free_balance(BOB);
 			let charly_balance = Balances::free_balance(CHARLY);
 
-			Imbalances::sack(RuntimeOrigin::root(), vec![ALICE, BOB], CHARLY).unwrap();
+			Imbalances::sack(Origin::root(), vec![ALICE, BOB], CHARLY).unwrap();
 
 			assert_eq!(Balances::total_issuance(), total_issuance);
 			assert_eq!(Balances::free_balance(ALICE), EXISTENTIAL_DEPOSIT);
@@ -30,7 +30,7 @@ fn ok() {
 #[test]
 fn must_be_signed() {
 	ExtBuilder::default().balances(vec![]).build().execute_with(|| {
-		assert_noop!(Imbalances::sack(RuntimeOrigin::none(), vec![], ALICE), BadOrigin);
+		assert_noop!(Imbalances::sack(Origin::none(), vec![], ALICE), BadOrigin);
 	})
 }
 
@@ -38,7 +38,7 @@ fn must_be_signed() {
 fn must_be_root() {
 	ExtBuilder::default().balances(vec![]).build().execute_with(|| {
 		assert_noop!(
-			Imbalances::sack(RuntimeOrigin::signed(ALICE), vec![], ALICE),
+			Imbalances::sack(Origin::signed(ALICE), vec![], ALICE),
 			BadOrigin
 		);
 	})
@@ -51,7 +51,7 @@ fn recipient_must_exist() {
 		.build()
 		.execute_with(|| {
 			assert_noop!(
-				Imbalances::sack(RuntimeOrigin::root(), vec![ALICE, BOB], CHARLY),
+				Imbalances::sack(Origin::root(), vec![ALICE, BOB], CHARLY),
 				Error::<TestRuntime>::AccountDoesNotExist
 			);
 		})

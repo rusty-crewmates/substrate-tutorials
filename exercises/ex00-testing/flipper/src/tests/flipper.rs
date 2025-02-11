@@ -1,11 +1,11 @@
 use super::mock::*;
-use frame_support::{assert_noop, assert_ok, assert_err};
-type Error = crate::Error::<TestRuntime>;
+use crate::{pallet, Error};
+use frame_support::{assert_noop, assert_ok};
 
 #[test]
 fn set_value_ok() {
 	new_test_ext().execute_with(|| {
-		assert_ok!(Flipper::set_value(RuntimeOrigin::signed(ALICE), false));
+		assert_ok!(Flipper::set_value(Origin::signed(ALICE), false));
 		assert_eq!(Flipper::value(), Some(false));
 	});
 }

@@ -5,7 +5,6 @@ pub use pallet::*;
 #[cfg(test)]
 mod tests;
 
-#[allow(unexpected_cfgs)] // skip warning "unexpected `cfg` condition value: `try-runtime`"
 #[frame_support::pallet]
 pub mod pallet {
 	use frame_support::pallet_prelude::*;
@@ -13,11 +12,11 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config: frame_system::Config {
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
 	}
 
 	#[pallet::pallet]
-	#[pallet::without_storage_info]
+	#[pallet::generate_store(pub(super) trait Store)]
 	pub struct Pallet<T>(_);
 
 	// The pallet's runtime storage items.
@@ -52,8 +51,7 @@ pub mod pallet {
 	impl<T: Config> Pallet<T> {
 		/// This function sets a value to the Value storage and emits an event, it should be used
 		/// once, if something is already present in the storage, it returns an error.
-		#[pallet::weight({0})]
-		#[pallet::call_index(0)]
+		#[pallet::weight(0)]
 		pub fn set_value(origin: OriginFor<T>, value: bool) -> DispatchResult {
 			// Checks that the extrinsic is signed and gets the signer.
 			// This function will return an error if the extrinsic isn't signed.
@@ -79,8 +77,7 @@ pub mod pallet {
 
 		/// This function flips the value and emits an event, if there is no value in the storage
 		/// then it returns an error.
-		#[pallet::weight({0})]
-		#[pallet::call_index(1)]
+		#[pallet::weight(0)]
 		pub fn flip_value(origin: OriginFor<T>) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 

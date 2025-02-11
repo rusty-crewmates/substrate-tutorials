@@ -3,27 +3,14 @@
 A Substrate based blockchain is made of the sum of the pallets it includes.
 In this exercise, you are going to learn how to include a pallet in a runtime.
 
-[Substrate SDK](https://github.com/paritytech/polkadot-sdk#-documentation) | 
-[Templates](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/templates/index.html):
-- [Minimal](https://github.com/paritytech/polkadot-sdk-minimal-template)
-- [Solo-Chain](https://github.com/paritytech/polkadot-sdk-solochain-template) (ex-"substrate-node-template")
-- [Para-Chain](https://github.com/paritytech/polkadot-sdk-parachain-template)
-- [OpenZeppelin](https://github.com/OpenZeppelin/polkadot-runtime-templates)
-
-The most recent version of solo-chain template at the time of this writing is v0.0.2:
-```
-## tag: v0.0.2, commit: 8599efc46aee8359692df055cc0818984f27763e
-git clone https://github.com/paritytech/polkadot-sdk-solochain-template
-cd polkadot-sdk-solochain-template && rm -rf .git/ .github/
-```
-
+We added a git submodule to this repository: [substrate-node-template](https://github.com/substrate-developer-hub/substrate-node-template).  
 It's a great unlicenced project that offers a functional, yet empty, Substrate blockchain. You can think about it as a skeleton, ready to receive the flesh and life you chose to infuse in it.
 We are going to add the asset pallet we wrote in the previous exercise to this runtime, and then run it.
 
 ## Step 0: Dry run
 
 ```shell
-$ cd polkadot-sdk-solochain-template
+$ cd substrate-node-template
 $ cargo build
 $ cargo run -- --dev
 ```
@@ -47,7 +34,7 @@ Great. Now go back to your terminal and hit `Ctrl + c` to kill the chain. We are
 ## Step 1: Import our code
 
 To be able to use our code in this project, we have to add it to the manifest.  
-Open `polkadot-sdk-solochain-template/runtime/Cargo.toml`.
+Open `substrate-node-template/runtime/Cargo.toml`.
 And add `pallet_assets` as a dependency:
 ```toml
 [dependencies]
@@ -62,7 +49,7 @@ Compile again to make sure the crate is well added to the project.
 
 ## Step 1: construct_runtime!
 
-Open `polkadot-sdk-solochain-template/runtime/src/lib.rs`.  
+Open `substrate-node-template/runtime/src/lib.rs`.  
 Find the `construct_runtime!` macro call. That's where we declare the pallets we want our runtime to use. That's where we have to add our `assets` pallet.
 
 First thing first, add the pallet assets to the runtime.

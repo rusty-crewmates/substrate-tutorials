@@ -9,12 +9,12 @@ We created a really simple pallet, `flipper`, that you will have to test.
 This pallet allows the users to store a boolean in the storage, calling the `set_value` extrinsic, and then flip its value by calling the `flip_value` extrinsic.
 
 ## To do
-In `ex00-writing-tests/flipper/src/` you will find a `lib.rs` file that defines the pallet configuration, storage, and dispatchable functions. 
-In `ex00-writing-tests/flipper/src/tests/` you will find the `mock.rs` file, which simulates the runtime execution. Your test will run against this specific implementation of your pallet. You don't need to update it. All you have to do is write the missing code in the `flipper.rs` file. The goal is to check the correct behavior of the `set_value()` and `flip_value()` functions.
-1. Fill the `set_value_ok()` test to ensure `set_value()` is storing the value passed as an argument.
-2. Fill the `set_value_err_already_set()` test to ensure that this extrinsic cannot be called twice successfully.
-3. Fill the `flip_value_ok()` test to ensure calls to `flip_value()` lead to the boolean value being inverted.
-4. Read `flip_function()` code and imagine a scenario that will lead to an error when calling it
+In ```ex00-writing-tests/flipper/src/``` you will find a ```.lib``` file that defines the pallet configuration, storage, and dispatchable functions. 
+In ```ex00-writing-tests/flipper/src/tests/``` you will find the ```mock.rs``` file, which simulates the runtime execution. Your test will run against this specific implementation of your pallet. You don't need to update it. All you have to do is write the missing code in the ```flipper.rs``` file. The goal is to check the correct behavior of the ```set_value()``` and ```flip_value()``` functions.
+1. Fill the ```set_value_ok()``` test to ensure ```set_value()``` is storing the value passed as an argument.
+2. Fill the ```set_value_err_already_set()``` test to ensure that this extrinsic cannot be called twice successfully.
+3. Fill the ```flip_value_ok()``` test to ensure calls to ```flip_value()``` lead to the boolean value being inverted.
+4. Read ```flip_function()``` code and imagine a scenario that will lead to an error when calling it
 
 ## Some links
 * Awesome Rusty: https://github.com/rusty-crewmates/awesome-rusty

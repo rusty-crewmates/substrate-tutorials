@@ -9,7 +9,7 @@ fn ok() {
 
 		let amount_to_slash = 500;
 
-		Imbalances::slash(RuntimeOrigin::root(), amount_to_slash, ALICE).unwrap();
+		Imbalances::slash(Origin::root(), amount_to_slash, ALICE).unwrap();
 
 		let treasury_part = amount_to_slash / 3;
 		let burned_part = amount_to_slash - treasury_part;
@@ -31,7 +31,7 @@ fn ok_not_enough_funds() {
 
 		let amount_to_slash = 5000;
 
-		Imbalances::slash(RuntimeOrigin::root(), amount_to_slash, ALICE).unwrap();
+		Imbalances::slash(Origin::root(), amount_to_slash, ALICE).unwrap();
 
 		let treasury_part = alice_balance / 3;
 		let burned_part = alice_balance - treasury_part;
@@ -45,7 +45,7 @@ fn ok_not_enough_funds() {
 #[test]
 fn must_be_signed() {
 	ExtBuilder::default().balances(vec![(ALICE, 100)]).build().execute_with(|| {
-		assert_noop!(Imbalances::slash(RuntimeOrigin::none(), 500, ALICE), BadOrigin);
+		assert_noop!(Imbalances::slash(Origin::none(), 500, ALICE), BadOrigin);
 	})
 }
 
@@ -53,7 +53,7 @@ fn must_be_signed() {
 fn must_be_root() {
 	ExtBuilder::default().balances(vec![(ALICE, 100)]).build().execute_with(|| {
 		assert_noop!(
-			Imbalances::slash(RuntimeOrigin::signed(ALICE), 500, ALICE),
+			Imbalances::slash(Origin::signed(ALICE), 500, ALICE),
 			BadOrigin
 		);
 	})
