@@ -25,11 +25,9 @@ pub mod pallet {
 	use frame_support::pallet_prelude::*;
 	use frame_system::{ensure_signed, pallet_prelude::*};
 
-	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
-
 	#[pallet::config]
 	pub trait Config: frame_system::Config + scale_info::TypeInfo {
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
 		type Currency: Currency<Self::AccountId>;
 		// Here are types that allow for the pallet coupling.
 		// Resource must be a type that implements transferable (remember that pallets are types).
@@ -42,7 +40,7 @@ pub mod pallet {
 	}
 
 	#[pallet::pallet]
-	#[pallet::storage_version(STORAGE_VERSION)]
+	#[pallet::generate_store(pub(super) trait Store)]
 	pub struct Pallet<T>(_);
 
 	#[pallet::event]

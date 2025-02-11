@@ -3,7 +3,7 @@ use frame_support::{assert_noop, assert_ok, error::BadOrigin};
 
 fn create_nft(amount: u128) {
 	let metadata = "Some metadata".as_bytes().to_vec().try_into().unwrap();
-	NFTs::mint(RuntimeOrigin::signed(ALICE), metadata, amount).unwrap();
+	NFTs::mint(Origin::signed(ALICE), metadata, amount).unwrap();
 }
 
 fn amount_owned(resource_id: u128, address: u64) -> u128 {
@@ -21,7 +21,7 @@ mod set_sale {
 			let amount = 2;
 
 			assert_ok!(Marketplace::set_sale(
-				RuntimeOrigin::signed(ALICE),
+				Origin::signed(ALICE),
 				0,
 				price,
 				amount
@@ -37,7 +37,7 @@ mod set_sale {
 	fn nft_does_not_exist() {
 		ExtBuilder::default().balances(vec![]).build().execute_with(|| {
 			assert_noop!(
-				Marketplace::set_sale(RuntimeOrigin::signed(ALICE), 0, 1000, 2),
+				Marketplace::set_sale(Origin::signed(ALICE), 0, 1000, 2),
 				Error::<TestRuntime>::NotEnoughOwned
 			);
 		})
@@ -48,7 +48,7 @@ mod set_sale {
 		ExtBuilder::default().balances(vec![]).build().execute_with(|| {
 			create_nft(5);
 			assert_noop!(
-				Marketplace::set_sale(RuntimeOrigin::signed(ALICE), 0, 1000, 0),
+				Marketplace::set_sale(Origin::signed(ALICE), 0, 1000, 0),
 				Error::<TestRuntime>::ZeroAmount
 			);
 		})
@@ -59,7 +59,7 @@ mod set_sale {
 		ExtBuilder::default().balances(vec![]).build().execute_with(|| {
 			create_nft(5);
 			assert_noop!(
-				Marketplace::set_sale(RuntimeOrigin::signed(ALICE), 0, 1000, 10),
+				Marketplace::set_sale(Origin::signed(ALICE), 0, 1000, 10),
 				Error::<TestRuntime>::NotEnoughOwned
 			);
 		})
@@ -68,7 +68,7 @@ mod set_sale {
 	#[test]
 	fn must_be_signed() {
 		ExtBuilder::default().balances(vec![]).build().execute_with(|| {
-			assert_noop!(Marketplace::set_sale(RuntimeOrigin::none(), 0, 1000, 2), BadOrigin);
+			assert_noop!(Marketplace::set_sale(Origin::none(), 0, 1000, 2), BadOrigin);
 		})
 	}
 }
@@ -82,9 +82,9 @@ mod buy {
 		ExtBuilder::default().balances(vec![(BOB, bob_funds)]).build().execute_with(|| {
 			create_nft(5);
 			let price = 1000;
-			assert_ok!(Marketplace::set_sale(RuntimeOrigin::signed(ALICE), 0, price, 2));
+			assert_ok!(Marketplace::set_sale(Origin::signed(ALICE), 0, price, 2));
 
-			assert_ok!(Marketplace::buy(RuntimeOrigin::signed(BOB), 0, ALICE, 1));
+			assert_ok!(Marketplace::buy(Origin::signed(BOB), 0, ALICE, 1));
 
 			assert_eq!(bob_funds - price, Balances::free_balance(BOB));
 			assert_eq!(price, Balances::free_balance(ALICE));
@@ -99,11 +99,11 @@ mod buy {
 		ExtBuilder::default().balances(vec![(BOB, bob_funds)]).build().execute_with(|| {
 			create_nft(5);
 			let price = 1000;
-			assert_ok!(Marketplace::set_sale(RuntimeOrigin::signed(ALICE), 0, price, 2));
+			assert_ok!(Marketplace::set_sale(Origin::signed(ALICE), 0, price, 2));
 
 			let amount_buy = 2;
 			let total_price = amount_buy * price;
-			assert_ok!(Marketplace::buy(RuntimeOrigin::signed(BOB), 0, ALICE, amount_buy));
+			assert_ok!(Marketplace::buy(Origin::signed(BOB), 0, ALICE, amount_buy));
 
 			assert_eq!(bob_funds - total_price, Balances::free_balance(BOB));
 			assert_eq!(total_price, Balances::free_balance(ALICE));
@@ -116,10 +116,10 @@ mod buy {
 	fn not_enough_in_sale() {
 		ExtBuilder::default().balances(vec![]).build().execute_with(|| {
 			create_nft(5);
-			assert_ok!(Marketplace::set_sale(RuntimeOrigin::signed(ALICE), 0, 1000, 2));
+			assert_ok!(Marketplace::set_sale(Origin::signed(ALICE), 0, 1000, 2));
 
 			assert_noop!(
-				Marketplace::buy(RuntimeOrigin::signed(BOB), 0, ALICE, 5),
+				Marketplace::buy(Origin::signed(BOB), 0, ALICE, 5),
 				Error::<TestRuntime>::NotEnoughInSale
 			);
 		})
@@ -129,12 +129,12 @@ mod buy {
 	fn not_enough_owned() {
 		ExtBuilder::default().balances(vec![]).build().execute_with(|| {
 			create_nft(5);
-			assert_ok!(Marketplace::set_sale(RuntimeOrigin::signed(ALICE), 0, 1000, 2));
+			assert_ok!(Marketplace::set_sale(Origin::signed(ALICE), 0, 1000, 2));
 
-			assert_ok!(NFTs::transfer(RuntimeOrigin::signed(ALICE), 0, 4, 0));
+			assert_ok!(NFTs::transfer(Origin::signed(ALICE), 0, 4, 0));
 
 			assert_noop!(
-				Marketplace::buy(RuntimeOrigin::signed(BOB), 0, ALICE, 2),
+				Marketplace::buy(Origin::signed(BOB), 0, ALICE, 2),
 				Error::<TestRuntime>::NotEnoughOwned
 			);
 		})
@@ -143,7 +143,7 @@ mod buy {
 	#[test]
 	fn must_be_signed() {
 		ExtBuilder::default().balances(vec![]).build().execute_with(|| {
-			assert_noop!(Marketplace::buy(RuntimeOrigin::none(), 0, ALICE, 1), BadOrigin);
+			assert_noop!(Marketplace::buy(Origin::none(), 0, ALICE, 1), BadOrigin);
 		})
 	}
 }

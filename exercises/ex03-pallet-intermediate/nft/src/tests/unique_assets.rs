@@ -1,7 +1,7 @@
 use crate::{tests::mock::*, Error};
 use frame_support::{assert_noop, assert_ok, error::BadOrigin, BoundedVec};
 
-fn last_event() -> RuntimeEvent {
+fn last_event() -> Event {
 	frame_system::Pallet::<TestRuntime>::events()
 		.pop()
 		.expect("Event expected")
@@ -16,7 +16,7 @@ mod mint {
 		new_test_ext().execute_with(|| {
 			let metadata: BoundedVec<u8, <TestRuntime as crate::pallet::Config>::MaxLength> =
 				"Some metadata".as_bytes().to_vec().try_into().unwrap();
-			assert_ok!(NFTs::mint(RuntimeOrigin::signed(ALICE), metadata.clone(), 5));
+			assert_ok!(NFTs::mint(Origin::signed(ALICE), metadata.clone(), 5));
 
 			assert_eq!(NFTs::nonce(), 1);
 
@@ -27,7 +27,7 @@ mod mint {
 			assert_eq!(NFTs::account(0, ALICE), 5);
 			assert_eq!(
 				last_event(),
-				RuntimeEvent::NFTs(crate::Event::Created {
+				Event::NFTs(crate::Event::Created {
 					creator: ALICE,
 					asset_id: 0
 				})
@@ -40,7 +40,7 @@ mod mint {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
 				NFTs::mint(
-					RuntimeOrigin::none(),
+					Origin::none(),
 					"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 					5
 				),
@@ -54,7 +54,7 @@ mod mint {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
 				NFTs::mint(
-					RuntimeOrigin::signed(ALICE),
+					Origin::signed(ALICE),
 					"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 					0
 				),
@@ -73,12 +73,12 @@ mod transfer {
 			let minted_amount = 5;
 			let transfered_amount = 2;
 			assert_ok!(NFTs::mint(
-				RuntimeOrigin::signed(ALICE),
+				Origin::signed(ALICE),
 				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 				minted_amount
 			));
 			assert_ok!(NFTs::transfer(
-				RuntimeOrigin::signed(ALICE),
+				Origin::signed(ALICE),
 				0,
 				transfered_amount,
 				BOB
@@ -89,7 +89,7 @@ mod transfer {
 
 			assert_eq!(
 				last_event(),
-				RuntimeEvent::NFTs(crate::Event::Transferred {
+				Event::NFTs(crate::Event::Transferred {
 					asset_id: 0,
 					from: ALICE,
 					to: BOB,
@@ -105,12 +105,12 @@ mod transfer {
 			let minted_amount = 5;
 			let transfered_amount = 10;
 			assert_ok!(NFTs::mint(
-				RuntimeOrigin::signed(ALICE),
+				Origin::signed(ALICE),
 				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 				minted_amount
 			));
 			assert_ok!(NFTs::transfer(
-				RuntimeOrigin::signed(ALICE),
+				Origin::signed(ALICE),
 				0,
 				transfered_amount,
 				BOB
@@ -121,7 +121,7 @@ mod transfer {
 
 			assert_eq!(
 				last_event(),
-				RuntimeEvent::NFTs(crate::Event::Transferred {
+				Event::NFTs(crate::Event::Transferred {
 					asset_id: 0,
 					from: ALICE,
 					to: BOB,
@@ -136,7 +136,7 @@ mod transfer {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
 				NFTs::mint(
-					RuntimeOrigin::none(),
+					Origin::none(),
 					"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 					5
 				),
@@ -149,7 +149,7 @@ mod transfer {
 	fn must_exist() {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
-				NFTs::transfer(RuntimeOrigin::signed(ALICE), 0, 100, BOB),
+				NFTs::transfer(Origin::signed(ALICE), 0, 100, BOB),
 				Error::<TestRuntime>::UnknownAssetId
 			);
 		})
@@ -159,12 +159,12 @@ mod transfer {
 	fn must_own_some() {
 		new_test_ext().execute_with(|| {
 			assert_ok!(NFTs::mint(
-				RuntimeOrigin::signed(ALICE),
+				Origin::signed(ALICE),
 				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 				5
 			));
 			assert_noop!(
-				NFTs::transfer(RuntimeOrigin::signed(BOB), 0, 2, ALICE),
+				NFTs::transfer(Origin::signed(BOB), 0, 2, ALICE),
 				Error::<TestRuntime>::NotOwned
 			);
 		})
@@ -180,11 +180,11 @@ mod burn {
 			let minted_amount = 5;
 			let burned_amount = 2;
 			assert_ok!(NFTs::mint(
-				RuntimeOrigin::signed(ALICE),
+				Origin::signed(ALICE),
 				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 				minted_amount
 			));
-			assert_ok!(NFTs::burn(RuntimeOrigin::signed(ALICE), 0, burned_amount));
+			assert_ok!(NFTs::burn(Origin::signed(ALICE), 0, burned_amount));
 
 			assert_eq!(
 				NFTs::unique_asset(0).unwrap().supply,
@@ -194,7 +194,7 @@ mod burn {
 
 			assert_eq!(
 				last_event(),
-				RuntimeEvent::NFTs(crate::Event::Burned {
+				Event::NFTs(crate::Event::Burned {
 					asset_id: 0,
 					owner: ALICE,
 					total_supply: minted_amount - burned_amount
@@ -209,19 +209,19 @@ mod burn {
 			let minted_amount = 5;
 			let burned_amount = 10;
 			assert_ok!(NFTs::mint(
-				RuntimeOrigin::signed(ALICE),
+				Origin::signed(ALICE),
 				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 				minted_amount
 			));
 
-			assert_ok!(NFTs::burn(RuntimeOrigin::signed(ALICE), 0, burned_amount));
+			assert_ok!(NFTs::burn(Origin::signed(ALICE), 0, burned_amount));
 
 			assert_eq!(NFTs::unique_asset(0).unwrap().supply, 0);
 			assert_eq!(NFTs::account(0, ALICE), 0);
 
 			assert_eq!(
 				last_event(),
-				RuntimeEvent::NFTs(crate::Event::Burned {
+				Event::NFTs(crate::Event::Burned {
 					asset_id: 0,
 					owner: ALICE,
 					total_supply: 0
@@ -233,7 +233,7 @@ mod burn {
 	#[test]
 	fn must_be_signed() {
 		new_test_ext().execute_with(|| {
-			assert_noop!(NFTs::burn(RuntimeOrigin::none(), 0, 5), BadOrigin);
+			assert_noop!(NFTs::burn(Origin::none(), 0, 5), BadOrigin);
 		})
 	}
 
@@ -241,7 +241,7 @@ mod burn {
 	fn must_exist() {
 		new_test_ext().execute_with(|| {
 			assert_noop!(
-				NFTs::burn(RuntimeOrigin::signed(ALICE), 0, 100),
+				NFTs::burn(Origin::signed(ALICE), 0, 100),
 				Error::<TestRuntime>::UnknownAssetId
 			);
 		})
@@ -251,12 +251,12 @@ mod burn {
 	fn must_own_some() {
 		new_test_ext().execute_with(|| {
 			assert_ok!(NFTs::mint(
-				RuntimeOrigin::signed(ALICE),
+				Origin::signed(ALICE),
 				"Some metadata".as_bytes().to_vec().try_into().unwrap(),
 				5
 			));
 			assert_noop!(
-				NFTs::burn(RuntimeOrigin::signed(BOB), 0, 2),
+				NFTs::burn(Origin::signed(BOB), 0, 2),
 				Error::<TestRuntime>::NotOwned
 			);
 		})

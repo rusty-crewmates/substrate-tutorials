@@ -4,7 +4,7 @@ In this exercise, you will build a simple fungible asset pallet.
 
 ## What to do?
 
-Edit the code in `ex01-pallet-easy/assets/src/lib.rs` until all tests pass.
+Edit the code in `ex01-fungible-token/assets/src/lib.rs` until all tests pass.
 We placed some helpful comments in the code 😉.
 
 Launch the tests by running:

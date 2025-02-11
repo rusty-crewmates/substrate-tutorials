@@ -8,7 +8,7 @@ use sp_core::offchain::{
 use super::mock::*;
 use crate::offchain_worker::fetch_btc_price;
 
-use super::mock::PriceOracle;
+use super::mock::{Call, PriceOracle};
 
 fn price_oracle_response(state: &mut OffchainState) {
 	state.expect_request(PendingRequest {
@@ -59,7 +59,7 @@ fn offchain_worker_submit_unsigned_transaction_ok() {
 
 		assert_eq!(
 			tx.call,
-			RuntimeCall::PriceOracle(crate::Call::set_btc_price {
+			Call::PriceOracle(crate::Call::set_btc_price {
 				btc_price: FixedI64::from_float(29021.47)
 			})
 		);
